@@ -83,6 +83,50 @@ if ($_SESSION['Id'] == $matricula or $_SESSION['Privs'] > 1) {
                 echo "Comunicate con el departamento de Control Escolar para una copia impresa</H1></center>";
             }
             break;
+        case 6:     // Solicitud Beca
+            $archivo = 'becas/'.$_SESSION['Seccion'].'/formato/'.$matricula.'.pdf';
+            if (file_exists($archivo)) 	{   //La boleta no está bloqueada
+                header ("Cache-Control: no-cache, must-revalidate"); //no guardar en CACHE 
+                header ("Pragma: no-cache");  
+                header('Content-type: application/pdf'); 
+                readfile($archivo); 
+            } else { // No se encuentra el archivo, solicitarlo impreso 
+                echo "<center><H1>Eror de consulta...</br>El archivo solicitado no existe</br>";
+            }
+            break;
+        case 7:     // Comprobante de ingresos
+            $archivo = 'becas/'.$_SESSION['Seccion'].'/ingresos/'.$matricula.'.pdf';
+            if (file_exists($archivo)) 	{   //La boleta no está bloqueada
+                header ("Cache-Control: no-cache, must-revalidate"); //no guardar en CACHE 
+                header ("Pragma: no-cache");  
+                header('Content-type: application/pdf'); 
+                readfile($archivo); 
+            } else { // No se encuentra el archivo, solicitarlo impreso 
+                echo "<center><H1>Eror de consulta...</br>El archivo solicitado no existe</br>";
+            }
+            break;
+        case 8:     // Identificación
+            $archivo = 'becas/'.$_SESSION['Seccion'].'/idoficial/'.$matricula.'.pdf';
+            if (file_exists($archivo)) 	{   //La boleta no está bloqueada
+                header ("Cache-Control: no-cache, must-revalidate"); //no guardar en CACHE 
+                header ("Pragma: no-cache");  
+                header('Content-type: application/pdf'); 
+                readfile($archivo); 
+            } else { // No se encuentra el archivo, solicitarlo impreso 
+                echo "<center><H1>Eror de consulta...</br>El archivo solicitado no existe</br>";
+            }
+            break;
+        case 9:     // Socioeconomico
+            $archivo = 'becas/'.$_SESSION['Seccion'].'/estudio/'.$matricula.'.pdf';
+            if (file_exists($archivo)) 	{   //La boleta no está bloqueada
+                header ("Cache-Control: no-cache, must-revalidate"); //no guardar en CACHE 
+                header ("Pragma: no-cache");  
+                header('Content-type: application/pdf'); 
+                readfile($archivo); 
+            } else { // No se encuentra el archivo, solicitarlo impreso 
+                echo "<center><H1>Eror de consulta...</br>El archivo solicitado no existe</br>";
+            }
+            break;
     }
             
 } else {
