@@ -19,6 +19,10 @@ define ('ESTADOS', array(
  ['22','Querétaro'], ['23','Quintana Roo'], ['24','San Luis Potosí'], ['25','Sinaloa'], ['26','Sonora'], ['27','Tabasco'], ['28','Tamaulipas'],
  ['29','Tlaxcala'], ['30','Veracruz'], ['31','Yucatán'], ['32','Zacatecas']));
 
+define ('CARRERAS', array (['ARQ','ARQUITECTURA'],['LAV','ANIMACIÓN Y VIDEOJUEGOS'],['LDE','DERECHO'], ['LFC','FORMACIÓN CATEQUÉTICA'],
+['LFR','FISIOTERAPIA Y REHABILITACIÓN'], ['LNI','NEGOCIOS INTERNACIONALES'], 
+['ETO','TRAUMATOLOGÍA Y ORTOPEDIA'], ['ERD','REHABILITACIÓN DEPORTIVA'], ['ERN','REHABILITACIÓN NEUROLÓGICA']));
+ 
 define ('MAXFILESIZE', 2097152);
 
 //******************************************************************************************************************************
@@ -50,6 +54,14 @@ function nomestado($state) {
     }
  }
 
+function select_carrera($selected) {
+    foreach (CARRERAS as list($clave, $valor)) {
+        echo '<option value="'.$clave.'"';
+        if ($clave == $selected) { echo ' selected'; }
+        echo '>'.$valor.'</option>';
+    }
+}
+ 
 //*************************************************************************************************
 // Funcion:     tipobeca($tipo)
 // Descripción: Cambia la clave de la beca por la descripcion completa
@@ -188,18 +200,16 @@ function corto_seccion() {
 function headerfull_($title) {
 echo '<!DOCTYPE HTML><html>'."\n";
 echo '<head>'."\n";
-//echo '<script src="https://kit.fontawesome.com/2a04e74308.js" crossorigin="anonymous"></script>'."\n";
 echo '<title>'.$title.'</title>'."\n";
 echo '<meta charset="utf-8" />'."\n";
 echo '<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />'."\n";
 echo '<link rel="stylesheet" href="assets/css/main.css" />'."\n";
 echo '<link href="assets/css/fontawesome-all.min.css" rel="stylesheet">'."\n";
-//scriptmuestra(1);
 echo '</head>'."\n";
-echo '<body class="is-preload">';
-echo '<div id="wrapper">';
-echo '<div id="main">';
-echo '<div class="inner">';
+echo '<body class="is-preload">'."\n";
+echo '<div id="wrapper">'."\n";         // Inicia el div que contiene todo  
+echo '<div id="main">'."\n";            // Inicia el div que contiene el body
+echo '<div class="inner">'."\n";        // Bloque derecho
 if ($_SESSION['login'] == 1) {
     echo '<header id="header"><a href="index.php" class="logo">'.$_SESSION['Nombres'].' - <strong>'.$title.'</strong></a>'."\n";
 } else {
@@ -246,7 +256,6 @@ scriptmuestra(2);
 echo '</div>  <!-- inner -->'."\n";
 echo '</div>'."\n";
 }
-
 //*************************************************************************************************
 // Funcion:     scriptmuestra
 // Descripción: carga el script y el div dependiendo del contexto de la llamada (1 header, 2 footer) validando privilegios
@@ -306,21 +315,6 @@ function showUser(str) {
 
 }
 
-//*************************************************************************************************
-// Funcion:     scripts
-// Descripción: carga los scripts al final de la pagina
-// Parametros:  Ninguno
-//*************************************************************************************************
-function scripts() {
-echo '<script src="assets/js/jquery.min.js"></script>'."\n";
-echo '<script src="assets/js/browser.min.js"></script>'."\n";
-echo '<script src="assets/js/breakpoints.min.js"></script>'."\n";
-echo '<script src="assets/js/util.js"></script>'."\n";
-echo '<script src="assets/js/main.js"></script>'."\n";
-echo '<script src="assets/js/aux.js"></script>'."\n";
-echo '</body>'."\n";
-echo '</html>'."\n";
-}
 
 //*************************************************************************************************
 // Funcion:     Sidebar
@@ -329,14 +323,12 @@ echo '</html>'."\n";
 //*************************************************************************************************
 
 function sidebar() {
-?>
-<div id="sidebar">
-    <div class="inner">
-	<!-- Menu -->
-	<nav id="menu">
-	<header class="major"><h2>Menu</h2></header>
-	<ul>
-<?php
+echo '<div id="sidebar">'."\n";
+echo '<div class="inner">'."\n";
+echo '<!-- Menu -->'."\n";
+echo '<nav id="menu">'."\n";
+echo '<header class="major"><h2>Menu</h2></header>'."\n";
+echo '<ul>'."\n";
 $type = 20; // 20 no hay login, 0 es alumno, 1 es usuario
 // Validar que hay login, y que tipo de usuario es
 if (isset($_SESSION['login']) && ($_SESSION['login'] == 1)) {
@@ -366,7 +358,6 @@ if (isset($_SESSION['login']) && ($_SESSION['login'] == 1)) {
             echo '<li><a href="becas.php">Trámite de Beca</a></li>'."\n";
 		echo '</ul>'."\n";
 		echo '</li>'."\n";
-        //echo '<li><a href="logout.php">Salir</a></li>'."\n";
         break;
     case '1': // Es USUARIO
     // Validar el tipo de usuario y los privilegios
@@ -380,18 +371,20 @@ if (isset($_SESSION['login']) && ($_SESSION['login'] == 1)) {
             echo '<li><a href="#">Enviar mensajes</a></li>'."\n";
             echo '</ul>'."\n";
             echo '</li>'."\n";
-            /*echo '<li><span class="opener">Financiero</span>'."\n";
-            echo '<ul>'."\n";
-            echo '<li><a href="recibo.php">Recibos de Pago</a></li>'."\n";
-            echo '</ul>'."\n";
-            echo '</li>'."\n";*/
-            //echo '<li><a href="logout.php">Salir</a></li>'."\n";
             break;
+        case '4':
+            echo '<li><a href="index.php">Inicio</a></li>'."\n";
+            echo '<li><a href="informacion.php">Información Grupo</a></li>'."\n";
+            echo '<li><a href="#">Reporte Entrega</a></li>'."\n";
+            echo '</li>'."\n";
+            break;
+        
         case '5':     // Admin
             echo '<li><a href="index.php">Inicio</a></li>'."\n";
             echo '<li><span class="opener">Académico</span>'."\n";
             echo '<ul>'."\n";
-            echo '<li><a href="boleta.php">Ver Boletas</a></li>'."\n";
+            echo '<li><a href="informacion.php">Información</a></li>'."\n";
+            echo '<li><a href="circulares.php">Circulares</a></li>'."\n";
             echo '<li><a href="#">Bloqueo/Desbloqueo</a></li>'."\n";
             echo '<li><a href="#">Enviar mensajes</a></li>'."\n";
             echo '</ul>'."\n";
@@ -407,7 +400,6 @@ if (isset($_SESSION['login']) && ($_SESSION['login'] == 1)) {
             echo '<li><a href="#">Perfiles</a></li>'."\n";
             echo '</ul>'."\n";
             echo '</li>'."\n";
-            //echo '<li><a href="logout.php">Salir</a></li>'."\n";
             break;
         }
     default:
@@ -437,25 +429,12 @@ if (isset($_SESSION['Id'])) {
             echo '<li><a href="media/Anuario_Universidad.pdf" target="_blank">Anuario Escolar</a></li>'."\n";
             break;
     }
-    
 }
 echo '</ul>'."\n";
 if (isset($_SESSION['Id'])) { echo '<li><a href="logout.php">Salir</a></li>'."\n"; }
 echo '</li>'."\n";
 echo '</ul>'."\n";
 echo '</nav>'."\n";
-
-contacto();     //Imprime los datos de contacto de la sección correspondiente - SOLAMENTE  SI INICIARON SESION
-
-}
-
-//*************************************************************************************************
-// Funcion:     contacto
-// Descripción: Escribe los datos de contacto en funcion a la seccion del alumno
-// Parametros:  Ninguno, los toma de variables de sesion
-//*************************************************************************************************
-function contacto(){
-// verificar si hay login y determinar las cadenas necesarias
 if (isset($_SESSION['login']) && $_SESSION['login'] == 1) {
   switch($_SESSION['Seccion']) {
     case '0':
@@ -479,21 +458,40 @@ if (isset($_SESSION['login']) && $_SESSION['login'] == 1) {
       $telefono="4433 43 0295 / 4433 23 7161";
       break;
   }
-  if ($_SESSION['Seccion']<5) {   //No es Administrativo, es necesario poner los datos de contacto
+if ($_SESSION['Seccion']<5) {   //No es Administrativo, es necesario poner los datos de contacto
     echo '<section>'."\n";
     echo '<p>La comunicación del Instituto con sus alumnos es importante. Para ello ponemos a tu disposición los siguientes medios:</p>'."\n";
-	  echo '<ul class="contact">'."\n";
+	echo '<ul class="contact">'."\n";
     echo '<li class="icon solid fa-envelope">'.$correo.'</li>'."\n";
     echo '<li class="icon solid fa-phone">'.$telefono.'</li>'."\n";
     echo '</ul>'."\n";
-	  echo '</section>'."\n";
+	echo '</section>'."\n";
   }
 }
 	// Footer
 echo '<footer id="footer">'."\n";
 echo '<p class="copyright">&copy; Instituto Valladolid. Todos los derechos reservados.</a>.</p>'."\n";
-echo '</footer></div></div></div>'."\n";
+echo '</footer>'."\n";
+echo '</div> <!-- 1 inner sidebar -->'."\n";     
+echo '</div> <!-- 2 sidebar -->'."\n";
+echo '</div> <!-- 3 wrapper principal-->'."\n";
 
+}
+
+//*************************************************************************************************
+// Funcion:     scripts
+// Descripción: carga los scripts al final de la pagina
+// Parametros:  Ninguno
+//*************************************************************************************************
+function scripts() {
+echo '<script src="assets/js/jquery.min.js"></script>'."\n";
+echo '<script src="assets/js/browser.min.js"></script>'."\n";
+echo '<script src="assets/js/breakpoints.min.js"></script>'."\n";
+echo '<script src="assets/js/util.js"></script>'."\n";
+echo '<script src="assets/js/main.js"></script>'."\n";
+echo '<script src="assets/js/auxiliar.js"></script>'."\n";
+echo '</body>'."\n";
+echo '</html>'."\n";
 }
 
 //*************************************************************************************************
@@ -587,7 +585,6 @@ function getAvisos($seccion, $grado) {
     		echo '<div class="box alt">'."\n";
             echo '<div class="row gtr-50 gtr-uniform">'."\n";
             foreach($aviso as $contenido) {
-                //echo '<article>';
                 echo '<div class="col-4"><span class="image fit"><a href="'.$contenido['Url'].'" class="image"><img src="images/'.$contenido['Imagen'].'" alt="" /></a></span>'."\n";
                 echo '<h4>'.$contenido['Titulo'].'</h4>'."\n";
                 echo '<p>'.$contenido['Contenido'].'</p>'."\n";
@@ -595,21 +592,13 @@ function getAvisos($seccion, $grado) {
             }
             echo '</div>'."\n";
             echo '</div>'."\n";
-    		/* echo '<div class="posts">';
-    		foreach($aviso as $contenido) {
-                echo '<article><a href="'.$contenido['Url'].'" class="image"><img src="images/'.$contenido['Imagen'].'" alt="" /></a>';
-                echo '<h3>'.$contenido['Titulo'].'</h3>';
-                echo '<p>'.$contenido['Contenido'].'</p>';
-                echo '</article>';
-            }
-            echo '</div>'; */
             echo '</section>'."\n";        
     }
 }
 
 
 //*************************************************************************************************
-// Funcion:     getGrupos
+// Funcion:     GrupoActivo
 // Descripción: Si el usuario es Docente Titular, buscar sus grupos y mostrarlos.
 // Parametros:  Id
 //*************************************************************************************************
@@ -646,7 +635,40 @@ function GrupoActivo($IdUsuario, $GrupoActivo) {
     }
 }
 
-        
+//*************************************************************************************************
+// Funcion:     grupos
+// Descripción: Si el usuario es Administrador, permitirle seleccionar la sección y el grupo a trabajar
+// Parametros:  Id, grupoactivo
+//*************************************************************************************************
+
+function grupos($IdUsuario) {
+        echo '<form method="post" action="index.php">'."\n";
+        echo '<div class="row gtr-uniform">'."\n";
+        echo '<div id="ListaSeccion" name="ListaSeccion" class="col-6 col-12-xsmall">'."\n";
+        echo '<select name="seccion" id="seccion" onchange="showGrupos()">'."\n";
+        echo '<option value="" disabled selected>Elige la sección</option>'."\n";
+        echo '<option value="0">Preescolar</option>'."\n";
+        echo '<option value="1">Primaria</option>'."\n";
+        echo '<option value="2">Secundaria</option>'."\n";
+        echo '<option value="3">Bachillerato</option>'."\n";
+        echo '<option value="4">Universidad</option>'."\n";
+        echo '</select>'."\n";
+        echo '</div>'."\n";
+        echo '<div id="select1" name="select1" class="col-6 col-12-xsmall">'."\n";
+        echo '<select name="Active" id="Active"><option value="" disabled selected>Elige el Grupo</option></select>'."\n";
+        echo '</div>'."\n";
+        echo '<div id="select2" name="select2" class="col-6 col-12-xsmall">'."\n";
+        //echo '<select name="ctx" id="ctx"><option value="" disabled selected>Elige la Carrera</option></select>'."\n";
+        echo '</div>'."\n";
+        echo '<div class="col-12">'."\n";
+        echo '<ul class="actions">'."\n";
+        echo '<li><input type="submit" value="Activar " class="primary" /></li>'."\n";
+        echo '</ul>'."\n";
+        echo '</div>'."\n";
+        echo '</div>'."\n";
+        echo '</form>'."\n";
+}
+
 
 //*************************************************************************************************
 // Funcion:     listado
@@ -669,6 +691,61 @@ function listado($grupo) {
         }
         echo '</table>'."\n";
         
+    }
+}
+
+//*************************************************************************************************
+// Funcion:     listado_admon
+// Descripción: Obtener un listado de los alumnos correspondientes al grupo activo del Administrador, permite bloquear o desbloquear directamente desde el listado
+// Parametros:  IdGrupo (el grupo activo)
+//*************************************************************************************************
+
+function listado_admon($grupo) {
+    $conn = new alumnos();
+    $lista = $conn->lista_alumnos($grupo);
+    $indice = count($lista);
+    if ($indice>0) {
+        echo '<table>'."\n";
+        echo '<tr><th>Matrícula</th><th>Apellidos</th><th>Nombres</th><th colspan=2><center>Boleta</center></th><th><center>Recibo de Pago</center></th><th><center>Información</center></th></tr>'."\n";
+        foreach($lista as $datos) {
+            echo '<tr><td>'.$datos['Id'].'</td><td>'.$datos['Apellidos'].' </td><td>'.$datos['Nombre'].'</td>'."\n";
+            echo '<td><center><a href="validpdf.php?context=1&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-file-pdf"></i></center></td>';
+            echo '<td><center><a href="#"><i class="fas fa-unlock-alt" onclick="unlock('.$datos['Id'].')"></i></a></center></td>';
+            echo '<td><center><a href="validpdf.php?context=2&id_alumno='.$datos['Id'].'" target="_blank"><i class="fas fa-money-check-alt"></i></a></center></td>';
+            echo '<td><center><a href="#" class="logo"><i class="fas fa-address-card" onclick="showUser('.$datos['Id'].')"></a></i></center></td></tr>'."\n";
+        }
+        echo '</table>'."\n";
+        
+    }
+}
+
+//*************************************************************************************************
+// Funcion:     listado_admon
+// Descripción: Obtener un listado de los alumnos correspondientes al grupo activo del Administrador, permite bloquear o desbloquear directamente desde el listado
+// Parametros:  IdGrupo (el grupo activo)
+//*************************************************************************************************
+
+function listado_becas($grupo, $seccion) {
+    $conn = new alumnos();
+    $lista = $conn->lista_becas($seccion, $grupo);
+    $indice = count($lista);
+    if ($indice>0) {
+        echo '<table>'."\n";
+        echo '<tr><th>Matrícula</th><th>Apellidos</th><th>Nombres</th><th><center>Solicitud</center></th><th><center>Boleta</center></th>';
+        echo '<th><center>Ingresos</center></th><th><center>Identificación</center></th><th><center>Socioeconómico</center></th></tr>'."\n";
+        foreach($lista as $datos) {
+            echo '<tr><td>'.$datos['Id'].'</td><td>'.$datos['Apellidos'].' </td><td>'.$datos['Nombre'].'</td>'."\n";
+            echo '<td><center><a href="validpdf.php?context=6&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-clipboard-list"></i></center></td>';
+            echo '<td><center><a href="validpdf.php?context=1&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-file-pdf"></i></center></td>';
+            echo '<td><center><a href="validpdf.php?context=7&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-file-invoice-dollar"></i></center></td>';
+            echo '<td><center><a href="validpdf.php?context=8&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-address-card"></i></center></td>';
+            echo '<td><center><a href="validpdf.php?context=9&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-home"></i></center></td>';
+            //echo '<td><center><a href="#" class="logo"><i class="fas fa-address-card" onclick="showUser('.$datos['Id'].')"></a></i></center></td></tr>'."\n";
+        }
+        echo '</table>'."\n";
+        
+    } else  {
+        echo '<p>Grupo sin alumnos</p>';
     }
 }
 

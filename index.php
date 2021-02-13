@@ -64,8 +64,44 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                     GrupoActivo($_SESSION['Id'], 0);
                 }
                 break;
-            case 5:
-                echo '<p>ADMINISTRADOR</p>'."\n";
+            case 4: // Becas
+                if (isset($_POST['seccion'])){   // Viene del formulario, si la sección es universidad, hay que mostrar la lista de carreras
+                    $_SESSION['Seccion'] = $_POST['seccion'];
+                    // Validar si eligió un grupo o solamente una sección
+                    if (isset($_POST['Active'])) {
+                        $_SESSION['Activo'] = $_POST['Active']; 
+                    } else { 
+                        $_SESSION['Activo'] = '';
+                    }
+                    // Mostrar seccion o grupo activo
+                    echo '<h4>'.$_SESSION['Seccion'];
+                    if ($_SESSION['Activo'] != '') {
+                        echo ' - '.$_SESSION['Activo'];
+                    }
+                    echo '</h4>';
+                    echo '<p>Ahora puedes elegir una opción del menú lateral</p><hr/>';
+                    echo '<p>O cambiar tu grupo activo:</p>'."\n";
+                    grupos($_SESSION['Id']);
+                } else {       // No viene de formulario, ni ha seleccionado, mostrar el formulario limpio
+                    echo '<p>Elige un grupo para comenzar a trabajar</p>'."\n";
+                    grupos($_SESSION['Id']);
+                }
+                break;
+            case 5: // Administrador
+                // Obtener los datos del titular
+                if (isset($_POST['Active'])){   // Viene del formulario
+                $_SESSION['Seccion'] = $_POST['seccion'];
+                $_SESSION['Activo'] = $_POST['Active'];
+                }
+                if (isset($_SESSION['Activo'])) {        // Avisa que selecciono un grupo y da la opción para cambiarlo.
+                    echo '<h4>Grupo Activo: '.$_SESSION['Activo'].'</h4>'."\n";
+                    echo '<p>Ahora puedes elegir una opción del menú lateral</p><hr/>';
+                    echo '<p>O cambiar tu grupo activo:</p>'."\n";
+                    grupos($_SESSION['Id']);
+                } else {       // No viene de formulario, ni ha seleccionado, mostrar el formulario limpio
+                    echo '<p>Elige un grupo para comenzar a trabajar</p>'."\n";
+                    grupos($_SESSION['Id']);
+                }
                 break;
             }
         break;
@@ -76,7 +112,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
     if (isset($error) && strlen($error)>2) { echo '<script type="text/javascript"> alert ("'.$error.'"); </script> '."\n"; }
 }
 
-echo '<div class="posts"></div>'."\n";
+//echo '<div class="posts"></div>'."\n";
 echo '</section>'."\n";
 
 /* ------------------- AQUI TERMINA LA SECCION CENTRAL DE INFORMACION -------------------*/

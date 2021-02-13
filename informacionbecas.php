@@ -40,23 +40,18 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                         echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
                     }
                     break;
-                case 4: // Becas
-                    if (isset($_SESSION['Activo'])) {
-                        echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.$_SESSION['Seccion'].' - '.secciones().' - '. substr($_SESSION['Activo'],0,3).'</h3>';
-                         listado_becas($_SESSION['Activo'], substr($_SESSION['Activo'],0,3));
-                    } else {
-                        echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
-                    }
-                    break;                
-                case 5: // Es administrador
+                case 4: // Es administrador
                     if (isset($_SESSION['Activo'])) {
                         echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.secciones().'</h3>';
-                         listado_admon($_SESSION['Activo']);
+                         listado_becas($_SESSION['Activo']);
                     } else {
                         echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
                     }
                     break;
                 }
+            break;
+        default:
+            echo '<p>No tienes los privilegios necesarios</p>';
             break;
         }
 } else {

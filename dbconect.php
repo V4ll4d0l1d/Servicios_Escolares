@@ -133,7 +133,7 @@ public function lista_alumnos($Grupo){
     $listado=null;
     $conn=new Conexion();
     try {
-        $stmt = $conn->prepare ("SELECT Id, Nombre, Apellidos, Grado, Grupo, Seccion, IdGrupo, Correo FROM DatosIDAlumno WHERE IdGrupo = :gg");
+        $stmt = $conn->prepare ("SELECT Id, Nombre, Apellidos, Grado, Grupo, Seccion, IdGrupo, Correo FROM DatosIDAlumno WHERE IdGrupo = :gg order by Apellidos");
         $stmt->bindParam(':gg', $Grupo);
         $stmt->execute();
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -271,13 +271,18 @@ public function status_reinscripcion ($Matricula, $Status, $CicloAct) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Consulta la bitácora de becas para saber si el alumno ha intentado llenar los datos de registro
-public function lista_becas($Matricula, $Ciclo) {
+public function lista_becas($Seccion, $Grupo) {
     $listado=null;
     $conn=new Conexion();
     try {
-        $stmt = $conn->prepare ("SELECT Id, Seccion, CicloAct, CicloSig, Grado, Tipo, Status, Fecha, Observaciones FROM Becas WHERE Id = :gg and CicloAct = :cc");
-        $stmt->bindParam(':gg', $Matricula);
-        $stmt->bindParam(':cc', $Ciclo);
+        if (isset($Grupo)) {
+            $stmt = $conn->prepare ("SELECT Becas.Id, DatosIDAlumno.Nombre, DatosIDAlumno.Apellidos, DatosIDAlumno.Seccion, DatosIDAlumno.IdGrupo, Becas.Tipo, Becas.Status, Becas.Fecha FROM Becas INNER JOIN DatosIDAlumno ON Becas.Id = DatosIDAlumno.Id where Becas.Seccion = :ss and DatosIDAlumno.IdGrupo = :gg");
+            $stmt->bindParam(':ss', $Seccion);
+            $stmt->bindParam(':gg', $Grupo);
+        } else {
+            $stmt = $conn->prepare ("SELECT Becas.Id, DatosIDAlumno.Nombre, DatosIDAlumno.Apellidos, DatosIDAlumno.Seccion, DatosIDAlumno.IdGrupo, Becas.Tipo, Becas.Status, Becas.Fecha FROM Becas INNER JOIN DatosIDAlumno ON Becas.Id = DatosIDAlumno.Id where Becas.Seccion = :ss");
+            $stmt->bindParam(':ss', $Seccion);
+        }
         $stmt->execute();
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resultado;
@@ -374,9 +379,41 @@ public function lista_grupos($Usuario){
         echo 'Error: ' . $e->getMessage();
     }
 }
-  
-  
+
+
+public function lista_seccion($Seccion){
+    $listado=null;
+    $conn=new Conexion();
+    try {
+        $stmt = $conn->prepare ("SELECT IdGrupo, Grado, Ciclo FROM Grupos WHERE Seccion = :gg order By IdGrupo");
+        $stmt->bindParam(':gg', $Seccion);
+        $stmt->execute();
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;
+    } catch(PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
 }
+
+public function lista_carrera($carrera) {
+    $listado=null;
+    $conn=new Conexion();
+    try {
+        $stmt = $conn->prepare ("SELECT IdGrupo, Grado, Ciclo FROM Grupos WHERE IdGrupo LIKE :term ORDER BY IdGrupo");
+        $stmt->bindValue(':term', $carrera.'%');
+        //$stmt->bindParam('s', $search);
+        $stmt->execute();
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;
+    } catch(PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
+}
+
+
+
+}
+
 
 //*************************************************************************************************************************
 //*************************************************************************************************************************
