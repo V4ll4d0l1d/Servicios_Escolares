@@ -107,8 +107,8 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
         break;
     }
 } else {
-    echo '<header class="major"><h2>Bienvenido al Sistema de Servicios <br>Escolares del Instituto Valladolid.</h2></header>'."\n";
-    echo '<p><b>Ingresa con tus credenciales</b></p>'."\n";
+    echo '<header class="major"><img src="images/logo_maristas.jpg" alt="logo" width="128" /><h2>Bienvenido al Sistema de Servicios Escolares.</h2></header>'."\n";
+    echo '<p id="principal"><b>Ingresa con tus credenciales</b></p>'."\n";
     if (isset($error) && strlen($error)>2) { echo '<script type="text/javascript"> alert ("'.$error.'"); </script> '."\n"; }
 }
 
@@ -118,7 +118,7 @@ echo '</section>'."\n";
 /* ------------------- AQUI TERMINA LA SECCION CENTRAL DE INFORMACION -------------------*/
 // comienza el login
 //<!-- main -->
-footer_();
+
 
 // Imprime el menú lateral de acuerdo a los datos y al contexto.
 sidebar();
@@ -126,5 +126,5 @@ sidebar();
 /* Scripts */
 scripts();
 
-
+footer_();
 ?>

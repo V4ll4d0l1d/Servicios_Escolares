@@ -210,6 +210,7 @@ echo '<body class="is-preload">'."\n";
 echo '<div id="wrapper">'."\n";         // Inicia el div que contiene todo  
 echo '<div id="main">'."\n";            // Inicia el div que contiene el body
 echo '<div class="inner">'."\n";        // Bloque derecho
+echo '<div id="prueba_ylw">';			//División sólo para inicio de sesión
 if ($_SESSION['login'] == 1) {
     echo '<header id="header"><a href="index.php" class="logo">'.$_SESSION['Nombres'].' - <strong>'.$title.'</strong></a>'."\n";
 } else {
@@ -323,16 +324,19 @@ function showUser(str) {
 //*************************************************************************************************
 
 function sidebar() {
-echo '<div id="sidebar">'."\n";
-echo '<div class="inner">'."\n";
-echo '<!-- Menu -->'."\n";
-echo '<nav id="menu">'."\n";
-echo '<header class="major"><h2>Menu</h2></header>'."\n";
-echo '<ul>'."\n";
+
 $type = 20; // 20 no hay login, 0 es alumno, 1 es usuario
 // Validar que hay login, y que tipo de usuario es
 if (isset($_SESSION['login']) && ($_SESSION['login'] == 1)) {
-  // han realizado Login
+  // Han realizado Login
+  
+  //Se carga el div del menú
+  echo '<div id="sidebar">'."\n";
+  echo '<div class="inner">'."\n";
+  echo '<!-- Menu -->'."\n";
+  echo '<nav id="menu">'."\n";
+  echo '<header class="major"><h2>Menu</h2></header>'."\n";
+  echo '<ul>'."\n";
   $type = $_SESSION['Type'];
   switch ($type) {
     case '0':   // Es ALUMNO
