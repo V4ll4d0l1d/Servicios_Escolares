@@ -224,7 +224,7 @@ if ($_SESSION['login'] == 1) {
     <li class="icon solid fa-key" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"><a href="#" class="logo"> Ingresar</a></li>
 <?php
     }
-echo '</ul></header>'."\n";
+echo '</ul></header></div>'."\n";
 echo '<section>'."\n";
 
 }
