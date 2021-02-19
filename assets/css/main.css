@@ -132,13 +132,13 @@ p {
   margin: 0 0 2em 0; }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #3d4449;
+  color: #003764; /*Azul institucional*/
   font-family: "Roboto Slab", serif;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.5;
   margin: 0 0 1em 0; }
   h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-    color: inherit;
+    /* color: inherit; */
     text-decoration: none;
     border-bottom: 0; }
 
@@ -148,7 +148,9 @@ h1 {
   line-height: 1.3; }
 
 h2 {
-  font-size: 1.75em; }
+	color: #003764;
+  font-size: 1.75em;
+   overflow: auto;}
 
 h3 {
   font-size: 1.25em; }
@@ -1000,10 +1002,12 @@ header p {
   text-transform: uppercase; }
 
 header.major > :last-child {
-  border-bottom: solid 3px #0066cc /*#002266 */
-  display: inline-block;
+  border-bottom: solid 3px;
+  color: #003764;
+  display: inline-block; 
   margin: 0 0 2em 0;
-  padding: 0 0.75em 0.5em 0; }
+  padding: 0 0.75em 0.5em 0;
+  overflow: auto;} 
 
 header.main > :last-child {
   margin: 0 0 1em 0; }
@@ -1932,6 +1936,11 @@ button,
     width: 2em; }
   #search form input[type="text"] {
     padding-right: 2.75em; }
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
 
 #sidebar {
   -moz-flex-grow: 0;
@@ -2093,7 +2102,7 @@ button,
   display: -webkit-flex;
   display: -ms-flex;
   display: flex;
-  border-bottom: solid 5px #0066cc; /*#002266; */
+  border-bottom: solid 5px #002266;
   padding: 6em 0 1em 0;
   position: relative; }
   #header > * {
@@ -2216,7 +2225,7 @@ button,
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  color: #3d4449;
+  /*color: #3d4449;*/
   font-family: "Roboto Slab", serif;
   font-weight: 400;
   letter-spacing: 0.075em;
@@ -2406,3 +2415,11 @@ span.psw {
   }
 }
 
+/*Código propio*/
+#principal{
+	padding: 50px 0;
+	font-size: 1.3em;
+}
+#prueba_ylw{
+	background-color: #ffb700;
+}
