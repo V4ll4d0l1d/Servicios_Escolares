@@ -113,7 +113,7 @@ a {
   transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
   border-bottom: dotted 1px;
   border-bottom-color: #474d52;
-  color: #0066cc;   /* azul */
+  color: #003764;   /* azul */
   text-decoration: none; }
   a:hover {
     border-bottom-color: #0066cc; /*#002266; */
@@ -1962,7 +1962,7 @@ button,
   #sidebar h2 {
     font-size: 1.38889em; }
   #sidebar > .inner {
-    padding: 2.22222em 2.22222em 2.44444em 2.22222em ;
+    /* padding: 2.22222em 2.22222em 2.44444em 2.22222em ; */
     position: relative;
     width: 26em; }
     #sidebar > .inner > * {
