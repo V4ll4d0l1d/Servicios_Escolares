@@ -478,7 +478,7 @@ if ($_SESSION['Seccion']<5) {   //No es Administrativo, es necesario poner los d
 echo '<footer id="footer">'."\n";
 echo '<p class="copyright">&copy; Instituto Valladolid. Todos los derechos reservados.</a>.</p>'."\n";
 echo '</footer>'."\n";
-echo '</div> <!-- 1 inner sidebar -->'."\n";     
+echo '</div></div> <!-- 1 inner sidebar -->'."\n";     
 echo '</div> <!-- 2 sidebar -->'."\n";
 echo '</div> <!-- 3 wrapper principal-->'."\n";
 
