@@ -331,12 +331,14 @@ if (isset($_SESSION['login']) && ($_SESSION['login'] == 1)) {
   // Han realizado Login
   
   //Se carga el div del menú
-  echo '<div id="sidebar">'."\n";
-  echo '<div class="inner">'."\n";
-  echo '<!-- Menu -->'."\n";
-  echo '<nav id="menu">'."\n";
-  echo '<header class="major"><h2>Menu</h2></header>'."\n";
-  echo '<ul>'."\n";
+   echo '<div id="sidebar">
+    <div class="inner">
+	<!-- Menu -->
+	
+	<header class="major"><h2>Menu</h2></header>
+	<nav id="menu">
+	<ul>';
+	
   $type = $_SESSION['Type'];
   switch ($type) {
     case '0':   // Es ALUMNO
@@ -354,14 +356,14 @@ if (isset($_SESSION['login']) && ($_SESSION['login'] == 1)) {
                 }
             }
 		echo '</ul>'."\n";
-		echo '</li>'."\n";
+		echo '</li>'."\n";//Fin de listado Acádemico
         echo '<li><span class="opener">Financiero</span>'."\n";
 		echo '<ul>'."\n";
             echo '<li><a href="recibos.php">Recibo de pago</a></li>'."\n";
             echo '<li><a href="formapago.php">Formas de pago</a></li>'."\n";
             echo '<li><a href="becas.php">Trámite de Beca</a></li>'."\n";
 		echo '</ul>'."\n";
-		echo '</li>'."\n";
+		echo '</li>'."\n";//Fin de listado Financiero
         break;
     case '1': // Es USUARIO
     // Validar el tipo de usuario y los privilegios
@@ -382,7 +384,6 @@ if (isset($_SESSION['login']) && ($_SESSION['login'] == 1)) {
             echo '<li><a href="#">Reporte Entrega</a></li>'."\n";
             echo '</li>'."\n";
             break;
-        
         case '5':     // Admin
             echo '<li><a href="index.php">Inicio</a></li>'."\n";
             echo '<li><span class="opener">Académico</span>'."\n";
@@ -438,7 +439,8 @@ echo '</ul>'."\n";
 if (isset($_SESSION['Id'])) { echo '<li><a href="logout.php">Salir</a></li>'."\n"; }
 echo '</li>'."\n";
 echo '</ul>'."\n";
-echo '</nav>'."\n";
+
+//Cargar datos de contacto según sección
 if (isset($_SESSION['login']) && $_SESSION['login'] == 1) {
   switch($_SESSION['Seccion']) {
     case '0':
