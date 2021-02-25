@@ -22,6 +22,7 @@ IF (isset($_SESSION['login'])&&($_SESSION['login'] == 1)) {
 
 headerfull_('Servicios Escolares');
 
+//sidebar();
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
 if ($_SESSION['login'] == 1) { // realizó login exitoso
     // validar el tipo de usuario
@@ -107,8 +108,9 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
         break;
     }
 } else {
-    echo '<header class="major"><img src="images/logo_maristas.jpg" alt="logo" width="128" /><h2>Bienvenido al Sistema de Servicios Escolares.</h2></header>'."\n";
-    echo '<p id="principal"><b>Ingresa con tus credenciales</b></p>'."\n";
+    echo '<section id="start">'."\n";echo '<header class="major"><img src="images/logo_maristas.png" alt="logo" width="128" /><h2>Bienvenido al Sistema de Servicios Escolares.</h2></header>'."\n";
+    echo '<p id="principal">Ingresa con tus credenciales</p>'."\n";
+	login_logout();
     if (isset($error) && strlen($error)>2) { echo '<script type="text/javascript"> alert ("'.$error.'"); </script> '."\n"; }
 }
 
@@ -121,10 +123,13 @@ echo '</section>'."\n";
 
 
 // Imprime el menú lateral de acuerdo a los datos y al contexto.
-sidebar();
 
+
+
+
+//echo '</nav>'."\n";
 /* Scripts */
 scripts();
 
-footer_();
+
 ?>

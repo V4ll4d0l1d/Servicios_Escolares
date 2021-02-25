@@ -221,22 +221,22 @@ if ($_SESSION['login'] == 1) {
     echo '<li class="icon solid fa-sign-out-alt" style="width:auto;"><a href="logout.php" class="logo">'.$_SESSION['Id'].'</a></li>'."\n";
 } else {
 ?>
-    <li class="icon solid fa-key" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"><a href="#" class="logo"> Ingresar</a></li>
+    <li class="icon solid fa-key" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"><a href="#" class="logo">Ingresar</a></li>
 <?php
     }
-echo '</ul></header>'."\n";
-echo '<section>'."\n";
+echo '</ul></header></div>'."\n";
+ 
 
 }
 
 
 //*************************************************************************************************
-// Funcion:     footer
+// Funcion:     login_logout
 // Descripción: acceso al formulario de login o al exit
 // Parametros:  Titulo
 //*************************************************************************************************
-function footer_() {
-echo '<section>'."\n";
+function login_logout() {
+//echo '<section>'."\n";
 echo '<div id="id01" class="modal" width="30%";>'."\n";
 echo '<form class="modal-content animate" action="index.php" method="post">'."\n";
 echo '<div class="imgcontainer"><span onclick="document.getElementById(\'id01\').style.display=\'none\'" class="close" title="Close Modal">&times;</span></div>'."\n";
@@ -250,7 +250,7 @@ echo '</div>'."\n";
 //echo '<div class="container" style="background-color:#f1f1f1"><span class="psw">¿Olvidaste tu <a href="#">Contraseña?</a></span><br><br></div>';
 echo '</form>'."\n";
 echo '</div> <!-- Modal -->'."\n";
-echo '</section>'."\n";
+//echo '</section>'."\n";
 // Para la información de los alumnos, solo si es un docente
 scriptmuestra(2);
 
@@ -279,7 +279,7 @@ function showUser(str) {
       if (this.readyState == 4 && this.status == 200) {
         //document.getElementById("info").style.display='block';
         document.getElementById("info").innerHTML = this.responseText;
-        document.getElementById("info").style.display='block';
+        document.getElementById("info").style.display='inline-block';
       }
     };
     xmlhttp.open("GET","getuser.php?q="+str,true);
@@ -331,11 +331,11 @@ if (isset($_SESSION['login']) && ($_SESSION['login'] == 1)) {
   // Han realizado Login
   
   //Se carga el div del menú
-   echo '<div id="sidebar">
-    <div class="inner">
+   echo '<div id="dropdown"><!--div id="sidebar"-->
+    <div class="inner"-->
 	<!-- Menu -->
 	
-	<header class="major"><h2>Menu</h2></header>
+	<header class="major"><h2>Menú</h2></header>
 	<nav id="menu">
 	<ul>';
 	
@@ -435,7 +435,7 @@ if (isset($_SESSION['Id'])) {
             break;
     }
 }
-echo '</ul>'."\n";
+echo '</ul></nav>'."\n";
 if (isset($_SESSION['Id'])) { echo '<li><a href="logout.php">Salir</a></li>'."\n"; }
 echo '</li>'."\n";
 echo '</ul>'."\n";
@@ -474,13 +474,15 @@ if ($_SESSION['Seccion']<5) {   //No es Administrativo, es necesario poner los d
 	echo '</section>'."\n";
   }
 }
-	// Footer
+echo '</div> <!-- 1 inner sidebar -->'."\n"; 	
+echo '</div> <!-- 2 sidebar -->'."\n";
+echo '</div> <!-- 3 wrapper principal-->'."\n";
+// Footer
 echo '<footer id="footer">'."\n";
 echo '<p class="copyright">&copy; Instituto Valladolid. Todos los derechos reservados.</a>.</p>'."\n";
 echo '</footer>'."\n";
-echo '</div></div> <!-- 1 inner sidebar -->'."\n";     
-echo '</div> <!-- 2 sidebar -->'."\n";
-echo '</div> <!-- 3 wrapper principal-->'."\n";
+    
+
 
 }
 
