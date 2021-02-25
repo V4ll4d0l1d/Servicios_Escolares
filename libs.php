@@ -218,7 +218,7 @@ if ($_SESSION['login'] == 1) {
 }
 echo '<ul class="icons">'."\n";
 if ($_SESSION['login'] == 1) {
-    echo '<li class="icon solid fa-sign-out-alt" style="width:auto;"><a href="logout.php" class="logo">'.$_SESSION['Id'].'</a></li>'."\n";
+    echo '<a href="logout.php" class="logo"><li class="icon solid fa-sign-out-alt" style="width:auto;">'.$_SESSION['Id'].'</li></a>'."\n";
 } else {
 ?>
     <a href="#" class="logo"><li class="icon solid fa-key" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Ingresar</li></a>
@@ -331,7 +331,7 @@ if (isset($_SESSION['login']) && ($_SESSION['login'] == 1)) {
   // Han realizado Login
   
   //Se carga el div del menú
-   echo '<div id="dropdown"><!--div id="sidebar"-->
+   echo '<!--div id="dropdown"--><div id="sidebar">
     <div class="inner"-->
 	<!-- Menu -->
 	
