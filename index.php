@@ -123,7 +123,7 @@ echo '</section>'."\n";
 
 
 // Imprime el menú lateral de acuerdo a los datos y al contexto.
-
+sidebar();
 
 
 

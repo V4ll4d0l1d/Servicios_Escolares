@@ -1363,9 +1363,10 @@ ul.icons {
   padding-left: 0; }
   ul.icons li {
     display: inline-block;
-    padding: 0 1em 0 0; }
+    padding: 0 0 0 0; }
     ul.icons li:last-child {
-      padding-right: 0; }
+      padding-right: 70px;
+	  }
     ul.icons li .icon {
       color: inherit; }
       ul.icons li .icon:before {
@@ -1516,8 +1517,8 @@ button,
   background-color: transparent;
   border-radius: 0.375em;
   border: 0;
-  box-shadow: inset 0 0 0 2px #0066cc; /* #002266 */
-  color: #0066cc !important; /* #002266 */
+  box-shadow: inset 0 0 0 2px #9d9d9c; /*#062a4e #002266 */
+  color: #ffffff;/*#0066cc !important; /* #002266 */
   cursor: pointer;
   display: inline-block;
   font-family: "Roboto Slab", serif;
@@ -2216,7 +2217,8 @@ button,
 /* Footer */
 #footer .copyright {
   color: #6e7377; /*#9fa3a6;*/
-  font-size: 0.9em; }
+  font-size: 0.9em;
+	padding: 0.3em 0 0 5.6em;}
   #footer .copyright a {
     color: inherit; }
 
@@ -2312,11 +2314,11 @@ input[type=text], input[type=password] {
 
 /* Set a style for all buttons   */
 .loginbutton {
-  background-color:  #0059b3;
+  background-color:  #003764;
   color: white;
-  padding: 5px 5px 10px 5px;
+  padding: 5px 5px 5px 5px;
   margin: 5px 0;
-  border: #595959;
+  /* border: #595959; */
   cursor: pointer;
   width: 100%;
 } 

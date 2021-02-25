@@ -221,7 +221,7 @@ if ($_SESSION['login'] == 1) {
     echo '<li class="icon solid fa-sign-out-alt" style="width:auto;"><a href="logout.php" class="logo">'.$_SESSION['Id'].'</a></li>'."\n";
 } else {
 ?>
-    <li class="icon solid fa-key" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"><a href="#" class="logo">Ingresar</a></li>
+    <a href="#" class="logo"><li class="icon solid fa-key" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Ingresar</li></a>
 <?php
     }
 echo '</ul></header></div>'."\n";
@@ -335,7 +335,7 @@ if (isset($_SESSION['login']) && ($_SESSION['login'] == 1)) {
     <div class="inner"-->
 	<!-- Menu -->
 	
-	<header class="major"><h2>Menú</h2></header>
+	<header class=""><h2>Menú</h2></header>
 	<nav id="menu">
 	<ul>';
 	
@@ -411,11 +411,11 @@ if (isset($_SESSION['login']) && ($_SESSION['login'] == 1)) {
     
   }
 }
-echo '<li><span class="opener">Enlaces</span>'."\n";
-echo '<ul>'."\n";
-echo '<li><a href="http://aulavirtual.umvalla.edu.mx" target="_blank">Aula Virtual</a></li>'."\n";
-echo '<li><a href="http://valladolid.edu.mx" target="_blank">Instituto Valladolid</a></li>'."\n";
-echo '<li><a href="http://umvalla.edu.mx" target="_blank">Universidad Marista Valladolid</a></li>'."\n";
+// echo '<li><span class="opener">Enlaces</span>'."\n";
+// echo '<ul>'."\n";
+// echo '<li><a href="http://aulavirtual.umvalla.edu.mx" target="_blank">Aula Virtual</a></li>'."\n";
+// echo '<li><a href="http://valladolid.edu.mx" target="_blank">Instituto Valladolid</a></li>'."\n";
+// echo '<li><a href="http://umvalla.edu.mx" target="_blank">Universidad Marista Valladolid</a></li>'."\n";
 if (isset($_SESSION['Id'])) {
     switch ($_SESSION['Seccion']) {
         case 0:
@@ -479,7 +479,7 @@ echo '</div> <!-- 2 sidebar -->'."\n";
 echo '</div> <!-- 3 wrapper principal-->'."\n";
 // Footer
 echo '<footer id="footer">'."\n";
-echo '<p class="copyright">&copy; Instituto Valladolid. Todos los derechos reservados.</a>.</p>'."\n";
+echo '<p class="copyright">&copy; Instituto Valladolid. Todos los derechos reservados.</a></p>'."\n";
 echo '</footer>'."\n";
     
 
@@ -589,7 +589,7 @@ function getAvisos($seccion, $grado) {
     $indice = count($aviso);
     if ($indice>0) {
     		echo '<section>'."\n";
-    		echo '<header class="major"><h2>Avisos</h2></header>'."\n";
+    		echo '<header class=""><h2>Avisos</h2></header>'."\n";
     		echo '<div class="box alt">'."\n";
             echo '<div class="row gtr-50 gtr-uniform">'."\n";
             foreach($aviso as $contenido) {
