@@ -1,5 +1,4 @@
 
-
 function acumular() {    
     var valor = parseInt(document.getElementById("flagdata").value);
     valor = isNaN(valor) ? 0 : valor;
@@ -38,7 +37,7 @@ function showGrupos() {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        if (str < '3') {
+        if (str < '4') {
             document.getElementById("select1").innerHTML = this.responseText;
         } else {
             if (str == '4' && crr == "") {
@@ -53,7 +52,6 @@ function showGrupos() {
     var str1 = "datos.php?seccion=";
     var str2 = "&ctx=";
     var url = str1.concat(str, str2, crr);
-    alert(url);
     xmlhttp.open("GET",url,true);
     xmlhttp.send(); 
 }
@@ -72,31 +70,6 @@ function showGrupos() {
       }
     };
     xmlhttp.open("GET","unlock.php?id="+str,true);
-    xmlhttp.send();
-  }
-}
-
-
-function acumular() {    
-    var valor = parseInt(document.getElementById("flagdata").value);
-    valor = isNaN(valor) ? 0 : valor;
-    document.getElementById("flagdata").value = valor +1;
-}
-
-function showUser(str) {
-  if (str == "") {
-    document.getElementById("info").innerHTML = "";
-    return;
-  } else {
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        //document.getElementById("info").style.display='block';
-        document.getElementById("info").innerHTML = this.responseText;
-        document.getElementById("info").style.display='block';
-      }
-    };
-    xmlhttp.open("GET","getuser.php?q="+str,true);
     xmlhttp.send();
   }
 }
