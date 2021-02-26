@@ -24,22 +24,8 @@ headerfull_('Circulares');
 
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
 if ($_SESSION['login'] == 1) { // realizó login exitoso
-    //echo '<header class="major"><h2>Circulares</h2></header>'."\n";
-        $dir = 'circulares/'.$_SESSION['Seccion'].'/';
-        if ($gestor = opendir($dir)) {      // SE PUEDE ABRIR EL DIRECTORIO
-            echo '<table id="circular">'."\n";
-            while (false !== ($archivo = readdir($gestor))) {
-                if($archivo=='.' or $archivo=='..') { 
-                    echo ''; 
-                } else { 
-                    echo '<tr><td><a href="'.$dir.$archivo.'" target="_blank">'.$archivo.'</a></td></tr>'."\n";
-                }
-            }
-            closedir($gestor);
-            echo '</table>'."\n";
-        } else {
-            echo '<center><h3>AÚN NO EXISTEN CIRCULARES EN ESTE CICLO ESCOLAR</h3></center>'."\n";
-        }
+	navbar();
+    lista_circulares();
 } else {
     echo '<header class="major"><h2>Bienvenido al Sistema de Servicios <br>Escolares del Instituto Valladolid.</h2></header>'."\n";
     echo '<p><b>Ingresa con tus credenciales</b></p>'."\n";
@@ -52,10 +38,6 @@ echo '</section>'."\n";
 /* ------------------- AQUI TERMINA LA SECCION CENTRAL DE INFORMACION -------------------*/
 // comienza el login
 //<!-- main -->
-footer_();
-
-// Imprime el menú lateral de acuerdo a los datos y al contexto.
-sidebar();
 
 /* Scripts */
 scripts();

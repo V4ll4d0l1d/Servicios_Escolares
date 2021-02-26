@@ -271,18 +271,61 @@ public function status_reinscripcion ($Matricula, $Status, $CicloAct) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Consulta la bitácora de becas para saber si el alumno ha intentado llenar los datos de registro
-public function lista_becas($Seccion, $Grupo) {
+public function lista_becas($Matricula, $Ciclo) {
     $listado=null;
     $conn=new Conexion();
     try {
-        if (isset($Grupo)) {
-            $stmt = $conn->prepare ("SELECT Becas.Id, DatosIDAlumno.Nombre, DatosIDAlumno.Apellidos, DatosIDAlumno.Seccion, DatosIDAlumno.IdGrupo, Becas.Tipo, Becas.Status, Becas.Fecha FROM Becas INNER JOIN DatosIDAlumno ON Becas.Id = DatosIDAlumno.Id where Becas.Seccion = :ss and DatosIDAlumno.IdGrupo = :gg");
-            $stmt->bindParam(':ss', $Seccion);
-            $stmt->bindParam(':gg', $Grupo);
-        } else {
-            $stmt = $conn->prepare ("SELECT Becas.Id, DatosIDAlumno.Nombre, DatosIDAlumno.Apellidos, DatosIDAlumno.Seccion, DatosIDAlumno.IdGrupo, Becas.Tipo, Becas.Status, Becas.Fecha FROM Becas INNER JOIN DatosIDAlumno ON Becas.Id = DatosIDAlumno.Id where Becas.Seccion = :ss");
-            $stmt->bindParam(':ss', $Seccion);
-        }
+        $stmt = $conn->prepare ("SELECT Id, Seccion, CicloAct, CicloSig, Grado, Tipo, Status, Fecha, Observaciones FROM Becas WHERE Id = :gg and CicloAct = :cc");
+        $stmt->bindParam(':gg', $Matricula);
+        $stmt->bindParam(':cc', $Ciclo);
+        $stmt->execute();
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;
+    } catch(PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
+}
+// Consulta la bitácora de becas para alimentar el listado para revisión
+public function lista_becas_alumno($Matricula, $Ciclo) {
+    $listado=null;
+    $conn=new Conexion();
+    try {
+    //SELECT Becas.Id, Becas.Seccion, Becas.CicloAct, Becas.CicloSig, Becas.Grado, Becas.Tipo, Becas.Status, Becas.Fecha, Becas.Observaciones, DatosIDAlumno.Apellidos, DatosIDAlumno.Nombre FROM Becas INNER JOIN DatosIDAlumno ON Becas.Id = DatosIDAlumno.Id WHERE Becas.Id ='160023'
+        $stmt = $conn->prepare ("SELECT Becas.Id, Becas.Seccion, Becas.CicloAct, Becas.CicloSig, Becas.Grado, Becas.Tipo, Becas.Status, Becas.Fecha, Becas.Observaciones, Becas.Review, DatosIDAlumno.Apellidos, DatosIDAlumno.Nombre FROM Becas INNER JOIN DatosIDAlumno ON Becas.Id = DatosIDAlumno.Id WHERE Becas.Id = :gg and Becas.CicloAct = :cc");
+        $stmt->bindParam(':gg', $Matricula);
+        $stmt->bindParam(':cc', $Ciclo);
+        $stmt->execute();
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;
+    } catch(PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
+}
+
+public function lista_becas_grupos($Seccion, $Grupo) {
+    $listado=null;
+    $conn=new Conexion();
+    //echo '<p>'.$Seccion.'-'.$Grupo.'</p>';
+    try {
+        $stmt = $conn->prepare ("SELECT Becas.Id, DatosIDAlumno.Nombre, DatosIDAlumno.Apellidos, DatosIDAlumno.Seccion, DatosIDAlumno.IdGrupo, Becas.Tipo, Becas.Status, Becas.Fecha FROM Becas INNER JOIN DatosIDAlumno ON Becas.Id = DatosIDAlumno.Id where Becas.Seccion = :ss and DatosIDAlumno.IdGrupo = :gg ORDER BY DatosIDAlumno.Apellidos");
+        $stmt->bindParam(':ss', $Seccion);
+        $stmt->bindParam(':gg', $Grupo);
+        $stmt->execute();
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;
+    } catch(PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
+}
+
+
+public function lista_becas_carrera($carrera) {
+    $listado=null;
+    $conn=new Conexion();
+    //echo '<p>'.$Seccion.'-'.$Grupo.'</p>';
+    try {            
+        $stmt = $conn->prepare ("SELECT Becas.Id, DatosIDAlumno.Nombre, DatosIDAlumno.Apellidos, DatosIDAlumno.Seccion, DatosIDAlumno.IdGrupo, Becas.Tipo, Becas.Status, Becas.Fecha FROM Becas INNER JOIN DatosIDAlumno ON Becas.Id = DatosIDAlumno.Id where Becas.Seccion = :ss ORDER BY DatosIDAlumno.IdGrupo" );
+        $stmt->bindParam(':ss', $carrera);
         $stmt->execute();
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resultado;
@@ -327,6 +370,26 @@ public function update_beca ($Matricula, $Tipo, $Cicloact) {
         return false;
     }
 }
+
+// Actualiza la fecha de la solicitud de Beca de un alumno POR PARTE DEL COMITE
+public function update_status_beca ($Matricula, $Status, $Tipo, $Cicloact, $Observaciones, $Review) {
+    try {
+        $conn = new Conexion();
+        $sql = "UPDATE Becas SET Tipo=?, Status=?, Observaciones=?, Review=? WHERE Id=? and Cicloact=?";
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute(array($Tipo, $Status, $Observaciones, $Review, $Matricula, $Cicloact))) {
+            return true;
+        } else {    // error al actualizar el Status
+            print_r($stmt->errorInfo());
+            return false;
+        }
+        
+    } catch(PDOException $e) {
+        echo 'Error: '. $e->getMessage();
+        return false;
+    }
+}
+
 
 // Actualiza Es Status de la solicitud de Beca de un alumno
 public function status_beca ($Matricula, $Status, $Fecha) {
@@ -441,7 +504,6 @@ private $Activo;
 //*************************************************************************************************
 
 public function leer_avisos($Seccion, $Grado){
-    $aviso=null;
     $conn=new Conexion();
     try {
         $stmt = $conn->prepare ("SELECT Seccion, Grado, Titulo, Contenido, Url, Imagen, Usuario FROM Avisos WHERE Seccion = :ss and Grado = 0 or Grado = :pp and Activo = 'Si'");
@@ -459,5 +521,80 @@ public function leer_avisos($Seccion, $Grado){
 
 }
 
+
+class Circular {
+  private $Seccion;
+  private $Ciclo;
+  private $Grupo;
+  private $Descripcion;
+  private $Archivo;
+
+  public function insert_circular ($Seccion, $Grupo, $Descripcion, $Archivo, $Ciclo) {
+    try {
+        $conn = new Conexion();
+        $sql = "INSERT INTO Circulares (Seccion, IdGrupo, Descripcion, Archivo, Ciclo) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute(array($Seccion, $Grupo, $Descripcion, $Archivo, $Ciclo))) {
+            return true;
+        } else {        //Problema en inserción
+            print_r($stmt->errorInfo());
+            return false;
+        }
+    } catch(PDOException $e) {
+        echo "Error en conexion: ".$e->getMessage();
+        return false;
+    }
+ }
+ 
+  public function lista_circular_seccion1 ($Seccion, $Ciclo) {
+    try {
+        $conn = new Conexion();
+        $sql = "SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM Circulares WHERE Seccion = :ss AND IdGrupo = '' AND Ciclo = :cc";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':ss', $Seccion);
+        $stmt->bindParam(':cc', $Ciclo);
+        $stmt->execute();
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;
+    } catch(PDOException $e) {
+        echo "Error en conexion: ".$e->getMessage();
+        return false;
+    }
+ }
+
+   public function lista_circular_seccion2 ($Seccion, $Ciclo) {
+    try {
+        $conn = new Conexion();
+        $sql = "SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM Circulares WHERE Seccion = :ss AND Ciclo = :cc ORDER BY IdGrupo";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':ss', $Seccion);
+        $stmt->bindParam(':cc', $Ciclo);
+        $stmt->execute();
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;
+    } catch(PDOException $e) {
+        echo "Error en conexion: ".$e->getMessage();
+        return false;
+    }
+ }
+
+   public function lista_circular_grupo ($Grupo, $Ciclo) {
+    try {
+        $conn = new Conexion();
+        $sql = "SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM Circulares WHERE IdGrupo = :gg AND Ciclo = :cc";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':gg', $Grupo);
+        $stmt->bindParam(':cc', $Ciclo);
+        $stmt->execute();
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;
+    } catch(PDOException $e) {
+        echo "Error en conexion: ".$e->getMessage();
+        return false;
+    }
+ }
+
+  
+}
 
 ?>
