@@ -22,13 +22,13 @@ IF (isset($_SESSION['login'])&&($_SESSION['login'] == 1)) {
 
 headerfull_('Servicios Escolares');
 
-//sidebar();
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
 if ($_SESSION['login'] == 1) { // realizó login exitoso
     // validar el tipo de usuario
+	navbar();
     switch ($_SESSION['Type']) {
     case 0:     // ALUMNO
-        // ¿Existen avisos?
+        //sidebar();// ¿Existen avisos?
         getAvisos($_SESSION['Seccion'], $_SESSION['Grado']);
         
         // imprimir sus datos
@@ -53,7 +53,8 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
         echo '<h3>Bienvenido '.$_SESSION['Nombres'].'</h3>'."\n";
         switch ($_SESSION['Privs']) {
             case 2:     // Titular
-                // Obtener los datos del titular
+                //sidebar();
+				// Obtener los datos del titular
                 if (isset($_POST['Active'])){   // Viene del formulario
                 $_SESSION['Activo'] = $_POST['Active'];
                 }
@@ -123,7 +124,7 @@ echo '</section>'."\n";
 
 
 // Imprime el menú lateral de acuerdo a los datos y al contexto.
-sidebar();
+// sidebar();
 
 
 

@@ -323,167 +323,51 @@ function showUser(str) {
 // Parametros:  $type: Tipo de usuario 'alumno' 0 /'usuario' 1
 //*************************************************************************************************
 
-function sidebar() {
-
-$type = 20; // 20 no hay login, 0 es alumno, 1 es usuario
-// Validar que hay login, y que tipo de usuario es
-if (isset($_SESSION['login']) && ($_SESSION['login'] == 1)) {
-  // Han realizado Login
-  
-  //Se carga el div del menú
-   echo '<!--div id="dropdown"--><div id="sidebar">
-    <div class="inner"-->
-	<!-- Menu -->
+function navbar(){
 	
-	<header class=""><h2>Menú</h2></header>
-	<nav id="menu">
-	<ul>';
-	
-  $type = $_SESSION['Type'];
-  switch ($type) {
-    case '0':   // Es ALUMNO
-		echo '<li><a href="index.php">Inicio</a></li>'."\n";
-		echo '<li><span class="opener">Académico</span>'."\n";
-        echo '<ul>'."\n";
-            echo '<li><a href="validpdf.php?context=1&id_alumno='.$_SESSION['Id'].'" target="_blank">Boleta</a></li>'."\n";
-            echo '<li><a href="circulares.php">Circulares</a></li>'."\n";
-            echo '<li><a href="reglamento.php">Reglamento</a></li>'."\n";
-            if (RINSC == 1 && $_SESSION['Seccion'] > 2) { // Se activa la reinscripcion semestral para prepa y uni
-                    echo '<li><a href="reinscripcion.php">Reinscripción</a></li>'."\n";
+	echo '<div class="topnav" id="myTopnav">
+  <a class="active" href="#"><i class="fa fa-fw fa-home"></i> INICIO</a>
+  <div class="dropdown">
+  <button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
+	<div class="dropdown-content">
+		<a href="validpdf.php?context=1&id_alumno='.$_SESSION['Id'].'" target="_blank">Boleta</a>
+		<a href="circulares.php">Circulares</a>
+		<a href="reglamento.php">Reglamento</a>';
+		if (RINSC == 1 && $_SESSION['Seccion'] > 2) { // Se activa la reinscripcion semestral para prepa y uni
+                    echo '<a href="reinscripcion.php">Reinscripción</a>';
             } else {
                 if (RINSC == 2) { //  Se activa reinscripcion anual, para todos
-                    echo '<li><a href="reinscripcion.php">Reinscripción</a></li>'."\n";
+                    echo '<a href="reinscripcion.php">Reinscripción</a>';
                 }
             }
-		echo '</ul>'."\n";
-		echo '</li>'."\n";//Fin de listado Acádemico
-        echo '<li><span class="opener">Financiero</span>'."\n";
-		echo '<ul>'."\n";
-            echo '<li><a href="recibos.php">Recibo de pago</a></li>'."\n";
-            echo '<li><a href="formapago.php">Formas de pago</a></li>'."\n";
-            echo '<li><a href="becas.php">Trámite de Beca</a></li>'."\n";
-		echo '</ul>'."\n";
-		echo '</li>'."\n";//Fin de listado Financiero
-        break;
-    case '1': // Es USUARIO
-    // Validar el tipo de usuario y los privilegios
-      switch ($_SESSION['Privs']) {
-        case '2':     // Titulares
-            echo '<li><a href="index.php">Inicio</a></li>'."\n";
-            echo '<li><span class="opener">Académico</span>'."\n";
-            echo '<ul>'."\n";
-            echo '<li><a href="informacion.php">Información</a></li>'."\n";
-            echo '<li><a href="circulares.php">Circulares</a></li>'."\n";
-            echo '<li><a href="#">Enviar mensajes</a></li>'."\n";
-            echo '</ul>'."\n";
-            echo '</li>'."\n";
-            break;
-        case '4':
-            echo '<li><a href="index.php">Inicio</a></li>'."\n";
-            echo '<li><a href="informacion.php">Información Grupo</a></li>'."\n";
-            echo '<li><a href="#">Reporte Entrega</a></li>'."\n";
-            echo '</li>'."\n";
-            break;
-        case '5':     // Admin
-            echo '<li><a href="index.php">Inicio</a></li>'."\n";
-            echo '<li><span class="opener">Académico</span>'."\n";
-            echo '<ul>'."\n";
-            echo '<li><a href="informacion.php">Información</a></li>'."\n";
-            echo '<li><a href="circulares.php">Circulares</a></li>'."\n";
-            echo '<li><a href="#">Bloqueo/Desbloqueo</a></li>'."\n";
-            echo '<li><a href="#">Enviar mensajes</a></li>'."\n";
-            echo '</ul>'."\n";
-            echo '</li>'."\n";
-            echo '<li><span class="opener">Financiero</span>'."\n";
-            echo '<ul>'."\n";
-            echo '<li><a href="#">Recibos de Pago</a></li>'."\n";
-            echo '</ul>'."\n";
-            echo '</li>'."\n";
-            echo '<li><span class="opener">Administrativo</span>'."\n";
-            echo '<ul>'."\n";
-            echo '<li><a href="#">Usuarios</a></li>'."\n";
-            echo '<li><a href="#">Perfiles</a></li>'."\n";
-            echo '</ul>'."\n";
-            echo '</li>'."\n";
-            break;
-        }
-    default:
-    
-  }
+	echo '</div></div>
+	<div class="dropdown">
+	<button class="dropbtn"><i class="fa fa-fw fa-money-check-alt"></i> FINANCIERO</button>
+	  <div class="dropdown-content">
+		<a href="recibos.php">Recibo de pago</a>
+        <a href="formapago.php">Formas de pago</a>
+        <a href="becas.php">Trámite de Beca</a>
+	</div></div>
+	<div class="dropdown">
+	<button class="dropbtn"><i class="fa fa-fw fa-user"></i> CONTACTO</button>
+	<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
+    <i class="fa fa-bars"></i></a>
+	
+	</div>
+	</div>';
+	
+	
+	
+	
+	
+	
 }
-// echo '<li><span class="opener">Enlaces</span>'."\n";
-// echo '<ul>'."\n";
-// echo '<li><a href="http://aulavirtual.umvalla.edu.mx" target="_blank">Aula Virtual</a></li>'."\n";
-// echo '<li><a href="http://valladolid.edu.mx" target="_blank">Instituto Valladolid</a></li>'."\n";
-// echo '<li><a href="http://umvalla.edu.mx" target="_blank">Universidad Marista Valladolid</a></li>'."\n";
-if (isset($_SESSION['Id'])) {
-    switch ($_SESSION['Seccion']) {
-        case 0:
-            echo '<li><a href="media/Anuario_Preescolar.pdf" target="_blank">Anuario Escolar</a></li>'."\n";
-            break;
-        case 1:
-            echo '<li><a href="media/Anuario_Primaria.pdf" target="_blank">Anuario Escolar</a></li>'."\n";
-            break;
-        case 2:
-            echo '<li><a href="media/Anuario_Secundaria.pdf" target="_blank">Anuario Escolar</a></li>'."\n";
-            break;
-        case 3:
-            echo '<li><a href="media/Anuario_Bachillerato.pdf" target="_blank">Anuario Escolar</a></li>'."\n";
-            break;
-        case 4:
-            echo '<li><a href="media/Anuario_Universidad.pdf" target="_blank">Anuario Escolar</a></li>'."\n";
-            break;
-    }
-}
-echo '</ul></nav>'."\n";
-if (isset($_SESSION['Id'])) { echo '<li><a href="logout.php">Salir</a></li>'."\n"; }
-echo '</li>'."\n";
-echo '</ul>'."\n";
 
-//Cargar datos de contacto según sección
-if (isset($_SESSION['login']) && $_SESSION['login'] == 1) {
-  switch($_SESSION['Seccion']) {
-    case '0':
-      $correo="preescolar@valladolid.edu.mx";
-      $telefono="4433 13 2098 / 4433 41 6978";
-      break;
-    case '1':
-      $correo="primaria@valladolid.edu.mx";
-      $telefono="4433 12 3280 / 4433 12 3392";
-      break;
-    case '2':
-      $correo="secundaria@valladolid.edu.mx";
-      $telefono="4433 12 7137 / 4433 13 9886";
-      break;
-    case '3':
-      $correo="preparatoria@valladolid.edu.mx";
-      $telefono="4433 23 5150 / 4433 23 7130";
-      break;
-    case '4':
-      $correo="secretaria@umvalla.edu.mx";
-      $telefono="4433 43 0295 / 4433 23 7161";
-      break;
-  }
-if ($_SESSION['Seccion']<5) {   //No es Administrativo, es necesario poner los datos de contacto
-    echo '<section>'."\n";
-    echo '<p>La comunicación del Instituto con sus alumnos es importante. Para ello ponemos a tu disposición los siguientes medios:</p>'."\n";
-	echo '<ul class="contact">'."\n";
-    echo '<li class="icon solid fa-envelope">'.$correo.'</li>'."\n";
-    echo '<li class="icon solid fa-phone">'.$telefono.'</li>'."\n";
-    echo '</ul>'."\n";
-	echo '</section>'."\n";
-  }
-}
-echo '</div> <!-- 1 inner sidebar -->'."\n"; 	
-echo '</div> <!-- 2 sidebar -->'."\n";
-echo '</div> <!-- 3 wrapper principal-->'."\n";
 // Footer
+function footer(){
 echo '<footer id="footer">'."\n";
 echo '<p class="copyright">&copy; Instituto Valladolid. Todos los derechos reservados.</a></p>'."\n";
 echo '</footer>'."\n";
-    
-
-
 }
 
 //*************************************************************************************************
