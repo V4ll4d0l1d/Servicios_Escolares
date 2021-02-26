@@ -24,6 +24,9 @@ headerfull_('Formas de pago');
 
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
 if ($_SESSION['login'] == 1) { // realizó login exitoso
+	navbar();
+	echo '<section>';
+
     // validar si es alumno
     if ($_SESSION['Type'] == 0) { // Es alumno
         ?>
@@ -97,12 +100,6 @@ echo '<div class="posts"></div>'."\n";
 echo '</section>'."\n";
 
 /* ------------------- AQUI TERMINA LA SECCION CENTRAL DE INFORMACION -------------------*/
-// comienza el login
-//<!-- main -->
-footer_();
-
-// Imprime el menú lateral de acuerdo a los datos y al contexto.
-sidebar();
 
 /* Scripts */
 scripts();

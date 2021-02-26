@@ -30,26 +30,24 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
     case 0:     // ALUMNO
         getAvisos($_SESSION['Seccion'], $_SESSION['Grado']);
 		// Imprime los datos del alumno
-        echo '<table>'."\n";
-        echo '<tr><th width=20%>Matricula</th><td>'.$_SESSION['Id'].'</td></tr>'."\n";
-        echo '<tr><th width=20%>Nombre</th><td>'.$_SESSION['Nombres'].'</td></tr>'."\n";
-        echo '<tr><th width=20%>Correo electrónico</th><td>'.$_SESSION['Correo'].'</td></tr>'."\n";
-        echo '<tr><th width=20%>Grupo</th><td>'. $_SESSION['IdGrupo'].'</td></tr>'."\n";
+        echo '<table>
+				<tr><th width=20%>Matricula</th><td>'.$_SESSION['Id'].'</td></tr>
+				<tr><th width=20%>Nombre</th><td>'.$_SESSION['Nombres'].'</td></tr>
+				<tr><th width=20%>Correo electrónico</th><td>'.$_SESSION['Correo'].'</td></tr>
+				<tr><th width=20%>Grupo</th><td>'. $_SESSION['IdGrupo'].'</td></tr>';
         if ($_SESSION['Seccion'] == 4) {
             echo '<tr><th width=20%>Carrera</th>'."\n";
         } else { 
             echo '<tr><th width=20%>Sección</th>'."\n";
         }
         echo '<td>'.secciones($_SESSION['Seccion']).'</td></tr>'."\n";
-        //echo '<tr><th width=20%>Sección</th><td>'. corto_seccion().'</td></tr>'."\n";
-        //echo '<tr><th width=20%>Sección</th><td>'. $_SESSION['Seccion'].'</td></tr>'."\n";
         if ($_SESSION['Seccion'] == 4) {
             echo '<tr><th width=20%>Carrera</th><td>'. $_SESSION['Carrera'].'</td></tr>'."\n";
         }
         echo '</table>'."\n";
         break;
     case 1:     // USUARIO - Validar el tipo de usuario----------------------------------
-        echo '<h3>Bienvenido '.$_SESSION['Nombres'].'</h3>'."\n";
+        echo '<section><h3>Bienvenido '.$_SESSION['Nombres'].'</h3>'."\n";
         switch ($_SESSION['Privs']) {
             case 2:     // Titular
                 // Obtener los datos del titular

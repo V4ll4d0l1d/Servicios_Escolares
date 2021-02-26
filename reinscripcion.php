@@ -21,6 +21,8 @@ headerfull_('Reinscripcion');
 
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
 if ($_SESSION['login'] == 1) { // realizó login exitoso
+	navbar();
+	echo '<section>';
     // validar el tipo de usuario
     switch ($_SESSION['Type']) {
     case 0:     // ALUMNO
@@ -187,9 +189,8 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
         break;
     }
 } else {
-    echo '<header class="major"><h2>Bienvenido al Sistema de Servicios <br>Escolares del Instituto Valladolid.</h2></header>'."\n";
-    echo '<p><b>Ingresa con tus credenciales</b></p>'."\n";
-    //   if (isset($error) && strlen($error)>2) { echo '<p>'.$error.'</p>'; }
+    echo '<header class="major"><h2>Bienvenido al Sistema de Servicios <br>Escolares del Instituto Valladolid.</h2></header>
+		<p><b>Ingresa con tus credenciales</b></p>'."\n";
     if (isset($error) && strlen($error)>2) { echo '<script type="text/javascript"> alert ("'.$error.'"); </script> '."\n"; }
 }
 
@@ -197,13 +198,6 @@ echo '<div class="posts"></div>'."\n";
 echo '</section>'."\n";
 
 /* ------------------- AQUI TERMINA LA SECCION CENTRAL DE INFORMACION -------------------*/
-// comienza el login
-//<!-- main -->
-footer_();
-
-// Imprime el menú lateral de acuerdo a los datos y al contexto.
-sidebar();
-
 /* Scripts */
 scripts();
 

@@ -26,26 +26,42 @@ headerfull_($title);
 
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
 if ($_SESSION['login'] == 1) { // realizó login exitoso
+	navbar();
+	echo '<section>';
     // validar el tipo de usuario
-    switch ($_SESSION['Type']) {
+      switch ($_SESSION['Type']) {
     case 0:     // ALUMNO No debería estar aquí
+        echo '<p>Ola k ase</p>';
         break;
     case 1:     // USUARIO
         switch ($_SESSION['Privs']) {
                 case 2: // Es titular
                     if (isset($_SESSION['Activo'])) {
-                        echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.secciones().'</h3>';
+                        echo '<h3>'.secciones(). ' - Grupo: '.$_SESSION['Activo'].'</h3>';
                          listado($_SESSION['Activo']);
                     } else {
                         echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
                     }
                     break;
-                case 4: // Becas
-                    if (isset($_SESSION['Activo'])) {
-                        echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.$_SESSION['Seccion'].' - '.secciones().' - '. substr($_SESSION['Activo'],0,3).'</h3>';
-                         listado_becas($_SESSION['Activo'], substr($_SESSION['Activo'],0,3));
-                    } else {
-                        echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
+                case 4: // Becas hay que validar que es lo que quiere ver OJO, quizá esto sirva para el director - administrador
+                    if (isset($_SESSION['Activo']) && $_SESSION['Activo'] != '') {   // Grupo Seleccionado, mostrarlo
+                        echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.secciones().'</h3>';
+                        echo '<p><b>Vista rápida</b>, si requieres detalle haz clic en la matrícula del alumno</p>';
+                         listado_becas(1);
+                    } else {    // verificar las demás opciones
+                        if (isset($_SESSION['Carrera']) && $_SESSION['Carrera'] != '' || $_SESSION['Seccion'] != 'NO') {    // Ojo, ¿qué pasa si es básica
+                            echo '<h3>'.secciones().'</h3>';
+                            echo '<p><b>Vista rápida</b>, si requieres detalle haz clic en la matrícula del alumno</p>';
+                            listado_becas(2);
+                        } else {
+                            //if ($_SESSION['Seccion'] != 'NO') {
+                              //  echo '<h3>'.secciones().'</h3>';
+                              //  echo '<p><b>Vista rápida</b>, si requieres detalle haz clic en la matrícula del alumno</p>';
+                              //  listado_becas(2);
+                            //} else {
+                                echo '<p>No has seleccionado una sección o grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
+                           // }
+                        }
                     }
                     break;                
                 case 5: // Es administrador
@@ -69,12 +85,7 @@ echo '<div class="posts"></div>';
 echo '</section>';
 
 /* ------------------- AQUI TERMINA LA SECCION CENTRAL DE INFORMACION -------------------*/
-// comienza el login
-//<!-- main -->
-footer_();
 
-// Imprime el menú lateral de acuerdo a los datos y al contexto.
-sidebar();
 
 /* Scripts */
 scripts();

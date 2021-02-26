@@ -25,6 +25,7 @@ headerfull_('Circulares');
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
 if ($_SESSION['login'] == 1) { // realizó login exitoso
 	navbar();
+	echo '<section>';
     lista_circulares();
 } else {
     echo '<header class="major"><h2>Bienvenido al Sistema de Servicios <br>Escolares del Instituto Valladolid.</h2></header>'."\n";

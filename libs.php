@@ -760,7 +760,7 @@ function lista_circulares() {
     }
     $Seccion = corto_seccion();
     $Ciclo = ciclo_actual();
-    echo '<p>Seccion: '.$Seccion.' - Grupo: '.$Grupo.' - Ciclo: '.$Ciclo.'</p>
+    echo '<h4>Seccion: '.$Seccion.' - Grupo: '.$Grupo.' - Ciclo: '.$Ciclo.'</h4>
 		<table>
 		<tr><th>Seccion</th><th>Grupo</th><th>Descripción</th><th>Enlace</th></tr>'."\n";
     $conn = new Circular();

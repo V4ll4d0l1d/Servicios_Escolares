@@ -24,8 +24,8 @@ headerfull_('Reglamentos');
 
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
 if ($_SESSION['login'] == 1) { // realizó login exitoso
-    //echo '<header class="major"><h2>Reglamento</h2></header>'."\n";
-    // validar si es alumno
+	navbar();
+	echo '<section>';
     if ($_SESSION['Type'] == 0) { // Es alumno
         $dir = 'reglamento/'.$_SESSION['Seccion'].'/';
         $directorio=opendir($dir); 
@@ -55,12 +55,6 @@ echo '<div class="posts"></div>'."\n";
 echo '</section>'."\n";
 
 /* ------------------- AQUI TERMINA LA SECCION CENTRAL DE INFORMACION -------------------*/
-// comienza el login
-//<!-- main -->
-footer_();
-
-// Imprime el menú lateral de acuerdo a los datos y al contexto.
-sidebar();
 
 /* Scripts */
 scripts();
