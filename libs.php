@@ -62,6 +62,25 @@ function select_carrera($selected) {
     }
 }
  
+ 
+function ciclo_actual() {
+    if (isset($_SESSION['Seccion'])) {
+        switch ($_SESSION['Seccion']) {
+            case 0:
+            case 1:
+            case 2:
+                $ciclo = CICLOACTA;
+                break;
+            case 3:
+            case 4:
+                $ciclo = CICLOACTS;
+                break;
+            }
+        return $ciclo;
+    } else {
+        return CICLOACTA;
+    }
+}
 //*************************************************************************************************
 // Funcion:     tipobeca($tipo)
 // Descripción: Cambia la clave de la beca por la descripcion completa
@@ -70,13 +89,13 @@ function select_carrera($selected) {
 //*************************************************************************************************
 function tipobeca($tipo) {
     switch ($tipo) {
-        case 'int':
+        case 'INT':
             return "Interna";
             break;
-        case 'sep':
+        case 'SEP':
             return "SEP";
             break;
-        case 'hno':
+        case 'HNO':
             return "Hermanos";
             break;
         default:
@@ -325,11 +344,11 @@ function showUser(str) {
 
 function navbar(){
 	$type = $_SESSION['Type'];
+	echo '<div class="topnav" id="myTopnav">
+		<a class="active" href="index.php"><i class="fa fa-fw fa-home"></i> INICIO</a>';
 	switch ($type) {
     case '0':   // Es ALUMNO
-		echo '<div class="topnav" id="myTopnav">
-		<a class="active" href="#"><i class="fa fa-fw fa-home"></i> INICIO</a>
-		<div class="dropdown">
+		echo '<div class="dropdown">
 		<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
 			<div class="dropdown-content">
 				<a href="validpdf.php?context=1&id_alumno='.$_SESSION['Id'].'" target="_blank">Boleta</a>
@@ -356,16 +375,14 @@ function navbar(){
 		<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
 		<i class="fa fa-bars"></i></a>
 	
-		</div>
 		</div>';
+		//</div>';
 	break;
 	case '1': // Es USUARIO
     // Validar el tipo de usuario y los privilegios
 		switch ($_SESSION['Privs']) {
 			case '2':     // Titulares
-				echo '<div class="topnav" id="myTopnav">
-				<a class="active" href="#"><i class="fa fa-fw fa-home"></i> INICIO</a>
-				<div class="dropdown">
+				echo '<div class="dropdown">
 				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
 					<div class="dropdown-content">
 						<a href="informacion.php">Información</a>
@@ -399,13 +416,11 @@ function navbar(){
 							}
 						}
 				echo	'</div>
-				</div>
 				</div>';
+				//</div>';
             break;
 			case '4':
-				echo '<div class="topnav" id="myTopnav">
-				<a class="active" href="#"><i class="fa fa-fw fa-home"></i> INICIO</a>
-				<a class="active" href="informacion.php">INFORMACIÓN</a>
+				echo '<a class="active" href="informacion.php">INFORMACIÓN</a>
 				<a class="active" href="#">REPORTE ENTREGA</a>
 				<a class="active" href="comunicacion.php">COMUNICACIÓN</a>
 				<div class="dropdown">
@@ -434,13 +449,11 @@ function navbar(){
 							}
 						}
 				echo	'</div>
-				</div>
 				</div>';
+				//</div>';
             break;
 			case '5':     // Admin
-				echo '<div class="topnav" id="myTopnav">
-				<a class="active" href="#"><i class="fa fa-fw fa-home"></i> INICIO</a>
-				<div class="dropdown">
+				echo '<div class="dropdown">
 				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
 					<div class="dropdown-content">
 						<a href="informacion.php">INFORMACIÓN</a>
@@ -461,15 +474,12 @@ function navbar(){
 						<a href="#">Usuarios</a>
 						<a href="#">Perfiles</a>
 					</div>
-				</div>
 				</div>';
+				//</div>';
             break;
 		}
-	
-	
-	
-	
 	}
+	echo '</div>';
 }
 
 // Footer
@@ -609,30 +619,31 @@ function GrupoActivo($IdUsuario, $GrupoActivo) {
     $grupo = $conn->lista_grupos($IdUsuario);
     $indice = count($grupo);
     if ($indice>0) {
-        echo '<form method="post" action="index.php">'."\n";
-        echo '<div class="row gtr-uniform">'."\n";
-        echo '<div class="col-6 col-12-xsmall">'."\n";
-        echo '<legend>Grupo Activo</legend>'."\n";
-        echo '<select name="Active" id="Active">'."\n";
-        if ($GrupoActivo == '0') {
+        echo '
+		<form method="post" action="index.php">
+		<div class="row gtr-uniform">
+			<div class="col-6 col-12-xsmall">
+			<legend>Grupo Activo</legend>
+			<select name="Active" id="Active">';
+        
+		if ($GrupoActivo == '0') {
             echo '<option value="">Selecciona el Grupo Activo</option>'."\n";
         } else {
             echo '<option value="'.$GrupoActivo.'">'.$GrupoActivo.'</option>'."\n";
         }
         foreach($grupo as $contenido) {
-           // if ($contenido['IdGrupo'] != $GrupoActivo) {
-                echo '<option value="'.$contenido['IdGrupo'].'">'.$contenido['IdGrupo'].'</option>'."\n";
-           // }
+            echo '<option value="'.$contenido['IdGrupo'].'">'.$contenido['IdGrupo'].'</option>'."\n";
         }
-        echo '</select>'."\n";
-        echo '</div>'."\n";
-        echo '<div class="col-12">'."\n";
-        echo '<ul class="actions">'."\n";
-        echo '<li><input type="submit" value="Activar " class="primary" /></li>'."\n";
-        echo '</ul>'."\n";
-        echo '</div>'."\n";
-        echo '</div>'."\n";
-        echo '</form>'."\n";
+        echo '
+			</select>
+			</div>
+			<div class="col-12">
+				<ul class="actions">
+				<li><input type="submit" value="Activar " class="primary" /></li>
+				</ul>
+			</div>
+        </div>
+        </form>'."\n";
     }
 }
 
@@ -643,31 +654,34 @@ function GrupoActivo($IdUsuario, $GrupoActivo) {
 //*************************************************************************************************
 
 function grupos($IdUsuario) {
-        echo '<form method="post" action="index.php">'."\n";
-        echo '<div class="row gtr-uniform">'."\n";
-        echo '<div id="ListaSeccion" name="ListaSeccion" class="col-6 col-12-xsmall">'."\n";
-        echo '<select name="seccion" id="seccion" onchange="showGrupos()">'."\n";
-        echo '<option value="" disabled selected>Elige la sección</option>'."\n";
-        echo '<option value="0">Preescolar</option>'."\n";
-        echo '<option value="1">Primaria</option>'."\n";
-        echo '<option value="2">Secundaria</option>'."\n";
-        echo '<option value="3">Bachillerato</option>'."\n";
-        echo '<option value="4">Universidad</option>'."\n";
-        echo '</select>'."\n";
-        echo '</div>'."\n";
-        echo '<div id="select1" name="select1" class="col-6 col-12-xsmall">'."\n";
-        echo '<select name="Active" id="Active"><option value="" disabled selected>Elige el Grupo</option></select>'."\n";
-        echo '</div>'."\n";
-        echo '<div id="select2" name="select2" class="col-6 col-12-xsmall">'."\n";
-        //echo '<select name="ctx" id="ctx"><option value="" disabled selected>Elige la Carrera</option></select>'."\n";
-        echo '</div>'."\n";
-        echo '<div class="col-12">'."\n";
-        echo '<ul class="actions">'."\n";
-        echo '<li><input type="submit" value="Activar " class="primary" /></li>'."\n";
-        echo '</ul>'."\n";
-        echo '</div>'."\n";
-        echo '</div>'."\n";
-        echo '</form>'."\n";
+        echo '
+		<form method="post" action="index.php">
+        <div class="row gtr-uniform">
+			<div id="ListaSeccion" name="ListaSeccion" class="col-3 col-12-small">
+				<select id="seccion" name="seccion" onchange="showGrupos()">
+					<option value="" disabled selected>Elige la sección</option>
+					<option value="0">Preescolar</option>
+					<option value="1">Primaria</option>
+					<option value="2">Secundaria</option>
+					<option value="3">Bachillerato</option>
+					<option value="4">Universidad</option>
+				</select>
+			</div>
+			<div id="select1" name="select1" class="col-3 col-12-small">
+				<select id="Active" name="Active"><option value="" disabled selected>Elige el Grupo</option></select>
+			</div>
+			<div id="select2" name="select2" class="col-3 col-12-small">
+			</div>
+			<div id="" name="select2" class="col-3 col-12-small">
+			</div>
+			<div class="col-12">
+				<ul class="actions">
+				<li><input type="submit" value="Activar " class="primary" /></li>
+				</ul>
+			</div>
+			<input id="flag" name="flag" type="hidden" Value="1">
+        </div>
+		</form>'."\n";
 }
 
 
@@ -720,35 +734,122 @@ function listado_admon($grupo) {
     }
 }
 
+
 //*************************************************************************************************
-// Funcion:     listado_admon
-// Descripción: Obtener un listado de los alumnos correspondientes al grupo activo del Administrador, permite bloquear o desbloquear directamente desde el listado
-// Parametros:  IdGrupo (el grupo activo)
+// Funcion:     lista_circulares
+// Descripción: Consulta las circulares en la BD correspondientes al alumno y las muestra
+// Parametros:  Los consulta de las variables de sesión
+//*************************************************************************************************
+function lista_circulares() {
+    // Toma los datos activos
+    if (isset($_SESSION['IdGrupo']) && $_SESSION['IdGrupo'] != '') {    // Es alumno!!
+        $Grupo = $_SESSION['IdGrupo'];
+    } else {    
+        if (isset($_SESSION['Activo']) && $_SESSION['Activo'] != '') {  // Es usuario
+            $Grupo = $_SESSION['Activo'];
+        } else {
+            $Grupo = '';
+        }
+    }
+    $Seccion = corto_seccion();
+    $Ciclo = ciclo_actual();
+    echo '<p>Seccion: '.$Seccion.' - Grupo: '.$Grupo.' - Ciclo: '.$Ciclo.'</p>
+		<table>
+		<tr><th>Seccion</th><th>Grupo</th><th>Descripción</th><th>Enlace</th></tr>'."\n";
+    $conn = new Circular();
+    if ($Grupo != '') {
+        $lista = $conn->lista_circular_grupo($Grupo, $Ciclo);
+        $indice = count($lista);
+        if ($indice>0) {
+            foreach($lista as $datos) {
+                echo '<tr><td>'.$datos['Seccion'].'</td><td>'.$datos['IdGrupo'].' </td><td>'.$datos['Descripcion'].'</td>'."\n";
+                echo '<td><center><a href="'.$datos['Archivo'].'" target="_blank"><i class="fas fa-book-open"></i></a></center></td>'."\n";
+            }
+        }
+    }
+    if ($Grupo == '' && $_SESSION['Privs'] > 3) {    // Es usuario y solo seleccionó carrera
+        $lista = $conn->lista_circular_seccion2 ($Seccion, $Ciclo);
+    } else {
+        $lista = $conn->lista_circular_seccion1 ($Seccion, $Ciclo);
+    }
+    $indice = count($lista);
+    if ($indice>0) {
+        foreach($lista as $datos) {
+            echo '<tr><td>'.$datos['Seccion'].'</td><td>'.$datos['IdGrupo'].' </td><td>'.$datos['Descripcion'].'</td>'."\n";
+            echo '<td><center><a href="'.$datos['Archivo'].'" target="_blank"><i class="fas fa-book-open"></i></a></center></td>'."\n";
+        }
+    }
+    echo '</table>'."\n";
+        
+}
+
+//*************************************************************************************************
+// Funcion:     listado_becas
+// Descripción: Obtener un listado de los alumnos que realizaron algún trámite de beca
+// Parametros:  IdGrupo y Seccion
 //*************************************************************************************************
 
-function listado_becas($grupo, $seccion) {
+function listado_becas($tipo) { // El tipo determina qué es lo que buscará (1: grupo, 2: carrera, 3: seccion) las variables están en sesion
     $conn = new alumnos();
-    $lista = $conn->lista_becas($seccion, $grupo);
+    switch ($tipo) {
+        case 1:
+            $lista = $conn->lista_becas_grupos(substr($_SESSION['Activo'],0,3), $_SESSION['Activo']);
+            break;
+        case 2:
+            $seccion = corto_seccion();
+            $lista = $conn->lista_becas_carrera($seccion);
+            echo '<h4>'.$seccion.'</h4>';
+            break;
+        case 3:
+            $lista = $conn->lista_becas_seccion($_SESSION['Seccion']);
+            break;
+    }
+
     $indice = count($lista);
     if ($indice>0) {
         echo '<table>'."\n";
-        echo '<tr><th>Matrícula</th><th>Apellidos</th><th>Nombres</th><th><center>Solicitud</center></th><th><center>Boleta</center></th>';
+        echo '<tr><th>Matrícula</th><th>Apellidos</th><th>Nombres</th>';
+        if ($tipo == 2) { echo '<th>Grupo</th>'; }
+        echo '<th>Status</th><th><center>Solicitud</center></th><th><center>Boleta</center></th>';
         echo '<th><center>Ingresos</center></th><th><center>Identificación</center></th><th><center>Socioeconómico</center></th></tr>'."\n";
         foreach($lista as $datos) {
-            echo '<tr><td>'.$datos['Id'].'</td><td>'.$datos['Apellidos'].' </td><td>'.$datos['Nombre'].'</td>'."\n";
+            echo '<tr><td><a href="detallebecas.php?id_alumno='.$datos['Id'].'&seccion='.$_SESSION['Seccion'].'">'.$datos['Id'].'</td><td>'.$datos['Apellidos'].' </td><td>'.$datos['Nombre'].'</td>'."\n";
+            if ($tipo == 2) { echo '<td>'.$datos['IdGrupo'].'</td>'; }
+            echo '<td><center>'.estatus($datos['Status']).'</i></center></td>';
             echo '<td><center><a href="validpdf.php?context=6&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-clipboard-list"></i></center></td>';
             echo '<td><center><a href="validpdf.php?context=1&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-file-pdf"></i></center></td>';
             echo '<td><center><a href="validpdf.php?context=7&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-file-invoice-dollar"></i></center></td>';
             echo '<td><center><a href="validpdf.php?context=8&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-address-card"></i></center></td>';
             echo '<td><center><a href="validpdf.php?context=9&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-home"></i></center></td>';
-            //echo '<td><center><a href="#" class="logo"><i class="fas fa-address-card" onclick="showUser('.$datos['Id'].')"></a></i></center></td></tr>'."\n";
         }
         echo '</table>'."\n";
         
     } else  {
-        echo '<p>Grupo sin alumnos</p>';
+        echo '<p>No se encontraron solicitudes en este grupo</p>';
     }
 }
+
+//*************************************************************************************************
+// Funcion:     estatus
+// Descripción: Cambia el icono del estatus en beca listado_becas()
+// Parametros:  IdGrupo
+//*************************************************************************************************
+function estatus($status) {
+$cadena = '';
+switch ($status) {
+    case 0:
+         $cadena = '<i class="fas fa-search"></i>';
+        break;
+    case 1:
+        $cadena = '<i class="fas fa-times"></i>';
+        break;
+    case 2:
+        $cadena = '<i class="fas fa-check"></i>';
+        break;
+}
+return $cadena;
+}
+
 
 //*************************************************************************************************
 // Funcion:     listado_recibo
