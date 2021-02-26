@@ -324,43 +324,79 @@ function showUser(str) {
 //*************************************************************************************************
 
 function navbar(){
-	
-	echo '<div class="topnav" id="myTopnav">
-  <a class="active" href="#"><i class="fa fa-fw fa-home"></i> INICIO</a>
-  <div class="dropdown">
-  <button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
-	<div class="dropdown-content">
-		<a href="validpdf.php?context=1&id_alumno='.$_SESSION['Id'].'" target="_blank">Boleta</a>
-		<a href="circulares.php">Circulares</a>
-		<a href="reglamento.php">Reglamento</a>';
-		if (RINSC == 1 && $_SESSION['Seccion'] > 2) { // Se activa la reinscripcion semestral para prepa y uni
+	$type = $_SESSION['Type'];
+	switch ($type) {
+    case '0':   // Es ALUMNO
+		echo '<div class="topnav" id="myTopnav">
+		<a class="active" href="#"><i class="fa fa-fw fa-home"></i> INICIO</a>
+		<div class="dropdown">
+		<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
+			<div class="dropdown-content">
+				<a href="validpdf.php?context=1&id_alumno='.$_SESSION['Id'].'" target="_blank">Boleta</a>
+				<a href="circulares.php">Circulares</a>
+				<a href="reglamento.php">Reglamento</a>';
+				if (RINSC == 1 && $_SESSION['Seccion'] > 2) { // Se activa la reinscripcion semestral para prepa y uni
                     echo '<a href="reinscripcion.php">Reinscripción</a>';
-            } else {
-                if (RINSC == 2) { //  Se activa reinscripcion anual, para todos
-                    echo '<a href="reinscripcion.php">Reinscripción</a>';
-                }
-            }
-	echo '</div></div>
-	<div class="dropdown">
-	<button class="dropbtn"><i class="fa fa-fw fa-money-check-alt"></i> FINANCIERO</button>
-	  <div class="dropdown-content">
-		<a href="recibos.php">Recibo de pago</a>
-        <a href="formapago.php">Formas de pago</a>
-        <a href="becas.php">Trámite de Beca</a>
-	</div></div>
-	<div class="dropdown">
-	<button class="dropbtn"><i class="fa fa-fw fa-user"></i> CONTACTO</button>
-	<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
-    <i class="fa fa-bars"></i></a>
+				} else {
+					if (RINSC == 2) { //  Se activa reinscripcion anual, para todos
+						echo '<a href="reinscripcion.php">Reinscripción</a>';
+					}
+				}
+		echo '</div></div>
+		<div class="dropdown">
+		<button class="dropbtn"><i class="fa fa-fw fa-money-check-alt"></i> FINANCIERO</button>
+			<div class="dropdown-content">
+			<a href="recibos.php">Recibo de pago</a>
+			<a href="formapago.php">Formas de pago</a>
+			<a href="becas.php">Trámite de Beca</a>
+			</div>
+		</div>
+		<div class="dropdown">
+		<button class="dropbtn"><i class="fa fa-fw fa-user"></i> CONTACTO</button>
+		<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
+		<i class="fa fa-bars"></i></a>
 	
-	</div>
-	</div>';
+		</div>
+		</div>';
+	break;
+	case '1': // Es USUARIO
+    // Validar el tipo de usuario y los privilegios
+		switch ($_SESSION['Privs']) {
+			case '2':     // Titulares
+				echo '<div class="topnav" id="myTopnav">
+				<a class="active" href="#"><i class="fa fa-fw fa-home"></i> INICIO</a>
+				<div class="dropdown">
+				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
+					<div class="dropdown-content">
+						<a href="informacion.php">Información</a>
+						<a href="circulares.php">Circulares</a>
+						<a href="#">Enviar mensajes</a>
+					</div>
+				</div>
+				<div class="dropdown">
+				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ENLACES</button>
+					<div class="dropdown-content">
+						<a href="http://aulavirtual.umvalla.edu.mx" target="_blank">Aula Virtual</a>
+						<a href="http://valladolid.edu.mx" target="_blank">Instituto Valladolid</a>
+						<a href="http://umvalla.edu.mx" target="_blank">Universidad Marista Valladolid</a>
+					</div>
+				</div>
+				</div>';
+            break;
+			case '4':
+				echo '<div class="topnav" id="myTopnav">
+				<a class="active" href="#"><i class="fa fa-fw fa-home"></i> INICIO</a>
+				<div class="dropdown">
+				<a href="informacion.php">Información Grupo</a>
+				<a href="#">Reporte Entrega</a>
+				</div>';
+            break;
+		}
 	
 	
 	
 	
-	
-	
+	}
 }
 
 // Footer
