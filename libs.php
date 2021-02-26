@@ -378,17 +378,90 @@ function navbar(){
 					<div class="dropdown-content">
 						<a href="http://aulavirtual.umvalla.edu.mx" target="_blank">Aula Virtual</a>
 						<a href="http://valladolid.edu.mx" target="_blank">Instituto Valladolid</a>
-						<a href="http://umvalla.edu.mx" target="_blank">Universidad Marista Valladolid</a>
-					</div>
+						<a href="http://umvalla.edu.mx" target="_blank">Universidad Marista Valladolid</a>';
+						if (isset($_SESSION['Id'])) {
+							switch ($_SESSION['Seccion']) {
+								case 0:
+									echo '<a href="media/Anuario_Preescolar.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 1:
+									echo '<a href="media/Anuario_Primaria.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 2:
+									echo '<a href="media/Anuario_Secundaria.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 3:
+									echo '<a href="media/Anuario_Bachillerato.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 4:
+									echo '<a href="media/Anuario_Universidad.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+							}
+						}
+				echo	'</div>
 				</div>
 				</div>';
             break;
 			case '4':
 				echo '<div class="topnav" id="myTopnav">
 				<a class="active" href="#"><i class="fa fa-fw fa-home"></i> INICIO</a>
+				<a class="active" href="informacion.php">INFORMACIÓN</a>
+				<a class="active" href="#">REPORTE ENTREGA</a>
+				<a class="active" href="comunicacion.php">COMUNICACIÓN</a>
 				<div class="dropdown">
-				<a href="informacion.php">Información Grupo</a>
-				<a href="#">Reporte Entrega</a>
+				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ENLACES</button>
+					<div class="dropdown-content">
+						<a href="http://aulavirtual.umvalla.edu.mx" target="_blank">Aula Virtual</a>
+						<a href="http://valladolid.edu.mx" target="_blank">Instituto Valladolid</a>
+						<a href="http://umvalla.edu.mx" target="_blank">Universidad Marista Valladolid</a>';
+						if (isset($_SESSION['Id'])) {
+							switch ($_SESSION['Seccion']) {
+								case 0:
+									echo '<a href="media/Anuario_Preescolar.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 1:
+									echo '<a href="media/Anuario_Primaria.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 2:
+									echo '<a href="media/Anuario_Secundaria.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 3:
+									echo '<a href="media/Anuario_Bachillerato.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 4:
+									echo '<a href="media/Anuario_Universidad.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+							}
+						}
+				echo	'</div>
+				</div>
+				</div>';
+            break;
+			case '5':     // Admin
+				echo '<div class="topnav" id="myTopnav">
+				<a class="active" href="#"><i class="fa fa-fw fa-home"></i> INICIO</a>
+				<div class="dropdown">
+				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
+					<div class="dropdown-content">
+						<a href="informacion.php">INFORMACIÓN</a>
+						<a href="comunicacion.php">COMUNICACIÓN</a>
+						<a href="#">BLOQUEO/DESBLOQUEO</a>
+						<a href="#">AVISOS</a>
+					</div>
+				</div>
+				<div class="dropdown">
+				<button class="dropbtn"><i class="fa fa-fw fa-money-check-alt"></i> FINANCIERO</button>
+					<div class="dropdown-content">
+						<a href="#">Recibos de Pago</a>
+					</div>
+				</div>
+				<div class="dropdown">
+				<button class="dropbtn"><i class="fa fa-fw fa-user-shield"></i>ADMINISTRATIVO</button>
+					<div class="dropdown-content">
+						<a href="#">Usuarios</a>
+						<a href="#">Perfiles</a>
+					</div>
+				</div>
 				</div>';
             break;
 		}
