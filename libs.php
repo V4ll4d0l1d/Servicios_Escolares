@@ -371,10 +371,9 @@ function navbar(){
 			</div>
 		</div>
 		<div class="dropdown">
-		<button class="dropbtn"><i class="fa fa-fw fa-user"></i> CONTACTO</button>
-		<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
-		<i class="fa fa-bars"></i></a>
-	
+			<button class="dropbtn"><i class="fa fa-fw fa-user"></i> CONTACTO</button>
+			<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
+			<i class="fa fa-bars"></i></a>
 		</div>';
 		//</div>';
 	break;
@@ -416,8 +415,11 @@ function navbar(){
 							}
 						}
 				echo	'</div>
+				</div>
+				<div class="dropdown">
+					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
+				<i class="fa fa-bars"></i></a>
 				</div>';
-				//</div>';
             break;
 			case '4':
 				echo '<a class="active" href="informacion.php">INFORMACIÓN</a>
@@ -449,17 +451,19 @@ function navbar(){
 							}
 						}
 				echo	'</div>
+				</div><div class="dropdown">
+					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
+					<i class="fa fa-bars"></i></a>
 				</div>';
-				//</div>';
             break;
 			case '5':     // Admin
 				echo '<div class="dropdown">
 				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
 					<div class="dropdown-content">
-						<a href="informacion.php">INFORMACIÓN</a>
-						<a href="comunicacion.php">COMUNICACIÓN</a>
-						<a href="#">BLOQUEO/DESBLOQUEO</a>
-						<a href="#">AVISOS</a>
+						<a href="informacion.php">Información</a>
+						<a href="comunicacion.php">Comunicación</a>
+						<a href="#">Bloqueo/Desbloqueo</a>
+						<a href="#">Avisos</a>
 					</div>
 				</div>
 				<div class="dropdown">
@@ -474,8 +478,11 @@ function navbar(){
 						<a href="#">Usuarios</a>
 						<a href="#">Perfiles</a>
 					</div>
+				</div>
+				<div class="dropdown">
+					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
+					<i class="fa fa-bars"></i></a>
 				</div>';
-				//</div>';
             break;
 		}
 	}
