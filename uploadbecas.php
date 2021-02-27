@@ -33,26 +33,28 @@ headerfull_('Becas');
 
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
 if ($_SESSION['login'] == 1) { // realizó login exitoso
-    // verifica que todos los datos vengan en el formulario y no sean vacios, en caso contrario debe Regresar al formulario
-    $Valida_POST = (isset($_POST['tipo']) && !empty($_POST['tipo']));
-    if (is_uploaded_file($_FILES['formato']['tmp_name'])) { $ValidaF1 = 1; }
-    if (is_uploaded_file($_FILES['boleta']['tmp_name'])) { $ValidaF2 = 1; }    
-    if (is_uploaded_file($_FILES['ingresos']['tmp_name'])) { $ValidaF3 = 1; }
-    if (is_uploaded_file($_FILES['idoficial']['tmp_name'])) { $ValidaF4 = 1; }
-    if (is_uploaded_file($_FILES['estudio']['tmp_name'])) { $ValidaF5 = 1; }
+    navbar();
+    echo '<section>';
+    // validar el tipo de usuario
+    switch ($_SESSION['Type']) {
+        case 0:     // ALUMNO Son los únicos que pueden subir sus datos
+            // verifica que todos los datos vengan en el formulario y no sean vacios, en caso contrario debe Regresar al formulario
+            $Valida_POST = (isset($_POST['tipo']) && !empty($_POST['tipo']));
+            if (is_uploaded_file($_FILES['formato']['tmp_name'])) { $ValidaF1 = 1; }
+            if (is_uploaded_file($_FILES['boleta']['tmp_name'])) { $ValidaF2 = 1; }    
+            if (is_uploaded_file($_FILES['ingresos']['tmp_name'])) { $ValidaF3 = 1; }
+            if (is_uploaded_file($_FILES['idoficial']['tmp_name'])) { $ValidaF4 = 1; }
+            if (is_uploaded_file($_FILES['estudio']['tmp_name'])) { $ValidaF5 = 1; }
     
-    $numarchivos = $ValidaF1+$ValidaF2+$ValidaF3+$ValidaF4+$ValidaF5;
-    if ($Valida_POST == FALSE) {
-        echo '<script type="text/javascript">'."\n";
-        echo 'alert("Los datos están incompletos, por favor revisa el formulario nuevamente");'."\n"; 
-        echo 'window.location = "becas.php"'."\n"; 
-        echo '</script>'."\n";
-        header("Location: becas.php");
-    } else  {
-        // validar el tipo de usuario
-        
-        switch ($_SESSION['Type']) {
-            case 0:     // ALUMNO Son los únicos que pueden subir sus datos
+            $numarchivos = $ValidaF1+$ValidaF2+$ValidaF3+$ValidaF4+$ValidaF5;
+            
+            if ($Valida_POST == FALSE) {
+                echo '<script type="text/javascript">'."\n";
+                echo 'alert("Los datos están incompletos, por favor revisa el formulario nuevamente");'."\n"; 
+                echo 'window.location = "becas.php"'."\n"; 
+                echo '</script>'."\n";
+                header("Location: becas.php");
+            } else  {
             if (isset($_POST['matricula'])) {
                 //Recuperamos datos del formulario
                 $_matricula = $_POST['matricula'];
@@ -276,30 +278,54 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                     if ($ValidaF5 == 1) {echo '<tr><td>Comprobante de Pago de Estudio Socioeconómico*</td><td>'.$estudio.'</td></tr>'."\n";}
                     echo '<tr><td>Fecha de Modificación</td><td>'.date("d").'/'.date("m").'/'.date("Y").'</td></tr>'."\n";
                     echo '</table><hr/>'."\n";
-                    if ($numarchivos > 0) { '<p>* - Sujetos a revisión por parte del Comité de Becas</p>'."\n"; }
-                    echo '<p>Espere comunicación por parte del comité de BECAS en los medios de contacto proporcionados en el Formato de Solicitud</p>';
+                    if ($numarchivos > 0) { echo '<p>* - Sujetos a revisión por parte del Comité de Becas</p>'."\n"; }
+                    echo '<h4>Espere comunicación por parte del comité de BECAS en los medios de contacto proporcionados en el Formato de Solicitud</h4>';
+                    echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar a formulario</a>'."\n";
+                }
                 }
                 }   //Fin de validación de matricula = usuario activo
             }       // Fin de validación de que se envio la matrícula en POST
         break;
         case 1:     // USUARIO - Validar el tipo de usuario
-            echo '<h3>Bienvenido</h3>'."\n";
-            echo '<p>No deberías estar aquí</p>'."\n";
+             if ($_SESSION['Privs'] == 4) {         // Solo Becas puede modificar
+                if (isset($_POST['matricula'])) {      // Vienen datos del formulario
+                    //Recuperamos datos del formulario
+                    $_matricula = $_POST['matricula'];
+                    $_nombre = $_POST['nombre'];
+                    $_seccion = $_POST['seccion'];
+                    $_cicloact = $_POST['cicloact'];
+                    $_status = $_POST['status'];
+                    $_tipo = $_POST['tipo'];                
+                    $_obs = htmlentities($_POST['obs']);
+                    $_review = htmlentities($_POST['review']);
+                    /*echo '<p>MAT: '.$_matricula.'</p>';
+                    echo '<p>STAT: '.$_status.'</p>';
+                    echo '<p>TIPO: '.$_tipo.'</p>';
+                    echo '<p>OBS: '.$_obs.'</p>';
+                    echo '<p>REV: '.$_review.'</p>'; */
+                    $conexionBD=new alumnos();
+                    $result=$conexionBD->update_status_beca ($_matricula, $_status, $_tipo, $_cicloact, $_obs, $_review);
+                    if (!$result) {
+                        echo '<h3>Error al actualizar el registro...</h3>';
+                        echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar a formulario</a>'."\n";
+                    } else {
+                        echo '<h3>Actualización exitosa...</h3>';
+                        echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar a formulario</a>'."\n";
+                    }
+                }
+            } else {
+                echo '<p>¿Qué haces aquí?</p>';
+            }
             break;
         }           // Fin del Switch
 } // fin del else de validación
-}
+//}
 
 
 echo '<div class="posts"></div>'."\n";
 echo '</section>'."\n";
 /* ------------------- AQUI TERMINA LA SECCION CENTRAL DE INFORMACION -------------------*/
-// comienza el login
-//<!-- main -->
-footer_();
 
-// Imprime el menú lateral de acuerdo a los datos y al contexto.
-sidebar();
 
 /* Scripts */
 scripts();

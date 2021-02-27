@@ -4,14 +4,13 @@ include ("dbconect.php");
 //include ("libs.php");
 $seccion=$_GET['seccion'];
 $contexto=$_GET['ctx'];
-//if (isset($_GET['ctx'])) {$contexto=$_GET['ctx']; }
 
-if ($seccion < 3) {
+if ($seccion < 4) {     // Preescolar a Bachillerato, hay que seleccionar el grupo.
     $conexionBD=new titular();
     $resultado=$conexionBD->lista_seccion($seccion);
     echo '<select name="Active" id="Active"><option value="" disabled selected>Elige el Grupo</option>'."\n";
     if (!$resultado) {
-        echo 'Problemas';
+        echo '<option value="" disabled selected>NO SE PUDIERON CARGAR LOS GRUPOS...</option>';
     } else {
         foreach ($resultado as $reg) {
             echo '<option value="'.$reg['IdGrupo'].'">'.$reg['IdGrupo'].'</option>'."\n";
@@ -19,7 +18,7 @@ if ($seccion < 3) {
     }
     echo '</select>'."\n";
 } else {    // universidad
-    if ($contexto == '') {  // primera vez que alige carrera
+    if ($contexto == '') {  // primera vez que elige carrera, utilizamos el div select1
         echo '<select name="ctx" id="ctx" onchange="showGrupos()"><option value="" disabled selected>Elige la carrera</option>'."\n";
         echo '<option value="ARQ">Arquitectura</option>'."\n";
         echo '<option value="LAV">Animación y Videojuegos</option>'."\n";
@@ -30,21 +29,20 @@ if ($seccion < 3) {
         echo '<option value="ETO">Traumatología y Ortopedia</option>'."\n";
         echo '<option value="ERD">Rehabilitación Deportiva</option>'."\n";
         echo '<option value="ERN">Rehabilitación Neurológica</option>'."\n";
-    } else {
-        echo '<p>'.$contexto.'</p>';
-        echo '<select name="Active" id="Active" onchange="showGrupos()"><option value="" disabled selected>Elige el grupo</option>'."\n";
+    } else {                // Ya eligió carrera, hay que mostrar la lista de grupos correspondiente
+        echo '<select name="Active" id="Active"><option value="" disabled selected>Elige el grupo</option>'."\n";
         $conexionBD=new titular();
         $resultado=$conexionBD->lista_carrera($contexto);
-        //echo '<select name="Active" id="Active"><option value="" disabled selected>Elige el Grupo</option>'."\n";
         if (!$resultado) {
-            echo 'Problemas';
+            echo '<option value="" disabled selected>NO SE PUDIERON CARGAR LOS GRUPOS...</option>';
         } else {
             foreach ($resultado as $reg) {
-                echo '<option value="'.$reg['IdGrupo'].'">'.$reg['IdGrupo'].'</option>'."\n";
+                echo '<option value="'.$reg['IdGrupo'].'"';
+                if (isset($_SESSION['Activo']) && $_SESSION['Activo'] == $reg['IdGrupo']) { echo ' selected';}
+                echo '>'.$reg['IdGrupo'].'</option>'."\n";
             }
         }
     }
-        
     echo '</select>'."\n";
     } 
 

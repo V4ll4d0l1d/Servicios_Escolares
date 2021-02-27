@@ -148,9 +148,13 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                     echo '<input type="checkbox" id="compdom_" name="compdom_" disabled>'."\n".'<label for="compdom_">Comprobante de Domicilio</label>'."\n";
                 }
                 echo '</div>'."\n";
-                echo '<h4>Si lo requiere, sube los documentos solicitados en formato PDF o JPG, no mayores de 2 Mb</h4>'."\n";
+                echo '  <div class="col-12">
+                        <h4>Si lo requiere, sube los documentos solicitados en formato PDF o JPG, no mayores de 2 Mb</h4>
+                        </div>';
             } else  {
-                echo '<h4>A continuación sube los documentos solicitados en formato PDF o JPG, no mayores de 2 Mb</h4>'."\n";
+                echo '  <div class="col-12">
+                        <h4>A continuación sube los documentos solicitados en formato PDF o JPG, no mayores de 2 Mb</h4>
+                        </div>';
             }
             ?>
             <div class="col-6 col-12-small">

@@ -194,6 +194,38 @@ function corto_seccion() {
     return $nombre;
 }
 
+//*************************************************************************************************
+// Funcion:     Seccion_nombre para las circulares, convertir estas tres funciones en una sola aunque pases parametros
+// Descripción: Cambia el numero de la sección por su nombre y/o carrera
+// Parametros:  Ninguno
+// Regresa una variable texto con el nombre de la sección correspondiente
+//*************************************************************************************************
+function seccion_nombre($seccion, $ctx) {
+    $nombre = "";
+    switch ($seccion) {
+        case 0:
+            $nombre = "PRE";
+            break;
+        case 1:
+            $nombre = "PRI";
+            break;
+        case 2:
+            $nombre = "SEC";
+            break;
+        case 3:
+            $nombre = "BAC";
+            break;
+        case 4:
+            if ($ctx != '') {
+                $nombre = $ctx;
+            } else {
+                $nombre = "UNI";
+            }
+            break;
+    }
+    return $nombre;
+}
+
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
 //******************************************************************************************************************************

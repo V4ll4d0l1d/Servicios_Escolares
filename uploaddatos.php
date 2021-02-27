@@ -33,6 +33,8 @@ headerfull_('Reinscripcion');
 
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
 if ($_SESSION['login'] == 1) { // realizó login exitoso
+    navbar();
+    echo '<section>';
 // verifica que todos los datos vengan en el formulario y no sean vacios, en caso contrario debe Regresar al formulario
 $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
                (isset($_POST['colonia']) && !empty($_POST['colonia'])) &&
@@ -86,7 +88,6 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
                 // REVISAMOS LOS ARCHIVOS --------------------------------------------------------
                     // FICHA DE CONTROL ESCOLAR       
                     if ($_FILES["ficha"]["error"] == 0 && $ValidaF1 == 1) {
-                        echo '<p>Ingresando Ficha</p>';
                         $uploadOk = 1;  // inicializamos banderas de subida
                         $ficha = basename($_FILES["ficha"]["name"]);
                         //Renombrar los archivos
@@ -121,7 +122,6 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
                     }
                     // CONTRATO DE SERVICIOS ESCOLARES
                     if ($_FILES["contrato"]["error"] == 0 && $ValidaF2 == 1) {
-                        echo '<p>Ingresando Contrato</p>';
                         $uploadOk = 1;  // inicializamos banderas de subida
                         $contrato = basename($_FILES["contrato"]["name"]);
                         //Renombrar los archivos
@@ -154,7 +154,6 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
                     }
                     // IDENTIFICACION OFICIAL
                     if ($_FILES["idoficial"]["error"] == 0 && $ValidaF3 == 1) {
-                        echo '<p>Ingresando Id</p>';
                         $uploadOk = 1;  // inicializamos banderas de subida
                         $idoficial = basename($_FILES["idoficial"]["name"]);
                         //Renombrar los archivos
@@ -187,7 +186,6 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
                     }
                     // COMPROBANTE DE DOMICILIO
                     if ($_FILES["compdomicilio"]["error"] == 0 && $ValidaF4 == 1) {
-                        echo '<p>Ingresando Comprobante</p>';
                         $uploadOk = 1;  // inicializamos banderas de subida
                         $compdomicilio = basename($_FILES["compdomicilio"]["name"]);
                         //Renombrar los archivos
@@ -225,13 +223,11 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
                     if ($_flag == 0) {
                         $result=$conexionBD->insert_alumnos_contacto ($_matricula, $_calle, $_colonia, $_ciudad, $_estado, $_postal, $_tel1, $_cel1, $_correo);
                         if ($_correo != $_SESSION['Correo']) { 
-                            echo '<p>Actualizar correo</p>';
                             $mail=$conexionBD->update_correo($_matricula, $_correo); 
                             }   // Si son distintos actualizalo en la otra tabla
                     } else  {
                         $result=$conexionBD->update_alumnos_contacto ($_matricula, $_calle, $_colonia, $_ciudad, $_estado, $_postal, $_tel1, $_cel1, $_correo);
                         if ($_correo != $_SESSION['Correo']) { 
-                            echo '<p>Actualizar correo</p>';
                             $mail=$conexionBD->update_correo($_matricula, $_correo); 
                         } 
                     }
@@ -239,7 +235,6 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
                             $conexionBD->insert_reinscripcion ($_matricula, $_SESSION['Seccion'], $_cicloact, $_ciclosig, $_gradosig);
                     }
                     if (!$result) {
-                        echo '<p>Algo fallo</p>';
                         $errorflag += 1;
                         array_push ($errores, "Base de Datos: Error al actualizar los datos");
                     }
@@ -248,7 +243,7 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
                 // Validar si se logró toda la actualización
                 if ($flagOK != $numarchivos || $errorflag > 0) { // o no se subieron los archivos o no se actualizó la BD
                     echo '<h4>Errores encontrados:</h4>'."\n";
-                    echo '<P>fLAG: '.$flagOK.'</p><p> ErrorFlag: '.$errorflag.'</p><p> NumArchivos: '.$numarchivos.'</p>';
+                    //echo '<P>fLAG: '.$flagOK.'</p><p> ErrorFlag: '.$errorflag.'</p><p> NumArchivos: '.$numarchivos.'</p>';
                     echo '<table id="errores">'."\n";
                     $max = sizeof($errores);
                     for($i = 0; $i < $max;$i++) {
@@ -276,6 +271,7 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
                     echo '<tr><td>Fecha de Modificación</td><td>'.date("d").'/'.date("m").'/'.date("Y").'</td></tr>'."\n";
                     echo '</table><hr/>'."\n";
                     if ($numarchivos > 0) { '<p>* - Sujetos a revisión por parte de Control Escolar</p>'."\n"; }
+                    echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar a formulario</a>'."\n";
                 }
                 
                 }   //Fin de validación de matricula = usuario activo
@@ -293,12 +289,6 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
 echo '<div class="posts"></div>'."\n";
 echo '</section>'."\n";
 /* ------------------- AQUI TERMINA LA SECCION CENTRAL DE INFORMACION -------------------*/
-// comienza el login
-//<!-- main -->
-footer_();
-
-// Imprime el menú lateral de acuerdo a los datos y al contexto.
-sidebar();
 
 /* Scripts */
 scripts();
