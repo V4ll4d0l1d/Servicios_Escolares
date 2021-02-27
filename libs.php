@@ -381,7 +381,7 @@ function navbar(){
 	switch ($type) {
     case '0':   // Es ALUMNO
 		echo '<div class="dropdown">
-		<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
+			<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
 			<div class="dropdown-content">
 				<a href="validpdf.php?context=1&id_alumno='.$_SESSION['Id'].'" target="_blank">Boleta</a>
 				<a href="circulares.php">Circulares</a>

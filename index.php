@@ -58,7 +58,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                     echo '<h4>Selección: '.secciones();
                     if($_SESSION['Activo'] != '') { echo '-'.$_SESSION['Activo']; }
                     echo '</h4>';
-                    echo '<p>Ahora puedes elegir una opción del menú lateral</p>';
+                    echo '<p>Ahora puedes elegir una opción del menú.</p>';
                     echo '<p>O cambiar tu grupo activo:</p>'."\n";
                     GrupoActivo($_SESSION['Id'], $_SESSION['Activo']);
                 } else {       // No viene de formulario, ni ha seleccionado, mostrar el formulario limpio
@@ -80,7 +80,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                     echo '<h4>Selección: '.secciones();
                     if($_SESSION['Activo'] != '') { echo '-'.$_SESSION['Activo']; }
                     echo '</h4>';
-                    echo '<p>Ahora puedes elegir una opción del menú lateral</p><hr/>';
+                    echo '<p>Ahora puedes elegir una opción del menú.</p><hr/>';
                     echo '<p>O cambiar tu grupo activo:</p>'."\n";
                     grupos($_SESSION['Id']);
                 } else {       // No viene de formulario, ni ha seleccionado, mostrar el formulario limpio
@@ -92,7 +92,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
         break;
     }
 } else {
-    echo '<section id="start">'."\n";echo '<header class="major"><img src="images/logo_maristas.png" alt="logo" width="128" /><h2>Bienvenido al Sistema de Servicios Escolares.</h2></header>'."\n";
+    echo '<section id="start">'."\n";echo '<header class="major"><img src="images/logo_maristas.png" alt="logo" width="128" /><h1>Bienvenido al Sistema de Servicios Escolares.</h1></header>'."\n";
     echo '<p id="principal">Ingresa con tus credenciales</p>'."\n";
 	login_logout();
     if (isset($error) && strlen($error)>2) { echo '<script type="text/javascript"> alert ("'.$error.'"); </script> '."\n"; }

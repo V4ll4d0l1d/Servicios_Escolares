@@ -111,7 +111,7 @@ a {
   -webkit-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
   -ms-transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
   transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
-  border-bottom: dotted 1px;
+  /* border-bottom: dotted 1px; */
   border-bottom-color: #474d52;
   color: #003764;   /* azul */
   text-decoration: none; }
@@ -133,7 +133,7 @@ p {
 
 h1, h2, h3, h4, h5, h6 {
   color: #003764; /*Azul institucional*/
-  font-family: "Roboto Slab", serif;
+  font-family: "Calibri", serif;
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 1em 0; }
@@ -143,14 +143,19 @@ h1, h2, h3, h4, h5, h6 {
     border-bottom: 0; }
 
 h1 {
-  font-size: 4em;
-  margin: 0 0 0.5em 0;
-  line-height: 1.3; }
+  font-size: 3em;
+  margin: 0 0 0 0;
+  line-height: 1.3; 
+  font-weight: bold;
+  font-family: "Verdana", serif;
+  text-align: center;
+  }
 
 h2 {
 	color: #003764;
-  font-size: 1.75em;
-   overflow: auto;}
+  font-size: 2em;
+   overflow: auto;
+   font-weight: bold;}
 
 h3 {
   font-size: 1.25em; }
@@ -166,16 +171,19 @@ h6 {
 
 @media screen and (max-width: 1680px) {
   h1 {
-    font-size: 3.5em; } }
+    font-size: 3.5em;
+		} }
 
 @media screen and (max-width: 980px) {
   h1 {
-    font-size: 3.25em; } }
+    font-size: 3.25em;
+  }}
 
 @media screen and (max-width: 736px) {
   h1 {
     font-size: 2em;
-    line-height: 1.4; }
+    line-height: 1.4;
+	}
   h2 {
     font-size: 1.5em; } }
 
@@ -1005,12 +1013,25 @@ header.major > :last-child {
   border-bottom: solid 3px;
   color: #d4dbe2;/* color: #003764; */
   display: inline-block; 
-  margin: 0 0 2em 0;
-  padding: 0 1.75em 0.5em 0;
-  overflow: auto;} 
+  /* margin: 0 0 2em 0; */
+  /* padding: 0 1.75em 0.5em 0; */
+  overflow: auto;
+  vertical-align: text-top;} 
 
 header.main > :last-child {
   margin: 0 0 1em 0; }
+  
+@media screen and (max-width: 750px) {
+	.header a {
+    float: none;
+    display: block;
+    text-align: left;
+	font-size: 75%;
+  }
+  /* .header-right { */
+    /* float: none; */
+  /* } */
+}
 
 /* Form */
 form {
@@ -1371,6 +1392,13 @@ ul.icons {
       color: inherit; }
       ul.icons li .icon:before {
         font-size: 1.25em; }
+
+@media screen and (max-width: 700px) {
+	ul.icons li:last-child {
+      padding-right: 10px;
+	  width: 50%;
+	  }
+}
 
 /* Contact */
 ul.contact {
@@ -2115,7 +2143,7 @@ button,
   #header .logo {
     border-bottom: 0;
     color: inherit;
-    font-family: "Roboto Slab", serif;
+    font-family: "Calibri", serif;
     font-size: 1.125em;
 	padding: .5em 0 1.5em 4em;}
   #header .icons {
@@ -2128,7 +2156,8 @@ button,
       padding-top: 6.5em; }
       #header .logo {
         font-size: 1.25em;
-        margin: 0; }
+        margin: 0; 
+		padding: 0;}
       #header .icons {
         height: 5em;
         line-height: 5em;
@@ -2423,6 +2452,7 @@ span.psw {
 	padding: 50px 0;
 	font-size: 1.3em;
 	color: #dde6ec;
+	font-family: "Verdana", serif;
 }
 #prueba_ylw{
 	background-color: #ffb700;
@@ -2436,7 +2466,7 @@ span.psw {
 }
 
 .topnav {
-  /* background-color: #333; */
+  background-image: linear-gradient(0, #43a6ff 0, #003664 50%, #000000 100%);
   overflow: hidden;
   /* position: relative; */
   /* display: inline-block; */
@@ -2447,11 +2477,12 @@ span.psw {
 .topnav a {
   float: left;
   display: block;
-  color: #003764;
+  color: white; /*#003764;*/
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
   font-size: 17px;
+  font-family: "Verdana", Serif;
 }
 .dropdown {
   float: left;
@@ -2463,19 +2494,18 @@ span.psw {
 .dropdown .dropbtn {
   /* float: left; */
   /* display: block; */
-  color: #003764;
+  color: white;/*#003764;*/
   text-align: center;
   /* padding: 14px 16px; */
   text-decoration: none;
   font-size: 17px;
-  /* background-color: #4CAF50; */
   border: none;
   margin: 0;
 }
 
 /* Change the color of links on hover */
 .topnav a:hover {
-  background-color: #9d9d9c;
+  background-color: transparent;
   color: black;
 }
 
@@ -2511,7 +2541,7 @@ span.psw {
 
 /* Add a dark background on topnav links and the dropdown button on hover */
 .topnav a:hover, .dropdown:hover .dropbtn {
-  background-color: #555;
+  background-color: transparent;
   color: white;
 }
 
@@ -2556,5 +2586,8 @@ span.psw {
     display: block;
     width: 100%;
     text-align: left;
+  }
+  .topnav.responsive .dropdown .dropbtn a {
+	  color: red;
   }
 }
