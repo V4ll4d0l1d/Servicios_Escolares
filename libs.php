@@ -418,7 +418,7 @@ function navbar(){
 					<div class="dropdown-content">
 						<a href="informacion.php">Información</a>
 						<a href="circulares.php">Circulares</a>
-						<a href="#">Enviar mensajes</a>
+						<a href="avisos.php">Enviar mensajes</a>
 					</div>
 				</div>
 				<div class="dropdown">
@@ -492,9 +492,9 @@ function navbar(){
 				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
 					<div class="dropdown-content">
 						<a href="informacion.php">Información</a>
-						<a href="comunicacion.php">Comunicación</a>
+						<a href="circulares.php">Comunicación</a>
+						<a href="avisos">Avisos</a>
 						<a href="bloqueo.php">Bloqueo/Desbloqueo</a>
-						<a href="#">Avisos</a>
 					</div>
 				</div>
 				<div class="dropdown">
