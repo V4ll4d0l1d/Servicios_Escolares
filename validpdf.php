@@ -7,7 +7,8 @@ if(isset($_GET['context']) && isset($_GET['id_alumno'])) {
     $contexto = $_GET['context'];
     $matricula=$_GET['id_alumno'];
 } else {
-    echo "<center><H1>Parametro Incorrecto...</br>Comunicate con el departamento de Control Escolar</H1></center>";
+    echo "<center><h3>Parametro Incorrecto...</br>Comunicate con el departamento de Control Escolar</h3></center>";
+    echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
 }
 //Validamos que esté buscando sus propios archivos o que la persona que consulta sea docente o administrador
 if ($_SESSION['Id'] == $matricula or $_SESSION['Privs'] > 1) {
@@ -15,23 +16,26 @@ if ($_SESSION['Id'] == $matricula or $_SESSION['Privs'] > 1) {
     switch ($contexto) {        // El contexto permite saber que es lo que estás descargando
         case 1:     // Calificaciones
             //Recuperamos Datos del alumno
-            $archivo = "boletas/".$_SESSION['Seccion']."/".$matricula.".pdf";   // Ruta de la boleta
+            //$archivo = "boletas/".$_SESSION['Seccion']."/".$matricula.".pdf";   // Ruta de la boleta
+            $archivo = "boletas/".$matricula.".pdf";   // Ruta de la boleta
             if (file_exists($archivo)) 	{   //La boleta no está bloqueada
                 header ("Cache-Control: no-cache, must-revalidate"); //no guardar en CACHE 
                 header ("Pragma: no-cache");  
                 header('Content-type: application/pdf'); 
                 readfile($archivo); 
             } else 	{   // Revisar si la boleta está bloqueada
-                $archivo2 = "boletas/".$_SESSION['Seccion']."/_".$matricula.".pdf"; 
+                //$archivo2 = "boletas/".$_SESSION['Seccion']."/_".$matricula.".pdf";
+                $archivo2 = "boletas/".$matricula.".pdf"; 
                 if (file_exists($archivo2)) { // Se encontro el archivo bloqueado, mostrar aviso de pago
-                    $archivo = "boletas/".$_SESSION['Seccion']."/Aviso.pdf"; // aqui la ruta a la carpeta con todos tus pdf
+                    $archivo = "boletas/Aviso_".$_SESSION['Seccion'].".pdf"; // Muestra el aviso correspondiente a la sección
                     header ("Cache-Control: no-cache, must-revalidate"); //no guardar en CACHE 
                     header ("Pragma: no-cache");  
                     header('Content-type: application/pdf'); 
                     readfile($archivo); 
                 } else { // No se encuentra el archivo, solicitarlo impreso 
-                    echo "<center><H1>Eror de consulta...</br>El archivo solicitado no existe</br>";
-                    echo "Comunicate con el departamento de Control Escolar para una copia impresa</H1></center>";
+                    echo "<center><h3>Eror de consulta...</br>El archivo solicitado no existe</br>";
+                    echo "Comunicate con el departamento de Control Escolar para una copia impresa</h3></center>";
+                    echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
                 }
             }
             break;
@@ -43,8 +47,9 @@ if ($_SESSION['Id'] == $matricula or $_SESSION['Privs'] > 1) {
                 header('Content-type: application/pdf'); 
                 readfile($archivo); 
             } else { // No se encuentra el archivo, solicitarlo impreso 
-                echo "<center><H1>Eror de consulta...</br>El archivo solicitado no existe</br>";
-                echo "Comunicate con el departamento de Control Escolar para una copia impresa</H1></center>";
+                echo "<center><h3>Error de consulta...</br>El archivo solicitado no existe</br>";
+                echo "Comunicate con el departamento de Control Escolar para una copia impresa</h3></center>";
+                echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
             }
             break;
         case 3:     // Recibo de pago Inscripcion 1
@@ -55,8 +60,9 @@ if ($_SESSION['Id'] == $matricula or $_SESSION['Privs'] > 1) {
                 header('Content-type: application/pdf'); 
                 readfile($archivo); 
             } else { // No se encuentra el archivo, solicitarlo impreso 
-                echo "<center><H1>Eror de consulta...</br>El archivo solicitado no existe</br>";
-                echo "Comunicate con el departamento de Control Escolar para una copia impresa</H1></center>";
+                echo "<center><h3>Error de consulta...</br>El archivo solicitado no existe</br>";
+                echo "Comunicate con el departamento de Control Escolar para una copia impresa</h3></center>";
+                echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
             }
             break;
         case 4:     // Recibo de pago Inscripcion 2
@@ -67,8 +73,9 @@ if ($_SESSION['Id'] == $matricula or $_SESSION['Privs'] > 1) {
                 header('Content-type: application/pdf'); 
                 readfile($archivo); 
             } else { // No se encuentra el archivo, solicitarlo impreso 
-                echo "<center><H1>Eror de consulta...</br>El archivo solicitado no existe</br>";
-                echo "Comunicate con el departamento de Control Escolar para una copia impresa</H1></center>";
+                echo "<center><h3>Error de consulta...</br>El archivo solicitado no existe</br>";
+                echo "Comunicate con el departamento de Control Escolar para una copia impresa</h3></center>";
+                echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
             }
             break;
         case 5:     // Recibo de pago Inscripcion 3
@@ -79,8 +86,9 @@ if ($_SESSION['Id'] == $matricula or $_SESSION['Privs'] > 1) {
                 header('Content-type: application/pdf'); 
                 readfile($archivo); 
             } else { // No se encuentra el archivo, solicitarlo impreso 
-                echo "<center><H1>Eror de consulta...</br>El archivo solicitado no existe</br>";
-                echo "Comunicate con el departamento de Control Escolar para una copia impresa</H1></center>";
+                echo "<center><h3>Error de consulta...</br>El archivo solicitado no existe</br>";
+                echo "Comunicate con el departamento de Control Escolar para una copia impresa</h3></center>";
+                echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
             }
             break;
         case 6:     // Solicitud Beca
@@ -91,7 +99,8 @@ if ($_SESSION['Id'] == $matricula or $_SESSION['Privs'] > 1) {
                 header('Content-type: application/pdf'); 
                 readfile($archivo); 
             } else { // No se encuentra el archivo, solicitarlo impreso 
-                echo "<center><H1>Eror de consulta...</br>El archivo solicitado no existe</br>";
+                echo "<center><h3>Error de consulta...</br>El archivo solicitado no existe</br></h3>";
+                echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
             }
             break;
         case 7:     // Comprobante de ingresos
@@ -102,7 +111,8 @@ if ($_SESSION['Id'] == $matricula or $_SESSION['Privs'] > 1) {
                 header('Content-type: application/pdf'); 
                 readfile($archivo); 
             } else { // No se encuentra el archivo, solicitarlo impreso 
-                echo "<center><H1>Eror de consulta...</br>El archivo solicitado no existe</br>";
+                echo "<center><h3>Error de consulta...</br>El archivo solicitado no existe</br></h3>";
+                echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
             }
             break;
         case 8:     // Identificación
@@ -113,7 +123,8 @@ if ($_SESSION['Id'] == $matricula or $_SESSION['Privs'] > 1) {
                 header('Content-type: application/pdf'); 
                 readfile($archivo); 
             } else { // No se encuentra el archivo, solicitarlo impreso 
-                echo "<center><H1>Eror de consulta...</br>El archivo solicitado no existe</br>";
+                echo "<center><h3>Error de consulta...</br>El archivo solicitado no existe</br></h3>";
+                echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
             }
             break;
         case 9:     // Socioeconomico
@@ -124,13 +135,15 @@ if ($_SESSION['Id'] == $matricula or $_SESSION['Privs'] > 1) {
                 header('Content-type: application/pdf'); 
                 readfile($archivo); 
             } else { // No se encuentra el archivo, solicitarlo impreso 
-                echo "<center><H1>Eror de consulta...</br>El archivo solicitado no existe</br>";
+                echo "<center><h3>Error de consulta...</br>El archivo solicitado no existe</br></h3>";
+                echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
             }
             break;
     }
             
 } else {
-	echo "<center><H1>Error de consulta, revisa tus datos por favor.</H1></center>";
+	echo "<center><H3>Error de consulta, revisa tus datos por favor.</h3></center>";
+	echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
 }
 
 ob_end_flush();

@@ -31,19 +31,15 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
     // validar el tipo de usuario
       switch ($_SESSION['Type']) {
     case 0:     // ALUMNO No debería estar aquí
-        echo '<p>Ola k ase</p>';
+        echo '<h3>No tienes privilegios suficientes, por favor comunicate con Sistemas </h3>';
         break;
     case 1:     // USUARIO
         switch ($_SESSION['Privs']) {
                 case 2: // Es titular
-                    if (isset($_SESSION['Activo'])) {
-                        echo '<h3>'.secciones(). ' - Grupo: '.$_SESSION['Activo'].'</h3>';
-                         listado($_SESSION['Activo']);
-                    } else {
-                        echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
-                    }
+                    echo '<h3>No tienes privilegios suficientes, por favor comunicate con Sistemas </h3>';
                     break;
                 case 4: // Becas hay que validar que es lo que quiere ver OJO, quizá esto sirva para el director - administrador
+                case 5: //Administrador
                     if (isset($_SESSION['Activo']) && $_SESSION['Activo'] != '') {   // Grupo Seleccionado, mostrarlo
                         echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.secciones().'</h3>';
                         echo '<p><b>Vista rápida</b>, si requieres detalle haz clic en la matrícula del alumno</p>';
@@ -58,14 +54,6 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                         }
                     }
                     break;                
-                case 5: // Es administrador
-                    if (isset($_SESSION['Activo'])) {
-                        echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.secciones().'</h3>';
-                         listado_admon($_SESSION['Activo']);
-                    } else {
-                        echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
-                    }
-                    break;
                 }
             break;
         }

@@ -454,9 +454,8 @@ function navbar(){
 				</div>';
             break;
 			case '4':
-				echo '<a class="active" href="informacion.php">INFORMACIÓN</a>
+				echo '<a class="active" href="listabecas.php">BECAS</a>
 				<a class="active" href="#">REPORTE ENTREGA</a>
-				<a class="active" href="comunicacion.php">COMUNICACIÓN</a>
 				<div class="dropdown">
 				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ENLACES</button>
 					<div class="dropdown-content">
@@ -494,13 +493,14 @@ function navbar(){
 					<div class="dropdown-content">
 						<a href="informacion.php">Información</a>
 						<a href="comunicacion.php">Comunicación</a>
-						<a href="#">Bloqueo/Desbloqueo</a>
+						<a href="bloqueo.php">Bloqueo/Desbloqueo</a>
 						<a href="#">Avisos</a>
 					</div>
 				</div>
 				<div class="dropdown">
 				<button class="dropbtn"><i class="fa fa-fw fa-money-check-alt"></i> FINANCIERO</button>
 					<div class="dropdown-content">
+						<a href="listabecas.php">Becas</a>
 						<a href="#">Recibos de Pago</a>
 					</div>
 				</div>
