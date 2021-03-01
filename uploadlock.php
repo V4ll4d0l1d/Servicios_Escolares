@@ -13,6 +13,8 @@ $uploadOk = 0;          // 0 si existe algún errro, 1 si es posible subir el ar
 $errores = array();     // Acumula en un arreglo los errores para mostrarlos al final
 $Valida_POST = FALSE;   // Bandera que revisa que los datos en el formulario no estén vacios.
 $ValidaF1 = 0;          // Se recibió el archivo
+$numarchivos = 0;		// Contador para ver cuantas boletas se modificaron
+$numlineas = 0;			// contador para comparar vs archivos procesados
 
 // VALIDAR SI YA SE INICIO SESION
 if (isset($_SESSION['login'])&&($_SESSION['login'] == 1)) {
@@ -106,11 +108,12 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                             if (! $lista) {	
                                 array_push($errores, "Archivo: Error al abrir el archivo");
                                 $errorflag += 1;
-                                //echo "<br />Error al abrir el archivo: ".$php_errormsg."<br />";                                
+                                echo "<p>Error al abrir el archivo: ".$php_errormsg."</p>";
                             } else {
                                 // preparando archivo para logs de errores
                                 $log = fopen("locks.log","a");
                                 $linea = "-------- ".$usuario." - ".$tipo." - ".$fecha." ---------\n";
+								echo '<p>'.$linea.'</p>';
                                 fwrite($log, $linea );
                                 // leyendo archivo de matriculas
                                 if ($tipo == 'lock') {
@@ -118,10 +121,11 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                                         $file=fgets($lista);
                                         // preparando nombres
                                         $filename = "boletas/".trim($file).".pdf";
-                                        $newfilename = "boletas/_".trim($file).".pdf";				
+                                        $newfilename = "boletas/_".trim($file).".pdf";
                                         if (@rename($filename, $newfilename)) {   // no hay errores
                                             $linea = '- ' . date('d/m/y') . ' - ' . $filename . ' - ' . $usuario .  " - ".$tipo."\n";
                                             fwrite($log, $linea );
+											echo '<p>'.$file.'</p>';
                                         } else {
                                             // incrementa el contador y registralo en logs
                                             array_push($errores, $filename." no encontrado");
@@ -138,6 +142,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                                         if (@rename($filename, $newfilename)) {   // no hay errores
                                             $linea = '- ' . date('d/m/y') . ' - ' . $filename . ' - ' . $usuario .  " - ".$tipo."\n";
                                             fwrite($log, $linea );
+											echo '<p>'.$file.'</p>';
                                         } else {
                                             // incrementa el contador y registralo en logs
                                             array_push($errores, $filename." no encontrado");
@@ -163,7 +168,10 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                         }
                         echo '</table><br>
                         <a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
-                    }
+                    } else {
+						echo '	<h4>Proceso terminado de forma exitosa.</h4>
+								<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
+					}
                     break;
                 }     // switch session privs
                 break;
