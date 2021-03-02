@@ -117,7 +117,7 @@ a {
   text-decoration: none; }
   a:hover {
     border-bottom-color: #0066cc; /*#002266; */
-    color: #0066cc !important; } /* #002266 */
+  color: #0066cc!important; } /* #002266 */
     a:hover strong {
       color: inherit; }
 
@@ -1551,7 +1551,7 @@ button,
   display: inline-block;
   font-family: "Verdana", serif;
   font-size: 0.8em;
-  font-weight: 700;
+  /* font-weight: 700; */
   height: 3.5em;
   letter-spacing: 0.075em;
   line-height: 3.5em;
@@ -2247,7 +2247,8 @@ button,
 #footer .copyright {
   color: #6e7377; /*#9fa3a6;*/
   font-size: 0.9em;
-	padding: 0.3em 0 0 5.6em;}
+	padding: 1em 0 0 0;
+	text-align: center;}
   #footer .copyright a {
     color: inherit; }
 
@@ -2476,17 +2477,20 @@ span.psw {
 /* Style the links inside the navigation bar */
 .topnav a {
   float: left;
-  display: block;
+  display: inline-block;
   color: white; /*#003764;*/
   text-align: center;
-  padding: 14px 16px;
+  padding: 16px 16px; 
   text-decoration: none;
   font-size: 17px;
   font-family: "Verdana", Serif;
+  letter-spacing: 0.075em;
+  /* line-height: 3.5em; */
 }
 .dropdown {
   float: left;
   overflow: hidden;
+  font-weight: normal;
   /* position: relative; */
   /* display: inline-block; */
 }
@@ -2496,7 +2500,7 @@ span.psw {
   /* display: block; */
   color: white;/*#003764;*/
   text-align: center;
-  /* padding: 14px 16px; */
+  /* */
   text-decoration: none;
   font-size: 17px;
   border: none;
@@ -2512,7 +2516,13 @@ span.psw {
 /* Add an active class to highlight the current page */
 .active {
   /* background-color: #9d9d9c; */
+  padding: 0 2.25em 0 2.25em;
+  
   color: #003764;
+}
+
+.active a:hover {
+	color: black;
 }
 
 /* Hide the link that should open and close the topnav on small screens */
@@ -2542,7 +2552,7 @@ span.psw {
 /* Add a dark background on topnav links and the dropdown button on hover */
 .topnav a:hover, .dropdown:hover .dropbtn {
   background-color: transparent;
-  color: white;
+  color: #0066cc;
 }
 
 /* Add a grey background to dropdown links on hover */
@@ -2579,6 +2589,7 @@ span.psw {
     float: none;
     display: block;
     text-align: left;
+	padding: 0 2.25em 0 2.25em;
   }
   .topnav.responsive .dropdown {float: none;}
   .topnav.responsive .dropdown-content {position: relative;}

@@ -45,6 +45,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             echo '<tr><th width=20%>Carrera</th><td>'. $_SESSION['Carrera'].'</td></tr>'."\n";
         }
         echo '</table>'."\n";
+		contacto();
         break;
     case 1:     // USUARIO - Validar el tipo de usuario----------------------------------
         echo '<section><h3>Bienvenido '.$_SESSION['Nombres'].'</h3>'."\n";
@@ -65,6 +66,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                     echo '<h4>Elige un grupo para comenzar a trabajar</h4>'."\n";
                     GrupoActivo($_SESSION['Id'], 0);
                 }
+				contacto();
                 break;
             case 4: // BECAS-----------------------------------------
             case 5: // Administrador
@@ -99,12 +101,13 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
 }
 
 //echo '<div class="posts"></div>'."\n";
-echo '</section>'."\n";
+echo '</section></div>'."\n";
 
 /* ------------------- AQUI TERMINA LA SECCION CENTRAL DE INFORMACION -------------------*/
 
 /* Scripts */
 scripts();
 
-
+/*Footer*/
+footer();
 ?>
