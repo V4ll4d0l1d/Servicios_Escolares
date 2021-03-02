@@ -256,6 +256,7 @@ echo '<meta charset="utf-8" />'."\n";
 echo '<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />'."\n";
 echo '<link rel="stylesheet" href="assets/css/main.css" />'."\n";
 echo '<link href="assets/css/fontawesome-all.min.css" rel="stylesheet">'."\n";
+echo '<link href="assets/css/style.css" rel="stylesheet">'."\n";
 echo '</head>'."\n";
 echo '<body class="is-preload">'."\n";
 echo '<div id="wrapper">'."\n";         // Inicia el div que contiene todo  
@@ -510,7 +511,8 @@ function navbar(){
 							}
 						}
 				echo	'</div>
-				</div><div class="dropdown">
+				</div>
+				<div class="dropdown">
 					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
 					<i class="fa fa-bars"></i></a>
 				</div>';

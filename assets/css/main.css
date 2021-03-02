@@ -1505,6 +1505,7 @@ table {
   table th {
     /* color: #3d4449; cambio por legibilidad*/
     color: #23272a;
+	font-family: "Calibri";
     font-size: 0.9em;
     font-weight: 600;
     padding: 0 0.75em 0.75em 0.75em;
@@ -1566,7 +1567,7 @@ button,
   button:hover,
   .button:hover {
     /*background-color: rgba(245, 106, 106, 0.05); } */
-    background-color: rgba(148, 148, 148, 0.3); } 
+    background-color: rgba(0, 50, 100, 0.8); } 
   input[type="submit"]:active,
   input[type="reset"]:active,
   input[type="button"]:active,
@@ -2402,7 +2403,7 @@ span.psw {
   background-color: #fefefe;
   margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
   border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 40%; /* Could be more or less, depending on screen size */
 }
 
 /* The Close Button (x) */
