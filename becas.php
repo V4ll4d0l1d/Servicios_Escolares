@@ -76,7 +76,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             
         } else {
             texto_becas($_SESSION['Seccion']);
-            echo '<h4>Revisa la información y actualiza los datos necesarios</h4>';
+            echo '<h3>Revisa la información y actualiza los datos necesarios</h3>';
         }
         ?>
         
@@ -102,7 +102,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
              <?php
         if ($flagfile == 1) {       // Ya existen archivos de este alumno.
             echo '<div class="col-12">'."\n";
-            echo '<h4>Documentos Entregados anteriormente:</h4>'."\n";
+            echo '<h3>Documentos Entregados anteriormente:</h3>'."\n";
             echo '</div>'."\n";
             echo '<div class="col-6 col-12-small">'."\n";
             if ($ficheros[0] == '1') { 
@@ -140,10 +140,10 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             }
             echo '</div>'."\n";
             if (isset($status) && $status == 0) {
-                echo '<h4>Si lo requiere, suba los documentos solicitados en formato PDF, no mayores de 2 Mb</h4>'."\n";
+                echo '<h3>Si lo requiere, suba los documentos solicitados en formato PDF, no mayores de 2 Mb</h3>'."\n";
             }
         } else  {       // Aún no ha subido ningun archivo, hay que solicitarlos
-            echo '<h4>A continuación suba los documentos solicitados en formato PDF, no mayores de 2 Mb</h4>'."\n";
+            echo '<h3>A continuación suba los documentos solicitados en formato PDF, no mayores de 2 Mb</h3>'."\n";
         }            
             
             if (isset($status) && $status != 0) {
@@ -229,4 +229,6 @@ echo '</section>'."\n";
 /* Scripts */
 scripts();
 
+/*Footer*/
+footer();
 ?>

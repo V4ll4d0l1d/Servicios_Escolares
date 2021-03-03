@@ -84,6 +84,7 @@ echo '</section>';
 /* Scripts */
 scripts();
 
-
+/*Footer*/
+footer();
 
 ?>

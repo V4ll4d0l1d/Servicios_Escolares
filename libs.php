@@ -270,7 +270,8 @@ if ($_SESSION['login'] == 1) {
 }
 echo '<ul class="icons">'."\n";
 if ($_SESSION['login'] == 1) {
-    echo '<a href="logout.php" class="logo"><li class="icon solid fa-sign-out-alt" style="width:auto;">'.$_SESSION['Id'].'</li></a>'."\n";
+    echo '<a href="logout.php" class="logo"><li class="icon solid fa-sign-out-alt" style="width:auto;">Salir</li></a>'."\n";
+	//echo '<a href="logout.php" class="logo"><li class="icon solid fa-sign-out-alt" style="width:auto;">'.$_SESSION['Id'].'</li></a>'."\n";
 } else {
 ?>
     <a href="#" class="logo"><li class="icon solid fa-key" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Ingresar</li></a>
@@ -554,7 +555,7 @@ function navbar(){
 // Footer
 function footer(){
 echo '<footer id="footer">'."\n";
-echo '<p class="copyright">&copy; Instituto Valladolid. Todos los derechos reservados.</a></p>'."\n";
+echo '<p class="copyright">&copy; Instituto   Valladolid.  Todos  los  derechos  reservados.</a></p>'."\n";
 echo '</footer>'."\n";
 }
 
@@ -666,7 +667,7 @@ function getAvisos($seccion, $grado) {
             echo '<div class="row gtr-50 gtr-uniform">'."\n";
             foreach($aviso as $contenido) {
                 echo '<div class="col-4"><span class="image fit"><a href="'.$contenido['Url'].'" class="image"><img src="images/'.$contenido['Imagen'].'" alt="" /></a></span>'."\n";
-                echo '<h4>'.$contenido['Titulo'].'</h4>'."\n";
+                echo '<h3>'.$contenido['Titulo'].'</h3>'."\n";
                 echo '<p>'.$contenido['Contenido'].'</p>'."\n";
                 echo '</div>'."\n";
             }

@@ -116,5 +116,6 @@ echo '</section>'."\n";
 /* Scripts */
 scripts();
 
-
+/*Footer*/
+footer();
 ?>
