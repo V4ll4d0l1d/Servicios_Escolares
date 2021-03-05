@@ -6,11 +6,11 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 html, body, div, span, applet, object,
-iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
+iframe, h1, h2, h3, h4, h5, h6, blockquote,
 pre, a, abbr, acronym, address, big, cite,
 code, del, dfn, em, img, ins, kbd, q, s, samp,
 small, strike, strong, sub, sup, tt, var, b,
-u, i, center, dl, dt, dd, ol, ul, li, fieldset,
+u, i, dl, dt, dd, ol, ul, li, fieldset,
 form, label, legend, table, caption, tbody,
 tfoot, thead, tr, th, td, article, aside,
 canvas, details, embed, figure, figcaption,
@@ -128,12 +128,12 @@ strong, b {
 em, i {
   font-style: italic; }
 
-p {
-  margin: 0 0 2em 0; }
+/* p { */
+  /* margin: 0 0 0 0; } */
 
 h1, h2, h3, h4, h5, h6 {
   color: #003764; /*Azul institucional*/
-  font-family: "Calibri", serif;
+  font-family: "Verdana", serif;
   font-weight: 500;
   line-height: 1.5;
   margin: 0 0 1em 0; }
@@ -143,7 +143,7 @@ h1, h2, h3, h4, h5, h6 {
     border-bottom: 0; }
 
 h1 {
-  font-size: 3em;
+  font-size: 2.7em;
   margin: 0 0 0 0;
   line-height: 1.3; 
   font-weight: bold;
@@ -1005,21 +1005,27 @@ section.special, article.special {
   text-align: center; }
 
 header p {
-  font-family: "Roboto Slab", serif;
+  font-family: "Verdana", serif;
   font-size: 1em;
   font-weight: 400;
   letter-spacing: 0.075em;
-  margin-top: -0.5em;
-  text-transform: uppercase; }
+  margin-top: -1.5em;
+  text-transform: uppercase;
+	/* margin: 0; */
+	}
 
 header.major > :last-child {
-  border-bottom: solid 3px;
+  /* border-bottom: solid 3px; */
   color: #d4dbe2;/* color: #003764; */
   display: inline-block; 
   /* margin: 0 0 2em 0; */
   /* padding: 0 1.75em 0.5em 0; */
   overflow: auto;
   vertical-align: text-top;} 
+  
+/* header.major img{ */
+	/* text-align: center; */
+/* } */
 
 header.main > :last-child {
   margin: 0 0 1em 0; }
@@ -1030,6 +1036,9 @@ header.main > :last-child {
     display: block;
     text-align: left;
 	font-size: 75%;
+  }
+  header p {
+	  margin-top: -3m;
   }
   /* .header-right { */
     /* float: none; */
@@ -1497,7 +1506,8 @@ ul.pagination {
 
 table {
   margin: 0 0 2em 0;
-  width: 100%; }
+  width: 100%;
+  }
   table tbody tr {
     border: solid 1px rgba(210, 215, 217, 0.75);
     border-left: 0;
@@ -1509,12 +1519,12 @@ table {
     padding: 0.75em 0.75em;
 	font-family: "FuturaBT";
 	font-stretch: ultra-expanded;
-	font-size: 1.2em;}
+	font-size: 1.1em;}
   table th {
     /* color: #3d4449; cambio por legibilidad*/
     color: #23272a;
 	font-family: "FuturaBT";
-    font-size: 1.5em;
+    font-size: 1.2em;
     font-weight: 600;
     padding: 0 0.75em 0.55em 0.75em;
     text-align: left; }
@@ -2395,6 +2405,7 @@ span.psw {
 	font-size: 1.3em;
 	color: #dde6ec;
 	font-family: "Verdana", serif;
+	margin-top: -0.5em;
 }
 #prueba_ylw{
 	background-color: #ffb700;
@@ -2552,6 +2563,10 @@ url('../webfonts/Futura-Book.woff') format('woff'),
 url('../webfonts/futura-book-bt-22240.ttf') format('truetype');
 }
 
-.contactUs{
+.contactUs {
 	font-family: "Verdana", serif;
+}
+
+.specialMargin {
+	margin: 0, 0, 2em, 0;
 }

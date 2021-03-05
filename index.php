@@ -96,7 +96,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
         break;
     }
 } else {
-    echo '<section id="start">'."\n";echo '<header class="major"><img src="images/logo_maristas.png" alt="logo" width="128" /><h1>Bienvenido al Sistema de Servicios Escolares.</h1></header>'."\n";
+    echo '<section id="start">'."\n";echo '<header class="major"><p><img src="images/logo_maristas.png" alt="logo" width="128" /></p><h1>Bienvenido al Sistema de Servicios Escolares.</h1></header>'."\n";
     echo '<p id="principal">Ingresa con tus credenciales</p>'."\n";
 	login_logout();
     if (isset($error) && strlen($error)>2) { echo '<script type="text/javascript"> alert ("'.$error.'"); </script> '."\n"; }
