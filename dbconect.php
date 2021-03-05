@@ -489,14 +489,15 @@ class aviso {
 private $Consecutivo;
 private $Seccion;
 private $Grado;
+private $Grupo;
+private $Titulo;
 private $Contenido;
 private $Url;
 private $Imagen;
-private $Usuario;
 private $Fecha_inicio;
 private $Fecha_fin;
 private $Activo;
-
+private $Usuario;
 
 //*************************************************************************************************
 // Funcion:     getAvisos
@@ -504,12 +505,15 @@ private $Activo;
 // Parametros:  Seccion
 //*************************************************************************************************
 
-public function leer_avisos($Seccion, $Grado){
+public function leer_avisos_grado($Seccion, $Grado, $Grupo){
     $conn=new Conexion();
     try {
-        $stmt = $conn->prepare ("SELECT Seccion, Grado, Titulo, Contenido, Url, Imagen, Usuario FROM Avisos WHERE Seccion = :ss and Grado = 0 or Grado = :pp and Activo = 'Si'");
+        //SELECT Seccion, Grado, Grupo, Titulo, Contenido, Url, Imagen FROM Avisos WHERE Seccion = "LFR" and Grado = '0' or grado ='1' and Grupo != "LFR11" and Activo = 'Si'
+        $stmt = $conn->prepare ("SELECT Seccion, Grado, Titulo, Contenido, Url, Imagen FROM Avisos WHERE Seccion = :ss AND Grado = 0 OR Grado = :pp AND Grupo != :gg AND curdate() > Fecha_Inicio AND curdate() < Fecha_Fin AND Activo = 'Si'");
+        
         $stmt->bindParam(':ss', $Seccion);
         $stmt->bindParam(':pp', $Grado);
+        $stmt->bindParam(':gg', $Grupo);
         $stmt->execute();
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resultado;
@@ -518,10 +522,78 @@ public function leer_avisos($Seccion, $Grado){
     }
 }
 
-
-
+public function leer_avisos_grupo($Seccion, $Grupo){
+    $conn=new Conexion();
+    try {                                                                                                      
+        $stmt = $conn->prepare ("SELECT Seccion, Grado, Grupo, Titulo, Contenido, Url, Imagen FROM Avisos WHERE Seccion = :ss AND Grupo = :gg AND curdate() > Fecha_Inicio AND curdate() < Fecha_Fin AND Activo = 'Si'");
+        $stmt->bindParam(':ss', $Seccion);
+        $stmt->bindParam(':gg', $Grupo);
+        $stmt->execute();
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;
+    } catch(PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
 }
 
+public function lista_avisos(){
+    $conn=new Conexion();
+    try {
+        $stmt = $conn->prepare ("SELECT Consecutivo, Seccion, Grado, Grupo, Titulo, Contenido, Url, Activo, Imagen, Fecha_Inicio, Fecha_Fin, Usuario FROM Avisos ORDER BY Seccion");
+        $stmt->execute();
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;
+    } catch(PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
+}
+
+public function insert_aviso ($Seccion, $Grado, $Grupo, $Titulo, $Contenido, $Url, $Imagen, $Finicio, $Ffin, $Activo, $Usuario) {
+    try {
+        $conn = new Conexion();
+        $sql = "INSERT INTO Avisos (Seccion, Grado, Grupo, Titulo, Contenido, Url, Imagen, Fecha_Inicio, Fecha_Fin, Activo, Usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute(array($Seccion, $Grado, $Grupo, $Titulo, $Contenido, $Url, $Imagen, $Finicio, $Ffin, $Activo, $Usuario))) {
+            return true;
+        } else {        //Problema en inserción
+            print_r($stmt->errorInfo());
+            return false;
+        }
+    } catch(PDOException $e) {
+        echo "Error en conexion: ".$e->getMessage();
+        return false;
+    }
+ }
+
+ public function lockavisos($id, $tipo) {
+    switch($tipo) {
+        case '1':
+            $sql = "UPDATE Avisos SET Activo='No' WHERE Consecutivo = :cc";
+            break;
+        case 2:
+            $sql = "UPDATE Avisos SET Activo='Si' WHERE Consecutivo = :cc";
+            break;
+    }
+    try {
+        $conn = new Conexion();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':cc', $id);
+        if ($stmt->execute()) {
+            return true;
+        } else {    // error al actualizar el Status
+            print_r($stmt->errorInfo());
+            return false;
+        }
+    } catch(PDOException $e) {
+        echo 'Error: '. $e->getMessage();
+        return false;
+    }
+    
+ }
+ 
+
+}
+//****************************************************************************************************************************************
 
 class Circular {
   private $Seccion;

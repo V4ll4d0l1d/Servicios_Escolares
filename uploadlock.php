@@ -113,42 +113,47 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                                 // preparando archivo para logs de errores
                                 $log = fopen("locks.log","a");
                                 $linea = "-------- ".$usuario." - ".$tipo." - ".$fecha." ---------\n";
-								echo '<p>'.$linea.'</p>';
+                                echo '<p>'.$linea.'</p>';
                                 fwrite($log, $linea );
                                 // leyendo archivo de matriculas
                                 if ($tipo == 'lock') {
                                     while (!feof($lista)) {
                                         $file=fgets($lista);
-                                        // preparando nombres
-                                        $filename = "boletas/".trim($file).".pdf";
-                                        $newfilename = "boletas/_".trim($file).".pdf";
-                                        if (@rename($filename, $newfilename)) {   // no hay errores
-                                            $linea = '- ' . date('d/m/y') . ' - ' . $filename . ' - ' . $usuario .  " - ".$tipo."\n";
-                                            fwrite($log, $linea );
-											echo '<p>'.$file.'</p>';
-                                        } else {
-                                            // incrementa el contador y registralo en logs
-                                            array_push($errores, $filename." no encontrado");
-                                            $errorflag +=1;
-                                            //fwrite($errorlog, "$filename \n");
-                                        }   
+                                        if ($file != '') {
+                                            // preparando nombres
+                                            $filename = "boletas/".trim($file).".pdf";
+                                            $newfilename = "boletas/_".trim($file).".pdf";
+                                            if (@rename($filename, $newfilename)) {   // no hay errores
+                                                $linea = '- ' . date('d/m/y') . ' - ' . $filename . ' - ' . $usuario .  " - ".$tipo."\n";
+                                                fwrite($log, $linea );
+                                                echo '<p>'.$file.'</p>';
+                                            } else {
+                                                // incrementa el contador y registralo en logs
+                                                $error = error_get_last();
+                                                array_push($errores, $filename." - ".$error['message']);
+                                                $errorflag +=1;
+                                            }
+                                        }
                                     }
                                 } else {
                                     while (!feof($lista)) {
                                         $file=fgets($lista);
-                                        // preparando nombres
-                                        $filename = "boletas/_".trim($file).".pdf";
-                                        $newfilename = "boletas/".trim($file).".pdf";				
-                                        if (@rename($filename, $newfilename)) {   // no hay errores
-                                            $linea = '- ' . date('d/m/y') . ' - ' . $filename . ' - ' . $usuario .  " - ".$tipo."\n";
-                                            fwrite($log, $linea );
-											echo '<p>'.$file.'</p>';
-                                        } else {
-                                            // incrementa el contador y registralo en logs
-                                            array_push($errores, $filename." no encontrado");
-                                            $errorflag +=1;
-                                            //fwrite($errorlog, "$filename \n");
-                                        }   
+                                        if ($file != '') {
+                                            // preparando nombres
+                                            $filename = "boletas/_".trim($file).".pdf";
+                                            $newfilename = "boletas/".trim($file).".pdf";
+                                            //echo '<p>'.$filename.' -> '.$newfilename.'</p>';
+                                            if (@rename($filename, $newfilename)) {   // no hay errores
+                                                $linea = '- ' . date('d/m/y') . ' - ' . $filename . ' - ' . $usuario .  " - ".$tipo."\n";
+                                                fwrite($log, $linea );
+                                                echo '<p>'.$file.'</p>';
+                                            } else {
+                                                // incrementa el contador y registralo en logs
+                                                $error = error_get_last();
+                                                array_push($errores, $filename." - ".$error['message']);
+                                                $errorflag +=1;
+                                            }   
+                                        }
                                     }
                                 }
                                 fclose($log);
