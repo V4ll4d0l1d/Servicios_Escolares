@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 03-02-2021 a las 11:09:37
--- Versión del servidor: 8.0.22-0ubuntu0.20.04.3
+-- Tiempo de generación: 05-03-2021 a las 14:18:23
+-- Versión del servidor: 8.0.23-0ubuntu0.20.04.1
 -- Versión de PHP: 7.4.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -30,9 +30,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `Avisos` (
   `Consecutivo` int NOT NULL,
-  `Seccion` int NOT NULL,
-  `Carrera` varchar(3) COLLATE utf8mb4_bin NOT NULL,
+  `Seccion` varchar(10) COLLATE utf8mb4_bin NOT NULL,
   `Grado` int NOT NULL,
+  `Grupo` varchar(5) COLLATE utf8mb4_bin DEFAULT NULL,
   `Titulo` varchar(30) COLLATE utf8mb4_bin NOT NULL,
   `Contenido` longtext COLLATE utf8mb4_bin NOT NULL,
   `Url` text COLLATE utf8mb4_bin NOT NULL,
@@ -47,11 +47,12 @@ CREATE TABLE `Avisos` (
 -- Volcado de datos para la tabla `Avisos`
 --
 
-INSERT INTO `Avisos` (`Consecutivo`, `Seccion`, `Carrera`, `Grado`, `Titulo`, `Contenido`, `Url`, `Imagen`, `Fecha_Inicio`, `Fecha_Fin`, `Activo`, `Usuario`) VALUES
-(1, 4, 'LFR', 0, 'Aviso 1', 'Este es un aviso de Prueba, la sección es Universidad y es General', 'http://umvalla.edu.mx', 'pic01.jpg', '2020-07-17', '2021-04-01', 'Si', 'jjmoreno23'),
-(2, 4, '0', 0, 'Aviso 2', 'Este es un segundo aviso de prueba. Recuerda que puedes tener varios dependiendo de la sección.', 'http://umvalla.edu.mx', 'pic02.jpg', '2020-07-17', '2021-04-01', 'Si', 'jjmoreno23'),
-(3, 3, '0', 0, 'Aviso 3', 'PREPARATORIA. Este es un tercer aviso de prueba. Recuerda que puedes tener varios dependiendo de la sección.', 'http://umvalla.edu.mx', 'pic03.jpg', '2020-07-17', '2021-04-01', 'Si', 'jjmoreno23'),
-(4, 4, '0', 1, 'Aviso 4', 'Este es un cuarto aviso de prueba. Recuerda que puedes tener varios dependiendo de la sección.', 'http://umvalla.edu.mx', 'pic04.jpg', '2020-07-17', '2021-04-01', 'Si', 'jjmoreno23');
+INSERT INTO `Avisos` (`Consecutivo`, `Seccion`, `Grado`, `Grupo`, `Titulo`, `Contenido`, `Url`, `Imagen`, `Fecha_Inicio`, `Fecha_Fin`, `Activo`, `Usuario`) VALUES
+(1, 'UNI', 0, NULL, 'Aviso 1', 'Este es un aviso de Prueba, la sección es Universidad y es General', 'http://umvalla.edu.mx', 'images/pic01.jpg', '2020-07-17', '2021-01-01', 'Si', 'jjmoreno23'),
+(2, 'LFR', 0, NULL, 'Aviso 2', 'Este es un segundo aviso de prueba. Recuerda que puedes tener varios dependiendo de la sección.', 'http://umvalla.edu.mx', 'images/pic02.jpg', '2020-07-17', '2021-04-01', 'Si', 'jjmoreno23'),
+(3, 'BAC', 0, NULL, 'Aviso 3', 'PREPARATORIA. Este es un tercer aviso de prueba. Recuerda que puedes tener varios dependiendo de la sección.', 'http://umvalla.edu.mx', 'images/pic03.jpg', '2020-07-17', '2021-04-01', 'Si', 'jjmoreno23'),
+(4, 'LFR', 1, 'LFR11', 'Aviso 4', 'Este es un cuarto aviso de prueba. Recuerda que puedes tener varios dependiendo de la sección.', 'http://umvalla.edu.mx', 'images/pic04.jpg', '2021-03-15', '2021-04-30', 'Si', 'jjmoreno23'),
+(10, 'LFR', 0, '', 'T&iacute;tulo del Aviso', 'Texto del Contenido', 'https://valladolid.edu.mx/Servicios-Escolares/secundaria/media/InvitacionFestival.jpg', 'images/LOGO MARISTAS ANAGRAMA.jpg', '2021-03-01', '2021-03-31', 'Si', 'jjmoreno23');
 
 -- --------------------------------------------------------
 
@@ -68,15 +69,50 @@ CREATE TABLE `Becas` (
   `Tipo` varchar(3) COLLATE utf8mb4_bin NOT NULL,
   `Status` int DEFAULT '0',
   `Fecha` timestamp NOT NULL,
-  `Observaciones` text COLLATE utf8mb4_bin NOT NULL
+  `Observaciones` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  `Review` text CHARACTER SET utf8mb4 COLLATE utf8mb4_bin
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
 -- Volcado de datos para la tabla `Becas`
 --
 
-INSERT INTO `Becas` (`Id`, `Seccion`, `CicloAct`, `CicloSig`, `Grado`, `Tipo`, `Status`, `Fecha`, `Observaciones`) VALUES
-('160023', 'LFR', '20-1', '20-2', 2, 'hno', 0, '2021-02-03 02:29:48', 'Esta es una prueba de las observaciones que pudieran tener.');
+INSERT INTO `Becas` (`Id`, `Seccion`, `CicloAct`, `CicloSig`, `Grado`, `Tipo`, `Status`, `Fecha`, `Observaciones`, `Review`) VALUES
+('160023', 'LFR', '20-1', '20-2', 2, 'int', 0, '2021-02-27 01:45:20', 'Hace falta informaci&oacute;n en el formato de solicitud. Por favor complementar y volver a subir.', 'Los dos hermanos ya cuentan con beca, valorar si es conveniente.'),
+('160024', 'LFR', '20-1', '20-2', 2, 'int', 2, '2021-02-15 06:00:00', 'M&aacute;s observaciones', 'Otras observaciones'),
+('160025', 'LFR', '20-1', '20-2', 2, 'HNO', 0, '2021-02-15 06:00:00', '', ''),
+('190001', 'PRI', '20-0', '21-0', 2, 'sep', 0, '2021-02-25 14:26:51', NULL, NULL),
+('190002', 'SEC', '20-0', '21-0', 3, 'sep', 1, '2021-02-25 14:49:06', 'PRUEBA :)', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Circulares`
+--
+
+CREATE TABLE `Circulares` (
+  `IdCircular` int NOT NULL,
+  `Seccion` varchar(10) COLLATE utf8mb4_bin NOT NULL,
+  `IdGrupo` varchar(10) COLLATE utf8mb4_bin NOT NULL,
+  `Descripcion` varchar(80) COLLATE utf8mb4_bin NOT NULL,
+  `Archivo` text COLLATE utf8mb4_bin NOT NULL,
+  `Ciclo` varchar(5) COLLATE utf8mb4_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Volcado de datos para la tabla `Circulares`
+--
+
+INSERT INTO `Circulares` (`IdCircular`, `Seccion`, `IdGrupo`, `Descripcion`, `Archivo`, `Ciclo`) VALUES
+(1, 'LFR', 'LFR11', 'Indicaciones sobre Reuniones Zoom', 'circulares/4/LFR_CertificateRemoteWorkandVirtualCollaboration.pdf', '20-1'),
+(2, 'LFR', 'LFR12', 'Indicaciones sobre Reuniones Zoom Grupo 12', 'circulares/4/LFR_CertificateRemoteWorkandVirtualCollaboration.pdf', '20-1'),
+(3, 'PRI', '', 'Circular del mes de Marzo Primaria', 'circulares/1/FreeRDP-User-Manual.pdf', '20-0'),
+(4, 'LFR', '', 'Indicaciones entrega de documentación oficial a Control Escolar', 'circulares/4/LFR_CertificateRemoteWorkandVirtualCollaboration.pdf', '20-1'),
+(5, 'LFR', '', 'Circular de Bienvenida, indicaciones Generales', 'circulares/4/LFR_PagoFinalCredito.pdf', '20-1'),
+(6, 'PRI', '', 'Indicaciones Generales para REINSCRIPCIÓN', 'circulares/1/Reporte André.pdf', '20-0'),
+(7, 'PRI', 'PRI31', 'Circular de Prueba', 'circulares/1/Circular Febrero 2021- personal docente.pdf', '20-0'),
+(8, 'LFR', '', 'Circular 2. Venta de Libros', 'circulares/4/LFR_DepositoOMG.pdf', '20-1'),
+(9, 'LFR', 'LFR11', 'Circular del mes de Marzo', 'circulares/4/LFR_Recibo-Feb.pdf', '20-1');
 
 -- --------------------------------------------------------
 
@@ -127,7 +163,9 @@ CREATE TABLE `DatosIDAlumno` (
 INSERT INTO `DatosIDAlumno` (`Id`, `Nombre`, `Apellidos`, `Grado`, `Grupo`, `Seccion`, `IdGrupo`, `Correo`) VALUES
 ('160023', 'Pedro Jaime', 'López González', 1, 1, 4, 'LFR11', 'otrocorreo@correo.com.mx'),
 ('160024', 'Miguel Angel', 'Hurtado Flores', 1, 1, 4, 'LFR11', 'correo@otromail.com'),
-('160025', 'JUAN LUIS', 'GONZALEZ GONZALEZ', 1, 1, 4, 'LFR12', 'uncorreo@mail.com');
+('160025', 'JUAN LUIS', 'GONZALEZ GONZALEZ', 1, 1, 4, 'LFR12', 'uncorreo@mail.com'),
+('190001', 'Miguel', 'Ruiz', 1, 1, 1, 'PRI11', 'uncorreo@mail.com'),
+('190002', 'Pedro', 'García', 2, 2, 2, 'SEC22', 'otrocorreo@correo.com');
 
 -- --------------------------------------------------------
 
@@ -148,8 +186,38 @@ CREATE TABLE `DatosIDUsuario` (
 --
 
 INSERT INTO `DatosIDUsuario` (`Id`, `Nombres`, `Seccion`, `Grado`, `Carrera`) VALUES
+('becas', 'Responsable de BECAS', '10', '', 'NO'),
 ('docente', 'Docente Universidad', '4', '1', 'LFR'),
 ('jjmoreno23', 'José de Jesús Moreno Contreras', '10', '', 'NO');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Grupos`
+--
+
+CREATE TABLE `Grupos` (
+  `IdGrupo` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `Seccion` int NOT NULL,
+  `Grado` int NOT NULL,
+  `Ciclo` varchar(4) COLLATE utf8mb4_bin NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+--
+-- Volcado de datos para la tabla `Grupos`
+--
+
+INSERT INTO `Grupos` (`IdGrupo`, `Seccion`, `Grado`, `Ciclo`) VALUES
+('LFR11', 4, 1, '20-1'),
+('LFR12', 4, 1, '20-1'),
+('LFR13', 4, 1, '20-1'),
+('LFR31', 4, 3, '20-1'),
+('PRI11', 1, 1, '20-0'),
+('PRI21', 1, 2, '20-0'),
+('PRI31', 1, 3, '20-0'),
+('PRI41', 1, 4, '20-0'),
+('SEC22', 2, 2, '20-0'),
+('SEC23', 2, 2, '20-0');
 
 -- --------------------------------------------------------
 
@@ -200,26 +268,27 @@ INSERT INTO `Titulares` (`IdUsuario`, `Ciclo`, `IdGrupo`, `Consecutivo`) VALUES
 
 --
 -- Estructura de tabla para la tabla `Usuarios`
--- Se cambia a 32 el varchar de pass porque el cifrado md5 tiene 32 caracteres
 --
 
 CREATE TABLE `Usuarios` (
   `Id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `Pass` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `Pass` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `Type` int NOT NULL DEFAULT '0',
   `Privileges` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='Tabla de Usuarios (sin datos)';
 
 --
 -- Volcado de datos para la tabla `Usuarios`
--- Se agrega md5() a las contraseñas para cifrarlas
 --
 
 INSERT INTO `Usuarios` (`Id`, `Pass`, `Type`, `Privileges`) VALUES
-('160023', md5('123456'), 0, 0),
-('160024', md5('123456'), 0, 0),
-('docente', md5('docente'), 1, 2),
-('jjmoreno23', md5('123456'), 1, 5);
+('160023', '123456', 0, 0),
+('160024', '123456', 0, 0),
+('190001', '123456', 0, 0),
+('190002', '123456', 0, 0),
+('becas', 'becas', 1, 4),
+('docente', 'docente', 1, 2),
+('jjmoreno23', '123456', 1, 5);
 
 --
 -- Índices para tablas volcadas
@@ -238,6 +307,12 @@ ALTER TABLE `Becas`
   ADD UNIQUE KEY `IdxBeca` (`Id`,`CicloAct`,`Seccion`);
 
 --
+-- Indices de la tabla `Circulares`
+--
+ALTER TABLE `Circulares`
+  ADD PRIMARY KEY (`IdCircular`);
+
+--
 -- Indices de la tabla `ContactoAlumno`
 --
 ALTER TABLE `ContactoAlumno`
@@ -254,6 +329,12 @@ ALTER TABLE `DatosIDAlumno`
 --
 ALTER TABLE `DatosIDUsuario`
   ADD UNIQUE KEY `Id` (`Id`);
+
+--
+-- Indices de la tabla `Grupos`
+--
+ALTER TABLE `Grupos`
+  ADD UNIQUE KEY `IdxGrupo` (`IdGrupo`,`Ciclo`);
 
 --
 -- Indices de la tabla `Reinscripciones`
@@ -281,13 +362,41 @@ ALTER TABLE `Usuarios`
 -- AUTO_INCREMENT de la tabla `Avisos`
 --
 ALTER TABLE `Avisos`
-  MODIFY `Consecutivo` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `Consecutivo` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `Circulares`
+--
+ALTER TABLE `Circulares`
+  MODIFY `IdCircular` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `Titulares`
 --
 ALTER TABLE `Titulares`
   MODIFY `Consecutivo` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `Becas`
+--
+ALTER TABLE `Becas`
+  ADD CONSTRAINT `Becas_ibfk_1` FOREIGN KEY (`Id`) REFERENCES `DatosIDAlumno` (`Id`);
+
+--
+-- Filtros para la tabla `ContactoAlumno`
+--
+ALTER TABLE `ContactoAlumno`
+  ADD CONSTRAINT `ContactoAlumno_ibfk_1` FOREIGN KEY (`Id`) REFERENCES `DatosIDAlumno` (`Id`);
+
+--
+-- Filtros para la tabla `Reinscripciones`
+--
+ALTER TABLE `Reinscripciones`
+  ADD CONSTRAINT `Reinscripciones_ibfk_1` FOREIGN KEY (`Id`) REFERENCES `DatosIDAlumno` (`Id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
