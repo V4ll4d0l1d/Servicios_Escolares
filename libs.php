@@ -624,7 +624,7 @@ if ($user) {
 } else {
 	$errorflag += 1;
 	$_SESSION['login'] = 0;
-	$errortext = "Credenciales de acceso no válidas";
+	$errortext = "Credenciales de acceso no válidas: ". $_POST['psw']." - ". md5($Pass);
 }
 
 return $errortext;
