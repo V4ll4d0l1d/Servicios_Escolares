@@ -1132,4 +1132,45 @@ function texto_becas($seccion) {
     }
 }
 
+//*************************************************************************************************
+// Funcion:     contacto
+// Descripción: Escribe los datos de contacto en funcion a la seccion del alumno
+// Parametros:  Ninguno, los toma de variables de sesion
+//*************************************************************************************************
+function contacto(){
+// verificar si hay login y determinar las cadenas necesarias
+	if (isset($_SESSION['login']) && $_SESSION['login'] == 1) {
+		switch($_SESSION['Seccion']) {
+    case '0':
+      $correo="preescolar@valladolid.edu.mx";
+      $telefono="4433 13 2098 / 4433 41 6978";
+      break;
+    case '1':
+      $correo="primaria@valladolid.edu.mx";
+      $telefono="4433 12 3280 / 4433 12 3392";
+      break;
+    case '2':
+      $correo="secundaria@valladolid.edu.mx";
+      $telefono="4433 12 7137 / 4433 13 9886";
+      break;
+    case '3':
+      $correo="preparatoria@valladolid.edu.mx";
+      $telefono="4433 23 5150 / 4433 23 7130";
+      break;
+    case '4':
+      $correo="secretaria@umvalla.edu.mx";
+      $telefono="4433 43 0295 / 4433 23 7161";
+      break;
+  }
+	if ($_SESSION['Seccion']<5) {   //No es Administrativo, es necesario poner los datos de contacto
+    echo '<section id="contactUs">'."\n";
+    echo '<p id="specialMargin">La comunicación del Instituto con sus alumnos es importante. Para ello ponemos a tu disposición los siguientes medios:</p>'."\n";
+	  echo '<ul class="contact">'."\n";
+    echo '<li class="icon solid fa-envelope">'.$correo.'</li>'."\n";
+    echo '<li class="icon solid fa-phone">'.$telefono.'</li>'."\n";
+    echo '</ul>'."\n";
+	  echo '</section>'."\n";
+  }
+	}
+}
 
