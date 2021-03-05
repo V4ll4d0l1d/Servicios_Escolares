@@ -226,6 +226,55 @@ function seccion_nombre($seccion, $ctx) {
     return $nombre;
 }
 
+
+function grado_seccion() {
+$grados = 0;
+    switch ($_SESSION['Seccion']) {
+        case 0:
+            $grados = 3;
+            break;
+        case 1:
+            $grados = 6;
+            break;
+        case 2:
+            $grados = 3;
+            break;
+        case 3:
+            $grados = 6;
+            break;
+        case 4:
+            $grados = 8;
+            break;
+    }
+    return $grados;
+}
+
+
+
+// for jpg 
+function resize_imagejpg($file, $w, $h) {
+   $src = imagecreatefromjpeg($file);
+   $dst = imagescale($src, $w, $h);
+   return $dst;
+}
+
+ // for png
+function resize_imagepng($file, $w, $h) {
+   $src = imagecreatefrompng($file);
+   $dst = imagescale($src, $w, $h);
+   return $dst;
+}
+
+// for gif
+function resize_imagegif($file, $w, $h) {
+   $src = imagecreatefromgif($file);
+   $dst = imagescale($src, $w, $h);
+   return $dst;
+}
+
+
+
+
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
 //******************************************************************************************************************************
@@ -256,7 +305,6 @@ echo '<meta charset="utf-8" />'."\n";
 echo '<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />'."\n";
 echo '<link rel="stylesheet" href="assets/css/main.css" />'."\n";
 echo '<link href="assets/css/fontawesome-all.min.css" rel="stylesheet">'."\n";
-echo '<link href="assets/css/style.css" rel="stylesheet">'."\n";
 echo '</head>'."\n";
 echo '<body class="is-preload">'."\n";
 echo '<div id="wrapper">'."\n";         // Inicia el div que contiene todo  
@@ -270,8 +318,7 @@ if ($_SESSION['login'] == 1) {
 }
 echo '<ul class="icons">'."\n";
 if ($_SESSION['login'] == 1) {
-    echo '<a href="logout.php" class="logo"><li class="icon solid fa-sign-out-alt" style="width:auto;">Salir</li></a>'."\n";
-	//echo '<a href="logout.php" class="logo"><li class="icon solid fa-sign-out-alt" style="width:auto;">'.$_SESSION['Id'].'</li></a>'."\n";
+    echo '<a href="logout.php" class="logo"><li class="icon solid fa-sign-out-alt" style="width:auto;">'.$_SESSION['Id'].'</li></a>'."\n";
 } else {
 ?>
     <a href="#" class="logo"><li class="icon solid fa-key" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Ingresar</li></a>
@@ -321,7 +368,25 @@ if (isset($_SESSION['Privs']) && $_SESSION['Privs'] > 1) {      // Solo se ejecu
     switch ($pos) {
         case 1:     // se utiliza para copiar este texto en el header; el parametro es la matricula del alumno a consultar
             ?>
-
+<script>
+function showUser(str) {
+  if (str == "") {
+    document.getElementById("info").innerHTML = "";
+    return;
+  } else {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        //document.getElementById("info").style.display='block';
+        document.getElementById("info").innerHTML = this.responseText;
+        document.getElementById("info").style.display='inline-block';
+      }
+    };
+    xmlhttp.open("GET","getuser.php?q="+str,true);
+    xmlhttp.send();
+  }
+}
+</script>
 <?php
         break;
     case 2:     // se utiliza para copiar este texto en el footer
@@ -387,34 +452,7 @@ function navbar(){
 			</div>
 		</div>
 		<div class="dropdown">
-				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ENLACES</button>
-					<div class="dropdown-content">
-						<a href="http://aulavirtual.umvalla.edu.mx" target="_blank">Aula Virtual</a>
-						<a href="http://valladolid.edu.mx" target="_blank">Instituto Valladolid</a>
-						<a href="http://umvalla.edu.mx" target="_blank">Universidad Marista Valladolid</a>';
-						if (isset($_SESSION['Id'])) {
-							switch ($_SESSION['Seccion']) {
-								case 0:
-									echo '<a href="media/Anuario_Preescolar.pdf" target="_blank">Anuario Escolar</a>';
-								break;
-								case 1:
-									echo '<a href="media/Anuario_Primaria.pdf" target="_blank">Anuario Escolar</a>';
-								break;
-								case 2:
-									echo '<a href="media/Anuario_Secundaria.pdf" target="_blank">Anuario Escolar</a>';
-								break;
-								case 3:
-									echo '<a href="media/Anuario_Bachillerato.pdf" target="_blank">Anuario Escolar</a>';
-								break;
-								case 4:
-									echo '<a href="media/Anuario_Universidad.pdf" target="_blank">Anuario Escolar</a>';
-								break;
-							}
-						}
-				echo	'</div>
-				</div>
-			<a class="active" href="index.php#contactUs" style><i class="fa fa-fw fa-user"></i> CONTACTO</a>
-		<div class="dropdown">
+			<button class="dropbtn"><i class="fa fa-fw fa-user"></i> CONTACTO</button>
 			<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
 			<i class="fa fa-bars"></i></a>
 		</div>';
@@ -459,7 +497,6 @@ function navbar(){
 						}
 				echo	'</div>
 				</div>
-				<a class="active" href="index.php#contactUs" style><i class="fa fa-fw fa-user"></i> CONTACTO</a>
 				<div class="dropdown">
 					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
 				<i class="fa fa-bars"></i></a>
@@ -494,8 +531,7 @@ function navbar(){
 							}
 						}
 				echo	'</div>
-				</div>
-				<div class="dropdown">
+				</div><div class="dropdown">
 					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
 					<i class="fa fa-bars"></i></a>
 				</div>';
@@ -506,7 +542,7 @@ function navbar(){
 					<div class="dropdown-content">
 						<a href="informacion.php">Información</a>
 						<a href="comunicacion.php">Circulares</a>
-						<a href="avisos">Avisos</a>
+						<a href="avisos.php">Avisos</a>
 						<a href="bloqueo.php">Bloqueo/Desbloqueo</a>
 					</div>
 				</div>
@@ -537,7 +573,7 @@ function navbar(){
 // Footer
 function footer(){
 echo '<footer id="footer">'."\n";
-echo '<p class="copyright">&copy; Instituto   Valladolid.  Todos  los  derechos  reservados.</a></p>'."\n";
+echo '<p class="copyright">&copy; Instituto Valladolid. Todos los derechos reservados.</a></p>'."\n";
 echo '</footer>'."\n";
 }
 
@@ -624,7 +660,7 @@ if ($user) {
 } else {
 	$errorflag += 1;
 	$_SESSION['login'] = 0;
-	$errortext = "Credenciales de acceso no válidas: ". $_POST['psw']." - ". md5($Pass);
+	$errortext = "Credenciales de acceso no válidas";
 }
 
 return $errortext;
@@ -638,27 +674,59 @@ return $errortext;
 // Parametros:  Seccion, grado
 //*************************************************************************************************
 
-function getAvisos($seccion, $grado) {
+function getAvisos($seccion, $grado, $grupo) {
+    
+    echo '<section>'."\n";
+    echo '<header class=""><h2>Avisos</h2></header>'."\n";
+    echo '<div class="box alt">'."\n";
+    echo '<div class="row gtr-50 gtr-uniform">'."\n";
     $conn = new aviso();
-    $aviso = $conn->leer_avisos($seccion, $grado);
+    $aviso = $conn->leer_avisos_grupo($seccion, $grupo);
     $indice = count($aviso);
     if ($indice>0) {
-    		echo '<section>'."\n";
-    		echo '<header class=""><h2>Avisos</h2></header>'."\n";
-    		echo '<div class="box alt">'."\n";
-            echo '<div class="row gtr-50 gtr-uniform">'."\n";
-            foreach($aviso as $contenido) {
-                echo '<div class="col-4"><span class="image fit"><a href="'.$contenido['Url'].'" class="image"><img src="images/'.$contenido['Imagen'].'" alt="" /></a></span>'."\n";
-                echo '<h3>'.$contenido['Titulo'].'</h3>'."\n";
-                echo '<p>'.$contenido['Contenido'].'</p>'."\n";
-                echo '</div>'."\n";
-            }
+        foreach($aviso as $contenido) {
+            echo '<div class="col-4"><span class="image fit"><a href="'.$contenido['Url'].'" target="_blank" class="image"><img src="'.$contenido['Imagen'].'" alt="" /></a></span>'."\n";
+            echo '<h4>'.$contenido['Titulo'].'</h4>'."\n";
+            echo '<p>'.$contenido['Contenido'].'</p>'."\n";
             echo '</div>'."\n";
-            echo '</div>'."\n";
-            echo '</section>'."\n";        
+        }
     }
+    $aviso2 = $conn->leer_avisos_grado($seccion, $grado, $grupo);
+    $indice = count($aviso2);
+    if ($indice>0) {
+        foreach($aviso2 as $contenido) {
+            echo '<div class="col-4"><span class="image fit"><a href="'.$contenido['Url'].'" target="_blank" class="image"><img src="'.$contenido['Imagen'].'" alt="" /></a></span>'."\n";
+            echo '<h4>'.$contenido['Titulo'].'</h4>'."\n";
+            echo '<p>'.$contenido['Contenido'].'</p>'."\n";
+            echo '</div>'."\n";
+        }
+    }
+    echo '</div>'."\n";
+    echo '</div>'."\n";
+    echo '</section>'."\n";        
 }
 
+function showAvisos() {
+    $conn = new aviso();
+    $lista = $conn->lista_avisos();
+    $indice = count($lista);
+    if ($indice>0) {
+        echo '  <table>
+                <tr><th>Sección</th><th>Grado</th><th>Grupo</th><th>Título</th><th>URL</th><th>Activo</th><th>Inicio</th><th>Fin</th><th>Usuario</th></tr>'."\n"; // 10 columnas
+        foreach($lista as $datos) {
+            echo '  <tr><td>'.$datos['Seccion'].'</td><td>'.$datos['Grado'].' </td><td>'.$datos['Grupo'].'</td>
+                    <td>'.$datos['Titulo'].'</td><td>'.$datos['Url'].' </td><td id="lock_'.$datos['Consecutivo'].'" >';
+                    if ($datos['Activo'] == 'Si') {
+                        echo '<a href="#"><i class="fas fa-eye" onclick="unlockaviso('.$datos['Consecutivo'].', 1)"></i></a>'; 
+                    } else { 
+                        echo '<a href="#"><i class="fas fa-eye-slash" onclick="unlockaviso('.$datos['Consecutivo'].', 2)"></i></a>'; 
+                    }
+                    echo '</td><td>'.$datos['Fecha_Inicio'].'</td><td>'.$datos['Fecha_Fin'].' </td><td>'.$datos['Usuario'].'</td></tr>
+                    <tr><td colspan = 9><b>Contenido:</b> '.$datos['Contenido'].'</td></tr>';
+        }
+        echo '</table>'."\n";
+    }
+}
 
 //*************************************************************************************************
 // Funcion:     GrupoActivo
@@ -754,10 +822,7 @@ function listado($grupo) {
             echo '<tr><td>'.$datos['Id'].'</td><td>'.$datos['Apellidos'].' </td><td>'.$datos['Nombre'].'</td>'."\n";
             echo '<td><center><a href="validpdf.php?context=1&id_alumno='.$datos['Id'].'" target="_blank"><i class="fas fa-book-open"></i></a></center></td>'."\n";
             echo '<td><center><a href="validpdf.php?context=2&id_alumno='.$datos['Id'].'" target="_blank"><i class="fas fa-money-check-alt"></i></a></center></td>'."\n";
-            
-			echo '<td><center><a href="informacion.php?id_alumno='.$datos['Id'].'" class="logo"><i class="fas fa-address-card" onclick="document.getElementById(\'info\').style.display=\'block\'" style="width:auto;"></a></i></center></td></tr>';
-			
-			//echo '<td><center><a href="#" class="logo"--><i class="fas fa-address-card" onclick="'.showUser($datos['Id']).'" style="width:auto;"></a></i></center></td></tr>'."\n";
+            echo '<td><center><a href="#" class="logo"><i class="fas fa-address-card" onclick="showUser('.$datos['Id'].')" style="width:auto;"></a></i></center></td></tr>'."\n";
         }
         echo '</table>'."\n";
         
@@ -771,6 +836,7 @@ function listado($grupo) {
 //*************************************************************************************************
 
 function listado_admon($grupo) {
+    $ruta = "boletas/";
     $conn = new alumnos();
     $lista = $conn->lista_alumnos($grupo);
     $indice = count($lista);
@@ -780,7 +846,12 @@ function listado_admon($grupo) {
         foreach($lista as $datos) {
             echo '<tr><td>'.$datos['Id'].'</td><td>'.$datos['Apellidos'].' </td><td>'.$datos['Nombre'].'</td>'."\n";
             echo '<td><center><a href="validpdf.php?context=1&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-file-pdf"></i></center></td>';
-            echo '<td><center><a href="#"><i class="fas fa-unlock-alt" onclick="unlock('.$datos['Id'].')"></i></a></center></td>';
+            $archivo = $ruta.$datos['Id'].'.pdf';
+            if (file_exists($archivo)) 	{ 
+                echo '<td><center><a href="#"><i class="fas fa-unlock" onclick="unlock('.$datos['Id'].')"></i></a></center></td>';
+            } else {
+                echo '<td><center><a href="#"><i class="fas fa-lock" onclick="unlock('.$datos['Id'].')"></i></a></center></td>';
+            }
             echo '<td><center><a href="validpdf.php?context=2&id_alumno='.$datos['Id'].'" target="_blank"><i class="fas fa-money-check-alt"></i></a></center></td>';
             echo '<td><center><a href="#" class="logo"><i class="fas fa-address-card" onclick="showUser('.$datos['Id'].')"></a></i></center></td></tr>'."\n";
         }
@@ -862,7 +933,7 @@ function listado_becas($tipo) { // El tipo determina qué es lo que buscará (1:
 
     $indice = count($lista);
     if ($indice>0) {
-        echo '<table id="responsiveTable">'."\n";
+        echo '<table>'."\n";
         echo '<tr><th>Matrícula</th><th>Apellidos</th><th>Nombres</th>';
         if ($tipo == 2) { echo '<th>Grupo</th>'; }
         echo '<th>Status</th><th><center>Solicitud</center></th><th><center>Boleta</center></th>';
@@ -875,7 +946,7 @@ function listado_becas($tipo) { // El tipo determina qué es lo que buscará (1:
             echo '<td><center><a href="validpdf.php?context=1&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-file-pdf"></i></center></td>';
             echo '<td><center><a href="validpdf.php?context=7&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-file-invoice-dollar"></i></center></td>';
             echo '<td><center><a href="validpdf.php?context=8&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-address-card"></i></center></td>';
-            echo '<td><center><a href="validpdf.php?context=9&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-hand-holding-usd"></i></center></td>';
+            echo '<td><center><a href="validpdf.php?context=9&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-home"></i></center></td>';
         }
         echo '</table>'."\n";
         
@@ -893,13 +964,13 @@ function estatus($status) {
 $cadena = '';
 switch ($status) {
     case 0:
-         $cadena = '<i class="fas fa-search" style="color: #0000ad;"></i>';
+         $cadena = '<i class="fas fa-search"></i>';
         break;
     case 1:
-        $cadena = '<i class="fas fa-times" style="color: #dc0000;"></i>';
+        $cadena = '<i class="fas fa-times"></i>';
         break;
     case 2:
-        $cadena = '<i class="fas fa-check" style="color: #009400;"></i>';
+        $cadena = '<i class="fas fa-check"></i>';
         break;
 }
 return $cadena;
@@ -1061,88 +1132,4 @@ function texto_becas($seccion) {
     }
 }
 
-//*************************************************************************************************
-// Funcion:     contacto
-// Descripción: Escribe los datos de contacto en funcion a la seccion del alumno
-// Parametros:  Ninguno, los toma de variables de sesion
-//*************************************************************************************************
-function contacto(){
-// verificar si hay login y determinar las cadenas necesarias
-	if (isset($_SESSION['login']) && $_SESSION['login'] == 1) {
-		switch($_SESSION['Seccion']) {
-    case '0':
-      $correo="preescolar@valladolid.edu.mx";
-      $telefono="4433 13 2098 / 4433 41 6978";
-      break;
-    case '1':
-      $correo="primaria@valladolid.edu.mx";
-      $telefono="4433 12 3280 / 4433 12 3392";
-      break;
-    case '2':
-      $correo="secundaria@valladolid.edu.mx";
-      $telefono="4433 12 7137 / 4433 13 9886";
-      break;
-    case '3':
-      $correo="preparatoria@valladolid.edu.mx";
-      $telefono="4433 23 5150 / 4433 23 7130";
-      break;
-    case '4':
-      $correo="secretaria@umvalla.edu.mx";
-      $telefono="4433 43 0295 / 4433 23 7161";
-      break;
-  }
-	if ($_SESSION['Seccion']<5) {   //No es Administrativo, es necesario poner los datos de contacto
-    echo '<section id="contactUs">'."\n";
-    echo '<p id="specialMargin">La comunicación del Instituto con sus alumnos es importante. Para ello ponemos a tu disposición los siguientes medios:</p>'."\n";
-	  echo '<ul class="contact">'."\n";
-    echo '<li class="icon solid fa-envelope">'.$correo.'</li>'."\n";
-    echo '<li class="icon solid fa-phone">'.$telefono.'</li>'."\n";
-    echo '</ul>'."\n";
-	  echo '</section>'."\n";
-  }
-	}
-}
 
-
-function showUser($q){
-	// echo $q;
-	echo '<div id="info" class="modal"><form class="modal-content animate">'."\n";
-	echo '<div class="imgcontainer"><span onclick="document.getElementById(\'info\').style.display=\'none\'" class="close" title="Close Modal">&times;</span></div>'."\n";
-	echo '<div class="container">'."\n";
-
-	$conexionBD=new alumnos();
-	$resultado=$conexionBD->lista_alumnos_contacto($q);
-	if (!$resultado) { echo "holi";// No hay datos para consultar, inicializar Valores
-		$calle_ = " ";
-		$colonia_ = " ";
-		$ciudad_ = " ";
-		$estado_ = " ";
-		$postal_ = " ";
-		$tel1_ = " ";
-		$cel1_ = " ";
-		$correo_ = " ";
-	} else {    // tomamos los valores
-		foreach ($resultado as $registro) {
-			$calle_ = $registro['Calle'];
-			$colonia_ = $registro['Colonia'];
-			$ciudad_ = $registro['Ciudad'];
-			$estado_ = $registro['Estado'];
-			$postal_ = $registro['Postal'];
-			$tel1_ = $registro['TelFijo'];
-			$cel1_ = $registro['Celular'];
-			$correo_ = $registro['Correo'];
-		}
-	}
-	echo '<h3>Datos de Contacto</h3><table width="60%">'."\n";
-	echo '<tr><td>Calle:</td><td>'.$calle_.'</td></tr>'."\n";
-	echo  '<tr><td>Colonia:</td><td>'.$colonia_.'</td></tr>'."\n";
-	echo '<tr><td>Ciudad:</td><td>'.$ciudad_.'</td></tr>'."\n";
-	echo '<tr><td>Estado:</td><td>'.nomestado($estado_).'</td></tr>'."\n";
-	echo '<tr><td>Código Postal:</td><td>'.$postal_.'</td></tr>'."\n";
-	echo '<tr><td>Teléfono:</td><td>'.$tel1_.'</td></tr>'."\n";
-	echo '<tr><td>Celular:</td><td>'.$cel1_.'</td></tr>'."\n";
-	echo '<tr><td>Correo electrónico:</td><td>'.$correo_.'</td></tr>'."\n";
-	echo '</table>';
-	echo '</div>'."\n";
-	echo '</form></div>'."\n";
-}
