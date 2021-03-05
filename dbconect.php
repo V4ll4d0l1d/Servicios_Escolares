@@ -509,7 +509,7 @@ public function leer_avisos_grado($Seccion, $Grado, $Grupo){
     $conn=new Conexion();
     try {
         //SELECT Seccion, Grado, Grupo, Titulo, Contenido, Url, Imagen FROM Avisos WHERE Seccion = "LFR" and Grado = '0' or grado ='1' and Grupo != "LFR11" and Activo = 'Si'
-        $stmt = $conn->prepare ("SELECT Seccion, Grado, Titulo, Contenido, Url, Imagen FROM Avisos WHERE Seccion = :ss AND Grado = 0 OR Grado = :pp AND Grupo != :gg AND curdate() > Fecha_Inicio AND curdate() < Fecha_Fin AND Activo = 'Si'");
+        $stmt = $conn->prepare ("SELECT Seccion, Grado, Titulo, Contenido, Url, Imagen FROM Avisos WHERE Seccion = :ss AND (Grado = 0 OR Grado = :pp) AND Grupo != :gg AND curdate() > Fecha_Inicio AND curdate() < Fecha_Fin AND Activo = 'Si'");
         
         $stmt->bindParam(':ss', $Seccion);
         $stmt->bindParam(':pp', $Grado);
