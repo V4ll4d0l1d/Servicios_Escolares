@@ -226,6 +226,55 @@ function seccion_nombre($seccion, $ctx) {
     return $nombre;
 }
 
+
+function grado_seccion() {
+$grados = 0;
+    switch ($_SESSION['Seccion']) {
+        case 0:
+            $grados = 3;
+            break;
+        case 1:
+            $grados = 6;
+            break;
+        case 2:
+            $grados = 3;
+            break;
+        case 3:
+            $grados = 6;
+            break;
+        case 4:
+            $grados = 8;
+            break;
+    }
+    return $grados;
+}
+
+
+
+// for jpg 
+function resize_imagejpg($file, $w, $h) {
+   $src = imagecreatefromjpeg($file);
+   $dst = imagescale($src, $w, $h);
+   return $dst;
+}
+
+ // for png
+function resize_imagepng($file, $w, $h) {
+   $src = imagecreatefrompng($file);
+   $dst = imagescale($src, $w, $h);
+   return $dst;
+}
+
+// for gif
+function resize_imagegif($file, $w, $h) {
+   $src = imagecreatefromgif($file);
+   $dst = imagescale($src, $w, $h);
+   return $dst;
+}
+
+
+
+
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
 //******************************************************************************************************************************
@@ -493,7 +542,7 @@ function navbar(){
 					<div class="dropdown-content">
 						<a href="informacion.php">Información</a>
 						<a href="comunicacion.php">Circulares</a>
-						<a href="avisos">Avisos</a>
+						<a href="avisos.php">Avisos</a>
 						<a href="bloqueo.php">Bloqueo/Desbloqueo</a>
 					</div>
 				</div>
@@ -625,27 +674,59 @@ return $errortext;
 // Parametros:  Seccion, grado
 //*************************************************************************************************
 
-function getAvisos($seccion, $grado) {
+function getAvisos($seccion, $grado, $grupo) {
+    
+    echo '<section>'."\n";
+    echo '<header class=""><h2>Avisos</h2></header>'."\n";
+    echo '<div class="box alt">'."\n";
+    echo '<div class="row gtr-50 gtr-uniform">'."\n";
     $conn = new aviso();
-    $aviso = $conn->leer_avisos($seccion, $grado);
+    $aviso = $conn->leer_avisos_grupo($seccion, $grupo);
     $indice = count($aviso);
     if ($indice>0) {
-    		echo '<section>'."\n";
-    		echo '<header class=""><h2>Avisos</h2></header>'."\n";
-    		echo '<div class="box alt">'."\n";
-            echo '<div class="row gtr-50 gtr-uniform">'."\n";
-            foreach($aviso as $contenido) {
-                echo '<div class="col-4"><span class="image fit"><a href="'.$contenido['Url'].'" class="image"><img src="images/'.$contenido['Imagen'].'" alt="" /></a></span>'."\n";
-                echo '<h4>'.$contenido['Titulo'].'</h4>'."\n";
-                echo '<p>'.$contenido['Contenido'].'</p>'."\n";
-                echo '</div>'."\n";
-            }
+        foreach($aviso as $contenido) {
+            echo '<div class="col-4"><span class="image fit"><a href="'.$contenido['Url'].'" target="_blank" class="image"><img src="'.$contenido['Imagen'].'" alt="" /></a></span>'."\n";
+            echo '<h4>'.$contenido['Titulo'].'</h4>'."\n";
+            echo '<p>'.$contenido['Contenido'].'</p>'."\n";
             echo '</div>'."\n";
-            echo '</div>'."\n";
-            echo '</section>'."\n";        
+        }
     }
+    $aviso2 = $conn->leer_avisos_grado($seccion, $grado, $grupo);
+    $indice = count($aviso2);
+    if ($indice>0) {
+        foreach($aviso2 as $contenido) {
+            echo '<div class="col-4"><span class="image fit"><a href="'.$contenido['Url'].'" target="_blank" class="image"><img src="'.$contenido['Imagen'].'" alt="" /></a></span>'."\n";
+            echo '<h4>'.$contenido['Titulo'].'</h4>'."\n";
+            echo '<p>'.$contenido['Contenido'].'</p>'."\n";
+            echo '</div>'."\n";
+        }
+    }
+    echo '</div>'."\n";
+    echo '</div>'."\n";
+    echo '</section>'."\n";        
 }
 
+function showAvisos() {
+    $conn = new aviso();
+    $lista = $conn->lista_avisos();
+    $indice = count($lista);
+    if ($indice>0) {
+        echo '  <table>
+                <tr><th>Sección</th><th>Grado</th><th>Grupo</th><th>Título</th><th>URL</th><th>Activo</th><th>Inicio</th><th>Fin</th><th>Usuario</th></tr>'."\n"; // 10 columnas
+        foreach($lista as $datos) {
+            echo '  <tr><td>'.$datos['Seccion'].'</td><td>'.$datos['Grado'].' </td><td>'.$datos['Grupo'].'</td>
+                    <td>'.$datos['Titulo'].'</td><td>'.$datos['Url'].' </td><td id="lock_'.$datos['Consecutivo'].'" >';
+                    if ($datos['Activo'] == 'Si') {
+                        echo '<a href="#"><i class="fas fa-eye" onclick="unlockaviso('.$datos['Consecutivo'].', 1)"></i></a>'; 
+                    } else { 
+                        echo '<a href="#"><i class="fas fa-eye-slash" onclick="unlockaviso('.$datos['Consecutivo'].', 2)"></i></a>'; 
+                    }
+                    echo '</td><td>'.$datos['Fecha_Inicio'].'</td><td>'.$datos['Fecha_Fin'].' </td><td>'.$datos['Usuario'].'</td></tr>
+                    <tr><td colspan = 9><b>Contenido:</b> '.$datos['Contenido'].'</td></tr>';
+        }
+        echo '</table>'."\n";
+    }
+}
 
 //*************************************************************************************************
 // Funcion:     GrupoActivo
@@ -755,6 +836,7 @@ function listado($grupo) {
 //*************************************************************************************************
 
 function listado_admon($grupo) {
+    $ruta = "boletas/";
     $conn = new alumnos();
     $lista = $conn->lista_alumnos($grupo);
     $indice = count($lista);
@@ -764,7 +846,12 @@ function listado_admon($grupo) {
         foreach($lista as $datos) {
             echo '<tr><td>'.$datos['Id'].'</td><td>'.$datos['Apellidos'].' </td><td>'.$datos['Nombre'].'</td>'."\n";
             echo '<td><center><a href="validpdf.php?context=1&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-file-pdf"></i></center></td>';
-            echo '<td><center><a href="#"><i class="fas fa-unlock-alt" onclick="unlock('.$datos['Id'].')"></i></a></center></td>';
+            $archivo = $ruta.$datos['Id'].'.pdf';
+            if (file_exists($archivo)) 	{ 
+                echo '<td><center><a href="#"><i class="fas fa-unlock" onclick="unlock('.$datos['Id'].')"></i></a></center></td>';
+            } else {
+                echo '<td><center><a href="#"><i class="fas fa-lock" onclick="unlock('.$datos['Id'].')"></i></a></center></td>';
+            }
             echo '<td><center><a href="validpdf.php?context=2&id_alumno='.$datos['Id'].'" target="_blank"><i class="fas fa-money-check-alt"></i></a></center></td>';
             echo '<td><center><a href="#" class="logo"><i class="fas fa-address-card" onclick="showUser('.$datos['Id'].')"></a></i></center></td></tr>'."\n";
         }
