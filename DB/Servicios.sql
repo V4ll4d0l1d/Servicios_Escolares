@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 05-03-2021 a las 14:18:23
+-- Tiempo de generación: 05-03-2021 a las 14:26:47
 -- Versión del servidor: 8.0.23-0ubuntu0.20.04.1
 -- Versión de PHP: 7.4.3
 
@@ -272,7 +272,7 @@ INSERT INTO `Titulares` (`IdUsuario`, `Ciclo`, `IdGrupo`, `Consecutivo`) VALUES
 
 CREATE TABLE `Usuarios` (
   `Id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `Pass` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `Pass` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `Type` int NOT NULL DEFAULT '0',
   `Privileges` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='Tabla de Usuarios (sin datos)';
@@ -282,13 +282,13 @@ CREATE TABLE `Usuarios` (
 --
 
 INSERT INTO `Usuarios` (`Id`, `Pass`, `Type`, `Privileges`) VALUES
-('160023', '123456', 0, 0),
-('160024', '123456', 0, 0),
-('190001', '123456', 0, 0),
-('190002', '123456', 0, 0),
-('becas', 'becas', 1, 4),
-('docente', 'docente', 1, 2),
-('jjmoreno23', '123456', 1, 5);
+('160023', 'e10adc3949ba59abbe56e057f20f883e', 0, 0),
+('160024', 'e10adc3949ba59abbe56e057f20f883e', 0, 0),
+('190001', 'e10adc3949ba59abbe56e057f20f883e', 0, 0),
+('190002', 'e10adc3949ba59abbe56e057f20f883e', 0, 0),
+('becas', '85e0c3574dab7f1ce9bd720b96b69645', 1, 4),
+('docente', 'ac99fecf6fcb8c25d18788d14a5384ee', 1, 2),
+('jjmoreno23', 'e10adc3949ba59abbe56e057f20f883e', 1, 5);
 
 --
 -- Índices para tablas volcadas
