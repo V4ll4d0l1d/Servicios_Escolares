@@ -7,6 +7,7 @@ session_start();
 include ("libs.php");           /* Librerias */
 include ("dbconect.php");
 $title = 'Información';
+
 // VALIDAR SI YA SE INICIO SESION
 IF (isset($_SESSION['login'])&&($_SESSION['login'] == 1)) {
     // sesion iniciada
@@ -20,6 +21,9 @@ IF (isset($_SESSION['login'])&&($_SESSION['login'] == 1)) {
         $error = Ingresar($_POST['username'], $_POST['psw']); // Validarlo, si es false no existe el usuario
     }
 }
+$matricula = "";
+    $matricula=$_GET['id_alumno'];
+
 
 
 headerfull_($title);
@@ -39,6 +43,8 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                     if (isset($_SESSION['Activo'])) {
                         echo '<h3>'.secciones(). ' - Grupo: '.$_SESSION['Activo'].'</h3>';
                          listado($_SESSION['Activo']);
+						 //echo $matricula;
+						 showUser($matricula);
                     } else {
                         echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
                     }
@@ -64,6 +70,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                          listado_admon($_SESSION['Activo']);
                     } else {
                         echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
+						showUser();
                     }
                     break;
                 }
