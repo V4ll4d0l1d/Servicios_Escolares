@@ -28,7 +28,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
 	navbar();
     switch ($_SESSION['Type']) {
     case 0:     // ALUMNO
-        getAvisos($_SESSION['Seccion'], $_SESSION['Grado']);
+        getAvisos(corto_seccion(), $_SESSION['Grado'], $_SESSION['IdGrupo']);
 		// Imprime los datos del alumno
         echo '<table>
 				<tr><th width=20%>Matricula</th><td>'.$_SESSION['Id'].'</td></tr>
@@ -77,10 +77,12 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                     if (isset($_POST['ctx'])) { $_SESSION['Carrera'] = $_POST['ctx']; } else { $_SESSION['Carrera'] = ''; }
                     // Seccion
                     if (isset($_POST['seccion'])) { $_SESSION['Seccion'] = $_POST['seccion']; } else { $_SESSION['Seccion'] = ''; }                    
-                    
+                }
+                // Si no viene de POST puede venir de otra página
+                if ((isset($_SESSION['Activo']) && $_SESSION['Activo'] != '') ||  (isset($_SESSION['Carrera']) && $_SESSION['Carrera'] != '')) {
                     // Mostrar seccion o grupo activo
                     echo '<h4>Selección: '.secciones();
-                    if($_SESSION['Activo'] != '') { echo '-'.$_SESSION['Activo']; }
+                    if (isset($_SESSION['Activo']) && $_SESSION['Activo'] != '') { echo '-'.$_SESSION['Activo']; }
                     echo '</h4>';
                     echo '<p>Ahora puedes elegir una opción del menú.</p><hr/>';
                     echo '<p>O cambiar tu grupo activo:</p>'."\n";
