@@ -503,6 +503,20 @@ function navbar(){
 				<i class="fa fa-bars"></i></a>
 				</div>';
             break;
+				case '3':     // ControlEscolar
+				echo '<div class="dropdown">
+				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
+					<div class="dropdown-content">
+						<a href="informacion.php">Reporte preinscripcion</a>
+						<!--a href="comunicacion.php">Concentrados</a-->
+					</div>
+				</div>
+				<div class="dropdown">
+					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
+					<i class="fa fa-bars"></i></a>
+				</div>';
+            break;
+			
 			case '4':
 				echo '<a class="active" href="listabecas.php">BECAS</a>
 				<a class="active" href="#">REPORTE ENTREGA</a>
