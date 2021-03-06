@@ -233,7 +233,8 @@ CREATE TABLE `Reinscripciones` (
   `Grado` int NOT NULL,
   `Status` int NOT NULL,
   `flag` int NOT NULL DEFAULT '0',
-  `Fecha` timestamp NOT NULL
+  `Fecha` timestamp NOT NULL,
+  `Observaciones` text NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
 
 --
