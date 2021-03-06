@@ -127,14 +127,14 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             echo '</div>'."\n";
             echo '<div class="col-6 col-12-small">'."\n";
             if ($ficheros[3] == '1') { 
-                echo '<input type="checkbox" id="idoficial_" name="idoficial_" checked disabled>'."\n".'<label><a href="'.$directorio.'/idoficial/'.$_SESSION['Id'].'.pdf" target = "_blank">Identificación Oficial</label>'."\n";
+                echo '<input type="checkbox" id="idoficial_" name="idoficial_" checked disabled>'."\n".'<label><a href="'.$directorio.'/idoficial/'.$_SESSION['Id'].'.pdf" target = "_blank">Identificación Oficial</a></label>'."\n";
             } else {
                 echo '<input type="checkbox" id="idoficial_" name="idoficial_" disabled>'."\n".'<label>Identificación Oficial</label>'."\n";
             }
             echo '</div>'."\n";
             echo '<div class="col-6 col-12-small">'."\n";
             if ($ficheros[4] == '1') { 
-                echo '<input type="checkbox" id="estudio_" name="estudio_" checked disabled>'."\n".'<label><a href="'.$directorio.'/estudio/'.$_SESSION['Id'].'.pdf" target = "_blank">Estudio Socioeconómico</label>'."\n";
+                echo '<input type="checkbox" id="estudio_" name="estudio_" checked disabled>'."\n".'<label><a href="'.$directorio.'/estudio/'.$_SESSION['Id'].'.pdf" target = "_blank">Estudio Socioeconómico</a></label>'."\n";
             } else {
                 echo '<input type="checkbox" id="estudio_" name="estudio_" disabled>'."\n".'<label>Estudio Socioeconómico</label>'."\n";
             }
