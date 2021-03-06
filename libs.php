@@ -982,13 +982,13 @@ function estatus($status) {
 $cadena = '';
 switch ($status) {
     case 0:
-         $cadena = '<i class="fas fa-search"></i>';
+         $cadena = '<i class="fas fa-search" style="color: #00008d"></i>';
         break;
     case 1:
-        $cadena = '<i class="fas fa-times"></i>';
+        $cadena = '<i class="fas fa-times" style="color: #ca0000"></i>';
         break;
     case 2:
-        $cadena = '<i class="fas fa-check"></i>';
+        $cadena = '<i class="fas fa-check" style="color: #008500"></i>';
         break;
 }
 return $cadena;
