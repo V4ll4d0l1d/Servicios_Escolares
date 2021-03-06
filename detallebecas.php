@@ -30,6 +30,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
         echo '<h3>No cuentas con los privilegios necesarios</h3>';
         break;
     case 4:     // Becas
+    case 5:     // Administrador
         // Validamos que viene la matrícula
         if (isset($_GET['id_alumno']) && $_GET['id_alumno'] != '') { $idAlumno = $_GET['id_alumno']; }
         if (isset($_GET['seccion']) && $_GET['seccion'] != '') { $SeccionAlumno = $_GET['seccion']; }
