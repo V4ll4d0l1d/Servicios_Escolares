@@ -32,6 +32,7 @@ headerfull_($title);
 
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
 if ($_SESSION['login'] == 1) { // realizó login exitoso
+	navbar();
     // validar el tipo de usuario
     switch ($_SESSION['Type']) {
     case 0:     // ALUMNO No debería estar aquí

@@ -21,8 +21,7 @@ IF (isset($_SESSION['login'])&&($_SESSION['login'] == 1)) {
         $error = Ingresar($_POST['username'], $_POST['psw']); // Validarlo, si es false no existe el usuario
     }
 }
-$matricula = "";
-    $matricula=$_GET['id_alumno'];
+if(isset($_GET['id_alumno'])){$matricula=$_GET['id_alumno'];}else{$matricula = "";}
 
 
 
