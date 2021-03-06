@@ -205,4 +205,6 @@ echo '</section>'."\n";
 /* Scripts */
 scripts();
 
+footer();
+
 ?>

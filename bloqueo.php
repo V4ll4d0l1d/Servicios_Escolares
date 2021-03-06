@@ -100,6 +100,6 @@ echo '</section>';
 /* Scripts */
 scripts();
 
-
+footer();
 
 ?>

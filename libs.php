@@ -563,6 +563,7 @@ function navbar(){
 						<a href="#">Perfiles</a>
 					</div>
 				</div>
+				<a class="active" href="index.php#contactUs" style><i class="fa fa-fw fa-user"></i> CONTACTO</a>
 				<div class="dropdown">
 					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
 					<i class="fa fa-bars"></i></a>
@@ -576,7 +577,7 @@ function navbar(){
 // Footer
 function footer(){
 echo '<footer id="footer">'."\n";
-echo '<p class="copyright">&copy; Instituto Valladolid. Todos los derechos reservados.</a></p>'."\n";
+echo '<p class="copyright">&copy; Instituto   Valladolid.   Todos los derechos reservados.</a></p>'."\n";
 echo '</footer>'."\n";
 }
 
