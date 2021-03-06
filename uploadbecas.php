@@ -287,7 +287,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             }       // Fin de validación de que se envio la matrícula en POST
         break;
         case 1:     // USUARIO - Validar el tipo de usuario
-             if ($_SESSION['Privs'] == 4) {         // Solo Becas puede modificar
+             if ($_SESSION['Privs'] >= 4) {         // Solo Becas puede modificar
                 if (isset($_POST['matricula'])) {      // Vienen datos del formulario
                     //Recuperamos datos del formulario
                     $_matricula = $_POST['matricula'];
