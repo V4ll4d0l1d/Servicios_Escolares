@@ -950,7 +950,7 @@ function listado_becas($tipo) { // El tipo determina qué es lo que buscará (1:
             echo '<td><center><a href="validpdf.php?context=1&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-file-pdf"></i></center></td>';
             echo '<td><center><a href="validpdf.php?context=7&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-file-invoice-dollar"></i></center></td>';
             echo '<td><center><a href="validpdf.php?context=8&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-address-card"></i></center></td>';
-            echo '<td><center><a href="validpdf.php?context=9&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-home"></i></center></td>';
+            echo '<td><center><a href="validpdf.php?context=9&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-hand-holding-usd"></i></center></td>';
         }
         echo '</table>'."\n";
         
