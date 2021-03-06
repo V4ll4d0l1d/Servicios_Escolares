@@ -106,37 +106,37 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             echo '</div>'."\n";
             echo '<div class="col-6 col-12-small">'."\n";
             if ($ficheros[0] == '1') { 
-                echo '<input type="checkbox" id="formato_" name="formato_" checked  disabled>'."\n".'<label for="formato_">Formato de Solicitud</label>'."\n";
+                echo '<input type="checkbox" id="formato_" name="formato_" checked  disabled>'."\n".'<label><a href="'.$directorio.'/formato/'.$_SESSION['Id'].'.pdf" target = "_blank">Formato de Solicitud</a></label>'."\n";
             } else { 
-                echo '<input type="checkbox" id="formato_" name="formato_" disabled>'."\n".'<label for="formato_">Formato de Solicitud</label>'."\n"; 
+                echo '<input type="checkbox" id="formato_" name="formato_" disabled>'."\n".'<label>Formato de Solicitud</label>'."\n"; 
             }
             echo '</div>'."\n";
             echo '<div class="col-6 col-12-small">'."\n";
             if ($ficheros[1] == '1') { 
-                echo '<input type="checkbox" id="boleta_" name="boleta_" checked disabled>'."\n".'<label for="boleta_">Boleta</label>'."\n";
+                echo '<input type="checkbox" id="boleta_" name="boleta_" checked disabled>'."\n".'<label><a href="'.$directorio.'/boleta/'.$_SESSION['Id'].'.pdf" target = "_blank">Boleta</a></label>'."\n";
             } else {
-                echo '<input type="checkbox" id="boleta_" name="boleta_" disabled>'."\n".'<label for="boleta_">Boleta</label>'."\n";
+                echo '<input type="checkbox" id="boleta_" name="boleta_" disabled>'."\n".'<label>Boleta</label>'."\n";
             }
             echo '</div>'."\n";
             echo '<div class="col-6 col-12-small">'."\n";
             if ($ficheros[2] == '1') { 
-                echo '<input type="checkbox" id="ingresos_" name="ingresos_" checked disabled>'."\n".'<label for="ingresos_">Comprobante de Ingresos</label>'."\n";
+                echo '<input type="checkbox" id="ingresos_" name="ingresos_" checked disabled>'."\n".'<label><a href="'.$directorio.'/ingresos/'.$_SESSION['Id'].'.pdf" target = "_blank">Comprobante de Ingresos</a></label>'."\n";
             } else {
-                echo '<input type="checkbox" id="ingresos_" name="ingresos_" disabled>'."\n".'<label for="ingresos_">Comprobante de Ingresos</label>'."\n";
+                echo '<input type="checkbox" id="ingresos_" name="ingresos_" disabled>'."\n".'<label>Comprobante de Ingresos</label>'."\n";
             }
             echo '</div>'."\n";
             echo '<div class="col-6 col-12-small">'."\n";
             if ($ficheros[3] == '1') { 
-                echo '<input type="checkbox" id="idoficial_" name="idoficial_" checked disabled>'."\n".'<label for="idoficial_">Identificación Oficial</label>'."\n";
+                echo '<input type="checkbox" id="idoficial_" name="idoficial_" checked disabled>'."\n".'<label><a href="'.$directorio.'/idoficial/'.$_SESSION['Id'].'.pdf" target = "_blank">Identificación Oficial</label>'."\n";
             } else {
-                echo '<input type="checkbox" id="idoficial_" name="idoficial_" disabled>'."\n".'<label for="idoficial_">Identificación Oficial</label>'."\n";
+                echo '<input type="checkbox" id="idoficial_" name="idoficial_" disabled>'."\n".'<label>Identificación Oficial</label>'."\n";
             }
             echo '</div>'."\n";
             echo '<div class="col-6 col-12-small">'."\n";
             if ($ficheros[4] == '1') { 
-                echo '<input type="checkbox" id="estudio_" name="estudio_" checked disabled>'."\n".'<label for="estudio_">Estudio Socioeconómico</label>'."\n";
+                echo '<input type="checkbox" id="estudio_" name="estudio_" checked disabled>'."\n".'<label><a href="'.$directorio.'/estudio/'.$_SESSION['Id'].'.pdf" target = "_blank">Estudio Socioeconómico</label>'."\n";
             } else {
-                echo '<input type="checkbox" id="estudio_" name="estudio_" disabled>'."\n".'<label for="estudio_">Estudio Socioeconómico</label>'."\n";
+                echo '<input type="checkbox" id="estudio_" name="estudio_" disabled>'."\n".'<label>Estudio Socioeconómico</label>'."\n";
             }
             echo '</div>'."\n";
             if (isset($status) && $status == 0) {
