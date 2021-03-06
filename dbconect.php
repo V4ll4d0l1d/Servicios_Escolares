@@ -247,10 +247,10 @@ public function insert_reinscripcion ($Matricula, $Seccion, $CicloAct, $CicloSig
 }
 
 // Actualiza Es Status de la solicitud de Beca de un alumno
-public function status_reinscripcion ($Matricula, $Status, $CicloAct) {
+public function status_reinscripcion ($Matricula, $Status, $CicloAct, $obs) {
     try {
         $conn = new Conexion();
-        $sql = "UPDATE Reincripciones SET Status=?, Fecha=now() WHERE Id=? and CicloAct=?";
+        $sql = "UPDATE Reinscripciones SET Status=?, Fecha=now() WHERE Id=? and CicloAct=?";
         $stmt = $conn->prepare($sql);
         if ($stmt->execute(array($Status, $Matricula, $CicloAct))) {
             return true;
@@ -265,6 +265,106 @@ public function status_reinscripcion ($Matricula, $Status, $CicloAct) {
     }
 }
 
+//Tabla de reinscripcion
+public function infoReinscripcionGeneral($seccion){
+	try{
+		$conn = new Conexion();
+		/*"SELECT idgrupo,datosidalumno.grado, count(datosidalumno.Id), count(reinscripciones.Id), cicloAct, cicloSig, reinscripciones.grado, status FROM `datosidalumno` left join reinscripciones on reinscripciones.Id=datosidalumno.Id WHERE datosidalumno.seccion=4 group by datosidalumno.IdGrupo, datosidalumno.Grado, status"*/
+        $stmt = $conn->prepare ("SELECT idgrupo,datosidalumno.grado, count(datosidalumno.Id), count(reinscripciones.Id), cicloAct, cicloSig, reinscripciones.grado, status FROM `datosidalumno` left join reinscripciones on reinscripciones.Id=datosidalumno.Id WHERE datosidalumno.seccion=:sc group by datosidalumno.IdGrupo, datosidalumno.Grado, status");
+		$stmt->bindParam(':sc', $seccion);
+        $stmt->execute();
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+		print_r($resultado);
+        return $resultado;	
+	}catch(PDOException $e){
+		 echo 'Error: '. $e->getMessage();
+        return false;
+	}
+}
+//Cantidad de alumnos inscritos por seccion, grupo 
+//Nivel basico
+public function infoInscritos($seccion,$car){
+	$car1=$car."%";
+	try{
+		$conn = new Conexion();
+		$stmt = $conn->prepare ("SELECT Grado, count(*) FROM `datosidalumno` where Seccion=:sc and IdGrupo like :car group by Grado order by Grado");
+		$stmt->execute(array(':sc' => $seccion ,':car'=> $car1));
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;	
+	}catch(PDOException $e){
+		 echo 'Error: '. $e->getMessage();
+        return false;
+	}
+}
+//Cantidad de alumnos con proceso de reinscripcion
+public function cantReinscripcion($seccion,$carrera,$grado){
+	$car1=$carrera."%";
+	try{
+		$conn = new Conexion();
+		$stmt = $conn->prepare ("SELECT  count(*) FROM `reinscripciones` inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and datosidalumno.Grado=:grado");
+		$stmt->execute(array(':sc' => $seccion ,':car'=> $car1,':grado'=>$grado));
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;	
+	}catch(PDOException $e){
+		 echo 'Error: '. $e->getMessage();
+        return false;
+	}
+}
+//Cantidad de alumnos por status
+public function cantReinsStatus($seccion,$carrera,$grado,$estatus){
+	$car1=$carrera."%";
+	try{
+		$conn = new Conexion();
+		$stmt = $conn->prepare ("SELECT  count(*) FROM `reinscripciones` inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and datosidalumno.Grado=:grado and Status=:estatus");
+		$stmt->execute(array(':sc' => $seccion ,':car'=> $car1,':grado'=>$grado,':estatus'=>$estatus));
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+		//print_r ($resultado);
+        return $resultado;	
+	}catch(PDOException $e){
+		 echo 'Error: '. $e->getMessage();
+        return false;
+	}
+}
+//Status de reinscripcion
+public function estatusReinscripcion($matricula,$cicloAct){
+	try{
+		$conn = new Conexion();
+		$stmt = $conn->prepare ("SELECT  Status FROM `reinscripciones` where Id=:matricula and CicloAct=:cicloAct");
+		$stmt->execute(array(':matricula' => $matricula ,':cicloAct'=> $cicloAct));
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;	
+	}catch(PDOException $e){
+		 echo 'Error: '. $e->getMessage();
+        return false;
+	}
+}
+//OBSERVACIONES DE Reinscripciones
+public function ObservacionesReinscripcion($matricula,$cicloAct){
+	try{
+		$conn = new Conexion();
+		$stmt = $conn->prepare ("SELECT  Observaciones FROM `reinscripciones` where Id=:matricula and CicloAct=:cicloAct");
+		$stmt->execute(array(':matricula' => $matricula ,':cicloAct'=> $cicloAct));
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;	
+	}catch(PDOException $e){
+		 echo 'Error: '. $e->getMessage();
+        return false;
+	}
+}
+
+public function lista_reinscripcion($_seccion,$_grado,$_carrera,$_estatus,$_cicloAct){
+	$car1=$_carrera."%";
+	try{
+		$conn = new Conexion();
+		$stmt = $conn->prepare ("SELECT  * FROM `reinscripciones` inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and datosidalumno.Grado=:grado and Status=:estatus and CicloAct=:cicloAct");
+		$stmt->execute(array(':sc' => $_seccion,':car'=>$car1,':grado'=>$_grado,':estatus'=>$_estatus,':cicloAct'=>$_cicloAct));
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;	
+	}catch(PDOException $e){
+		 echo 'Error: '. $e->getMessage();
+        return false;
+	}
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // BECAS BECAS BECAS BECAS BECAS BECAS BECAS BECAS BECAS BECAS BECAS BECAS BECAS BECAS BECAS BECAS BECAS BECAS BECAS BECAS 

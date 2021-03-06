@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set("display_errors","On");
 ini_set("session.gc_maxlifetime","14400");
 session_start();
-
+	
 include ("libs.php");           /* Librerias */
 include ("dbconect.php");
 
@@ -19,15 +19,24 @@ IF (isset($_SESSION['login'])&&($_SESSION['login'] == 1)) {
 
 headerfull_('Reinscripcion');
 
+
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
 if ($_SESSION['login'] == 1) { // realizó login exitoso
 	navbar();
 	echo '<section>';
+
+//Para alumnos que se encuentran en el ultimo grado de su seccion que se quieren inscribir en la siguiente seccion, es decir, alumnos de 3ro de preescolar que desean inscribirse a primero de primaria
+		if ((0 === strncmp ($_SESSION['IdGrupo'], 'PRE3',4)) OR (0 === strncmp ($_SESSION['IdGrupo'], 'PRI6',4)) OR (0 === strncmp ($_SESSION['IdGrupo'], 'SEC3',4)) OR (0 === strncmp ($_SESSION['IdGrupo'], 'BAC3',4)) ){
+			$GradoSig = 1;
+			$Seccion=$_SESSION['Seccion']+1;
+		}else{
+			$GradoSig = $_SESSION['Grado']+1;
+			$Seccion=$_SESSION['Seccion'];
+		}
     // validar el tipo de usuario
     switch ($_SESSION['Type']) {
     case 0:     // ALUMNO
-        texto_reinscripcion($_SESSION['Seccion']);
-        // hacemos una consulta para verificar si hay datos previos.
+    // hacemos una consulta para verificar si hay datos previos.
         $conexionBD=new alumnos();
         $resultado=$conexionBD->lista_alumnos_contacto($_SESSION['Id']);
         if (!$resultado) {
@@ -45,9 +54,10 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                 $tel1_ = $registro['TelFijo'];
                 $cel1_ = $registro['Celular'];
             }
+		
             // Validamos que documentos existen, ponemos un 1 en cada posición si existe el fichero
             $ficheros = array('0','0','0','0');
-            $directorio = "reinscripcion/".$_SESSION['Seccion'];
+            $directorio = "reinscripcion/".$Seccion;
             $directorios = ["ficha", "contrato", "idoficial", "domicilio"];
             $extensiones = ['pdf','jpg','jpeg','png'];
             for ($i = 0; $i < 4; $i++) {
@@ -59,20 +69,43 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             }
         }
         // INICIALIZAMOS LOS VALORES DE REINSCRIPCION
-        $GradoSig = $_SESSION['Grado']+1;
-        if ($_SESSION['Seccion'] > 2) { $CicloSig = CICLOSIGS; } else { $CicloSig = CICLOSIGA; }
-        if ($_SESSION['Seccion'] > 2) { $CicloAct = CICLOACTS; } else { $CicloAct = CICLOACTA; }
-        ?>
-        
+		
+        if ($Seccion > 2) { $CicloSig = CICLOSIGS; } else { $CicloSig = CICLOSIGA; }
+        if ($Seccion > 2) { $CicloAct = CICLOACTS; } else { $CicloAct = CICLOACTA; }
+        $status=(estatus_reinscripcion($_SESSION['Id'],$CicloAct));
+		   if (isset($status)) {
+			    $flagdata=1;
+            // Existe un registro, ¿Cómo va el proceso?
+            switch ($status) {
+                case 0:    // En proceso
+                    echo '<h3>TRÁMITE EN PROCESO DE REVISIÓN</h3>';				
+                    break;
+                case 1:     // Modificacion de datos
+                    echo '<h3>REVISA LA DOCUMENTACION FALTANTE </h3>';
+                    break;
+                case 2:     // Aceptado
+                    echo '<h3>TRÁMITE FINALIZADO</h3>';
+                    break;
+            }
+            echo '<div class="col-12">'.observaciones_reinscripcion($_SESSION['Id'],$CicloAct).'<hr/></div>';
+            
+        } else {
+                    texto_reinscripcion($Seccion);
+					
+        }
+		?>
+        	
         <h3>Revisa la información y actualiza los datos necesarios</h3>
         <form id="contact" action="uploaddatos.php" method="post" enctype="multipart/form-data" >
          <div class="row gtr-uniform">
             <div class="col-3 col-12-small">
                 Matricula <input id="matricula" name="matricula" type="text" value="<?php echo $_SESSION['Id'] ?>" readonly /> 
             </div>
+		<?php if( $Seccion > 3){ ?>
             <div class="col-3 col-12-small">
                 Carrera <input id="carrera" name="carrera" type="text" value="<?php echo $_SESSION['Carrera'] ?>" readonly /> 
             </div>
+		<?php } ?>
            <div class="col-3 col-12-small">
                 Ciclo Reinscripción <input id="CicloSig" name="ciclosig" type="text" value="<?php echo $CicloSig ?>" readonly /> 
             </div>
@@ -175,8 +208,10 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             </div>
             <?php
                 echo '<input id="Flag" name="Flag" type="hidden" value="'.$flagfile.'">';   // 0 para insert, 1 para update
-                echo '<input id="flagdata" name="flagdata" type="hidden">';   // mayor a 0 si se modifico algún dato
+                echo '<input id="flagdata" name="flagdata" type="hidden" value="'. $flagdata.'">';   // mayor a 0 si se modifico algún dato
+				echo '<input id="datosModificados" name="datosModificados" type="hidden">';
                 echo '<input id="cicloact" name="cicloact" type="hidden" value="'.$CicloAct.'">';
+				echo '<input id="seccionsig" name="seccionsig" type="hidden" value="'.$Seccion.'">';
             ?>
             <div class="col-12">
                 <ul class="actions fit">
@@ -203,6 +238,15 @@ echo '</section>'."\n";
 
 /* ------------------- AQUI TERMINA LA SECCION CENTRAL DE INFORMACION -------------------*/
 /* Scripts */
-scripts();
-
 ?>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	camposMod="";
+  $("input").change(function(){
+	  camposMod+=this.id+"/";
+	  flagdata+=1;
+	$("#datosModificados").val(camposMod);
+  });
+});
+</script>

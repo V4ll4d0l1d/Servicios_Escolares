@@ -35,7 +35,10 @@ headerfull_('Reinscripcion');
 if ($_SESSION['login'] == 1) { // realizó login exitoso
     navbar();
     echo '<section>';
-// verifica que todos los datos vengan en el formulario y no sean vacios, en caso contrario debe Regresar al formulario
+        // validar el tipo de usuario       
+        switch ($_SESSION['Type']) {
+            case 0:     // ALUMNO Son los únicos que pueden subir sus datos
+			// verifica que todos los datos vengan en el formulario y no sean vacios, en caso contrario debe Regresar al formulario
 $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
                (isset($_POST['colonia']) && !empty($_POST['colonia'])) &&
                (isset($_POST['ciudad']) && !empty($_POST['ciudad'])) &&
@@ -57,15 +60,13 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
         echo 'window.location = "reinscripcion.php"'."\n"; 
         echo '</script>'."\n";
         header("Location: reinscripcion.php");
-    } else  {
-        // validar el tipo de usuario       
-        switch ($_SESSION['Type']) {
-            case 0:     // ALUMNO Son los únicos que pueden subir sus datos
+    } 
             if (isset($_POST['matricula'])) {
                 //Recuperamos datos del formulario
                 $_matricula = $_POST['matricula'];
                 $_nombre = $_POST['nombre'];
-                $_carrera = $_POST['carrera'];
+				if($_SESSION['Seccion']==4){
+					$_carrera = $_POST['carrera'];}
                 $_correo = $_POST['email'];
                 $_calle = htmlentities($_POST['calle']);
                 $_colonia = htmlentities($_POST['colonia']);
@@ -77,14 +78,17 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
                 $_ciclosig = htmlentities($_POST['ciclosig']);
                 $_cicloact = htmlentities($_POST['cicloact']);
                 $_gradosig = htmlentities($_POST['gradosig']);
+				$_seccionsig = htmlentities($_POST['seccionsig']);
+				echo $_seccionsig;
+				
                 $_flagdata = $_POST['flagdata'];        // hay cambios en los datos registrados
-                if ($_SESSION['Seccion'] > 2) { $_cicloact = CICLOACTS; } else { $_cicloact = CICLOACTA; }
+                if ($_seccionsig  > 2) { $_cicloact = CICLOACTS; } else { $_cicloact = CICLOACTA; }
                 
                 $_flag = $_POST['Flag'];    // 0 para insert, 1 para update
                 // --------- VALIDAMOS QUE EL USUARIO CORRESPONDA CON LOS DATOS ----------------
                 if ($_matricula == $_SESSION['Id'] ) {
                     // Determinar el directorio en función a la sección
-                    $target_dir = "reinscripcion/".$_SESSION['Seccion'];
+                    $target_dir = "reinscripcion/".$_seccionsig ;
                 // REVISAMOS LOS ARCHIVOS --------------------------------------------------------
                     // FICHA DE CONTROL ESCOLAR       
                     if ($_FILES["ficha"]["error"] == 0 && $ValidaF1 == 1) {
@@ -231,9 +235,11 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
                             $mail=$conexionBD->update_correo($_matricula, $_correo); 
                         } 
                     }
-                    if ($_POST['flagdata'] > 0) {
-                            $conexionBD->insert_reinscripcion ($_matricula, $_SESSION['Seccion'], $_cicloact, $_ciclosig, $_gradosig);
-                    }
+                    if ($_POST['flagdata'] == 0) {
+                            $conexionBD->insert_reinscripcion ($_matricula, $_seccionsig , $_cicloact, $_ciclosig, $_gradosig);
+                    }else{
+						    $conexionBD->status_reinscripcion ($_matricula, 0,  $_cicloact,"");
+					}
                     if (!$result) {
                         $errorflag += 1;
                         array_push ($errores, "Base de Datos: Error al actualizar los datos");
@@ -278,11 +284,27 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
             }       // Fin de validación de que se envio la matrícula en POST
         break;
         case 1:     // USUARIO - Validar el tipo de usuario
-            echo '<h3>Bienvenido</h3>'."\n";
-            echo '<p>No deberías estar aquí</p>'."\n";
-            break;
-        }           // Fin del Switch
-} // fin del else de validación
+           case 1:     // USUARIO
+        switch ($_SESSION['Privs']) {
+			case 3: //CONTROL ESCOLAR
+				$status_=$_POST['status'];
+				$obs_=$_POST['obs'];
+				$cicloAct_=$_POST['cicloact'];
+				$matricula_=$_POST['matricula'];
+				$fecha_=$_POST['fecha'];
+				$conexionBD=new alumnos();
+				$conexionBD->status_reinscripcion ($matricula_, $status_,  $cicloAct_,$obs_);
+			    echo '<script type="text/javascript">'."\n";
+				echo 'alert("Se actualizado el registro...");'."\n"; 
+				echo 'window.location = "informacion.php"'."\n"; 
+				echo '</script>'."\n";
+				header("Location: informacion.php");
+			break;
+        }   
+		break;
+		}
+        // Fin del Switch
+
 }
 
 

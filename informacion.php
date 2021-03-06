@@ -57,7 +57,11 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                             echo '<p>No has seleccionado una sección o grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
                         }
                     }
-                    break;                
+                    break; 
+				case 3://Control Escolares
+					listado_infoGeneralReinsc($_SESSION['Seccion']);					
+                    break;
+					
                 case 5: // Es administrador
                     if (isset($_SESSION['Activo'])) {
                         echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.secciones().'</h3>';

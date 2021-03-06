@@ -139,6 +139,58 @@ if ($_SESSION['Id'] == $matricula or $_SESSION['Privs'] > 1) {
                 echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
             }
             break;
+		case 10:     // FichaReinscripcion
+		if(isset($_GET['seccion'])){$seccion=$_GET['seccion'];}else{$seccion=0;} 
+            $archivo = 'reinscripcion/'.$seccion.'/ficha/'.$matricula.'.pdf';
+            if (file_exists($archivo)) 	{   //La boleta no está bloqueada
+                header ("Cache-Control: no-cache, must-revalidate"); //no guardar en CACHE 
+                header ("Pragma: no-cache");  
+                header('Content-type: application/pdf'); 
+                readfile($archivo); 
+            } else { // No se encuentra el archivo, solicitarlo impreso 
+                echo "<center><h3>Error de consulta...</br>El archivo solicitado no existe</br></h3>";
+                echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
+            }
+            break;
+		case 11:     // INE 
+		if(isset($_GET['seccion'])){$seccion=$_GET['seccion'];}else{$seccion=0;}         
+			$archivo = 'reinscripcion/'.$seccion.'/idoficial/'.$matricula.'.pdf';
+            if (file_exists($archivo)) 	{   //La ficha no se encuentra
+                header ("Cache-Control: no-cache, must-revalidate"); //no guardar en CACHE 
+                header ("Pragma: no-cache");  
+                header('Content-type: application/pdf'); 
+                readfile($archivo); 
+            } else { // No se encuentra el archivo, solicitarlo impreso 
+                echo "<center><h3>Error de consulta...</br>El archivo solicitado no existe</br></h3>";
+                echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
+            }
+            break;
+		case 12:     // Domicilio Reinscripcion
+            if(isset($_GET['seccion'])){$seccion=$_GET['seccion'];}else{$seccion=0;} 
+			$archivo = 'reinscripcion/'.$seccion.'/domicilio/'.$matricula.'.pdf';
+            if (file_exists($archivo)) 	{   //La boleta no está bloqueada
+                header ("Cache-Control: no-cache, must-revalidate"); //no guardar en CACHE 
+                header ("Pragma: no-cache");  
+                header('Content-type: application/pdf'); 
+                readfile($archivo); 
+            } else { // No se encuentra el archivo, solicitarlo impreso 
+                echo "<center><h3>Error de consulta...</br>El archivo solicitado no existe</br></h3>";
+                echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
+            }
+            break;
+		case 13:     // Contrato
+			if(isset($_GET['seccion'])){$seccion=$_GET['seccion'];}else{$seccion=0;} 
+            $archivo = 'becas/'.$seccion.'/contrato/'.$matricula.'.pdf';
+            if (file_exists($archivo)) 	{   //La boleta no está bloqueada
+                header ("Cache-Control: no-cache, must-revalidate"); //no guardar en CACHE 
+                header ("Pragma: no-cache");  
+                header('Content-type: application/pdf'); 
+                readfile($archivo); 
+            } else { // No se encuentra el archivo, solicitarlo impreso 
+                echo "<center><h3>Error de consulta...</br>El archivo solicitado no existe</br></h3>";
+                echo '<a href='.$_SERVER['HTTP_REFERER'].'>Regresar...</a>'."\n";
+            }
+            break;
     }
             
 } else {
