@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 05-03-2021 a las 14:26:47
+-- Tiempo de generación: 04-03-2021 a las 11:15:50
 -- Versión del servidor: 8.0.23-0ubuntu0.20.04.1
 -- Versión de PHP: 7.4.3
 
@@ -48,11 +48,10 @@ CREATE TABLE `Avisos` (
 --
 
 INSERT INTO `Avisos` (`Consecutivo`, `Seccion`, `Grado`, `Grupo`, `Titulo`, `Contenido`, `Url`, `Imagen`, `Fecha_Inicio`, `Fecha_Fin`, `Activo`, `Usuario`) VALUES
-(1, 'UNI', 0, NULL, 'Aviso 1', 'Este es un aviso de Prueba, la sección es Universidad y es General', 'http://umvalla.edu.mx', 'images/pic01.jpg', '2020-07-17', '2021-01-01', 'Si', 'jjmoreno23'),
-(2, 'LFR', 0, NULL, 'Aviso 2', 'Este es un segundo aviso de prueba. Recuerda que puedes tener varios dependiendo de la sección.', 'http://umvalla.edu.mx', 'images/pic02.jpg', '2020-07-17', '2021-04-01', 'Si', 'jjmoreno23'),
-(3, 'BAC', 0, NULL, 'Aviso 3', 'PREPARATORIA. Este es un tercer aviso de prueba. Recuerda que puedes tener varios dependiendo de la sección.', 'http://umvalla.edu.mx', 'images/pic03.jpg', '2020-07-17', '2021-04-01', 'Si', 'jjmoreno23'),
-(4, 'LFR', 1, 'LFR11', 'Aviso 4', 'Este es un cuarto aviso de prueba. Recuerda que puedes tener varios dependiendo de la sección.', 'http://umvalla.edu.mx', 'images/pic04.jpg', '2021-03-15', '2021-04-30', 'Si', 'jjmoreno23'),
-(10, 'LFR', 0, '', 'T&iacute;tulo del Aviso', 'Texto del Contenido', 'https://valladolid.edu.mx/Servicios-Escolares/secundaria/media/InvitacionFestival.jpg', 'images/LOGO MARISTAS ANAGRAMA.jpg', '2021-03-01', '2021-03-31', 'Si', 'jjmoreno23');
+(1, 'UNI', 0, NULL, 'Aviso 1', 'Este es un aviso de Prueba, la sección es Universidad y es General', 'http://umvalla.edu.mx', 'pic01.jpg', '2020-07-17', '2021-04-01', 'Si', 'jjmoreno23'),
+(2, 'LFR', 0, NULL, 'Aviso 2', 'Este es un segundo aviso de prueba. Recuerda que puedes tener varios dependiendo de la sección.', 'http://umvalla.edu.mx', 'pic02.jpg', '2020-07-17', '2021-04-01', 'Si', 'jjmoreno23'),
+(3, 'BAC', 0, NULL, 'Aviso 3', 'PREPARATORIA. Este es un tercer aviso de prueba. Recuerda que puedes tener varios dependiendo de la sección.', 'http://umvalla.edu.mx', 'pic03.jpg', '2020-07-17', '2021-04-01', 'Si', 'jjmoreno23'),
+(4, 'LFR', 1, 'LFR11', 'Aviso 4', 'Este es un cuarto aviso de prueba. Recuerda que puedes tener varios dependiendo de la sección.', 'http://umvalla.edu.mx', 'pic04.jpg', '2020-07-17', '2021-04-01', 'Si', 'jjmoreno23');
 
 -- --------------------------------------------------------
 
@@ -272,7 +271,7 @@ INSERT INTO `Titulares` (`IdUsuario`, `Ciclo`, `IdGrupo`, `Consecutivo`) VALUES
 
 CREATE TABLE `Usuarios` (
   `Id` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
-  `Pass` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `Pass` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `Type` int NOT NULL DEFAULT '0',
   `Privileges` int NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='Tabla de Usuarios (sin datos)';
@@ -282,13 +281,13 @@ CREATE TABLE `Usuarios` (
 --
 
 INSERT INTO `Usuarios` (`Id`, `Pass`, `Type`, `Privileges`) VALUES
-('160023', 'e10adc3949ba59abbe56e057f20f883e', 0, 0),
-('160024', 'e10adc3949ba59abbe56e057f20f883e', 0, 0),
-('190001', 'e10adc3949ba59abbe56e057f20f883e', 0, 0),
-('190002', 'e10adc3949ba59abbe56e057f20f883e', 0, 0),
-('becas', '85e0c3574dab7f1ce9bd720b96b69645', 1, 4),
-('docente', 'ac99fecf6fcb8c25d18788d14a5384ee', 1, 2),
-('jjmoreno23', 'e10adc3949ba59abbe56e057f20f883e', 1, 5);
+('160023', '123456', 0, 0),
+('160024', '123456', 0, 0),
+('190001', '123456', 0, 0),
+('190002', '123456', 0, 0),
+('becas', 'becas', 1, 4),
+('docente', 'docente', 1, 2),
+('jjmoreno23', '123456', 1, 5);
 
 --
 -- Índices para tablas volcadas
@@ -362,7 +361,7 @@ ALTER TABLE `Usuarios`
 -- AUTO_INCREMENT de la tabla `Avisos`
 --
 ALTER TABLE `Avisos`
-  MODIFY `Consecutivo` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `Consecutivo` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `Circulares`

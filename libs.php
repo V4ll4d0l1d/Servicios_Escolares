@@ -226,6 +226,55 @@ function seccion_nombre($seccion, $ctx) {
     return $nombre;
 }
 
+
+function grado_seccion() {
+$grados = 0;
+    switch ($_SESSION['Seccion']) {
+        case 0:
+            $grados = 3;
+            break;
+        case 1:
+            $grados = 6;
+            break;
+        case 2:
+            $grados = 3;
+            break;
+        case 3:
+            $grados = 6;
+            break;
+        case 4:
+            $grados = 8;
+            break;
+    }
+    return $grados;
+}
+
+
+
+// for jpg 
+function resize_imagejpg($file, $w, $h) {
+   $src = imagecreatefromjpeg($file);
+   $dst = imagescale($src, $w, $h);
+   return $dst;
+}
+
+ // for png
+function resize_imagepng($file, $w, $h) {
+   $src = imagecreatefrompng($file);
+   $dst = imagescale($src, $w, $h);
+   return $dst;
+}
+
+// for gif
+function resize_imagegif($file, $w, $h) {
+   $src = imagecreatefromgif($file);
+   $dst = imagescale($src, $w, $h);
+   return $dst;
+}
+
+
+
+
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
 //******************************************************************************************************************************
@@ -256,7 +305,6 @@ echo '<meta charset="utf-8" />'."\n";
 echo '<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />'."\n";
 echo '<link rel="stylesheet" href="assets/css/main.css" />'."\n";
 echo '<link href="assets/css/fontawesome-all.min.css" rel="stylesheet">'."\n";
-echo '<link href="assets/css/style.css" rel="stylesheet">'."\n";
 echo '</head>'."\n";
 echo '<body class="is-preload">'."\n";
 echo '<div id="wrapper">'."\n";         // Inicia el div que contiene todo  
@@ -403,34 +451,7 @@ function navbar(){
 			<a href="becas.php">Trámite de Beca</a>
 			</div>
 		</div>
-		<div class="dropdown">
-				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ENLACES</button>
-					<div class="dropdown-content">
-						<a href="http://aulavirtual.umvalla.edu.mx" target="_blank">Aula Virtual</a>
-						<a href="http://valladolid.edu.mx" target="_blank">Instituto Valladolid</a>
-						<a href="http://umvalla.edu.mx" target="_blank">Universidad Marista Valladolid</a>';
-						if (isset($_SESSION['Id'])) {
-							switch ($_SESSION['Seccion']) {
-								case 0:
-									echo '<a href="media/Anuario_Preescolar.pdf" target="_blank">Anuario Escolar</a>';
-								break;
-								case 1:
-									echo '<a href="media/Anuario_Primaria.pdf" target="_blank">Anuario Escolar</a>';
-								break;
-								case 2:
-									echo '<a href="media/Anuario_Secundaria.pdf" target="_blank">Anuario Escolar</a>';
-								break;
-								case 3:
-									echo '<a href="media/Anuario_Bachillerato.pdf" target="_blank">Anuario Escolar</a>';
-								break;
-								case 4:
-									echo '<a href="media/Anuario_Universidad.pdf" target="_blank">Anuario Escolar</a>';
-								break;
-							}
-						}
-				echo	'</div>
-				</div>
-			<a class="active" href="index.php#contactUs" style><i class="fa fa-fw fa-user"></i> CONTACTO</a>
+		<a class="active" href="index.php#contactUs" style><i class="fa fa-fw fa-user"></i> CONTACTO</a>
 		<div class="dropdown">
 			<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
 			<i class="fa fa-bars"></i></a>
@@ -482,33 +503,6 @@ function navbar(){
 				<i class="fa fa-bars"></i></a>
 				</div>';
             break;
-			case '3':     // ControlEscolar
-				echo '<div class="dropdown">
-				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
-					<div class="dropdown-content">
-						<a href="informacion.php">Reporte preinscripcion</a>
-						<a href="comunicacion.php">Concentrados</a>
-					</div>
-				</div>
-				<div class="dropdown">
-				<button class="dropbtn"><i class="fa fa-fw fa-money-check-alt"></i> FINANCIERO</button>
-					<div class="dropdown-content">
-						<a href="listabecas.php">Becas</a>
-						<a href="#">Recibos de Pago</a>
-					</div>
-				</div>
-				<div class="dropdown">
-				<button class="dropbtn"><i class="fa fa-fw fa-user-shield"></i>ADMINISTRATIVO</button>
-					<div class="dropdown-content">
-						<a href="#">Usuarios</a>
-						<a href="#">Perfiles</a>
-					</div>
-				</div>
-				<div class="dropdown">
-					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
-					<i class="fa fa-bars"></i></a>
-				</div>';
-            break;
 			case '4':
 				echo '<a class="active" href="listabecas.php">BECAS</a>
 				<a class="active" href="#">REPORTE ENTREGA</a>
@@ -539,6 +533,7 @@ function navbar(){
 						}
 				echo	'</div>
 				</div>
+				<a class="active" href="index.php#contactUs" style><i class="fa fa-fw fa-user"></i> CONTACTO</a>
 				<div class="dropdown">
 					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
 					<i class="fa fa-bars"></i></a>
@@ -550,7 +545,7 @@ function navbar(){
 					<div class="dropdown-content">
 						<a href="informacion.php">Información</a>
 						<a href="comunicacion.php">Circulares</a>
-						<a href="avisos">Avisos</a>
+						<a href="avisos.php">Avisos</a>
 						<a href="bloqueo.php">Bloqueo/Desbloqueo</a>
 					</div>
 				</div>
@@ -568,6 +563,7 @@ function navbar(){
 						<a href="#">Perfiles</a>
 					</div>
 				</div>
+				<a class="active" href="index.php#contactUs" style><i class="fa fa-fw fa-user"></i> CONTACTO</a>
 				<div class="dropdown">
 					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
 					<i class="fa fa-bars"></i></a>
@@ -581,7 +577,7 @@ function navbar(){
 // Footer
 function footer(){
 echo '<footer id="footer">'."\n";
-echo '<p class="copyright">&copy; Instituto Valladolid. Todos los derechos reservados.</a></p>'."\n";
+echo '<p class="copyright">&copy; Instituto   Valladolid.   Todos los derechos reservados.</a></p>'."\n";
 echo '</footer>'."\n";
 }
 
@@ -682,27 +678,59 @@ return $errortext;
 // Parametros:  Seccion, grado
 //*************************************************************************************************
 
-function getAvisos($seccion, $grado) {
+function getAvisos($seccion, $grado, $grupo) {
+    
+    echo '<section>'."\n";
+    echo '<header class=""><h2>Avisos</h2></header>'."\n";
+    echo '<div class="box alt">'."\n";
+    echo '<div class="row gtr-50 gtr-uniform">'."\n";
     $conn = new aviso();
-    $aviso = $conn->leer_avisos($seccion, $grado);
+    $aviso = $conn->leer_avisos_grupo($seccion, $grupo);
     $indice = count($aviso);
     if ($indice>0) {
-    		echo '<section>'."\n";
-    		echo '<header class=""><h2>Avisos</h2></header>'."\n";
-    		echo '<div class="box alt">'."\n";
-            echo '<div class="row gtr-50 gtr-uniform">'."\n";
-            foreach($aviso as $contenido) {
-                echo '<div class="col-4"><span class="image fit"><a href="'.$contenido['Url'].'" class="image"><img src="images/'.$contenido['Imagen'].'" alt="" /></a></span>'."\n";
-                echo '<h4>'.$contenido['Titulo'].'</h4>'."\n";
-                echo '<p>'.$contenido['Contenido'].'</p>'."\n";
-                echo '</div>'."\n";
-            }
+        foreach($aviso as $contenido) {
+            echo '<div class="col-4"><span class="image fit"><a href="'.$contenido['Url'].'" target="_blank" class="image"><img src="'.$contenido['Imagen'].'" alt="" /></a></span>'."\n";
+            echo '<h4>'.$contenido['Titulo'].'</h4>'."\n";
+            echo '<p>'.$contenido['Contenido'].'</p>'."\n";
             echo '</div>'."\n";
-            echo '</div>'."\n";
-            echo '</section>'."\n";        
+        }
     }
+    $aviso2 = $conn->leer_avisos_grado($seccion, $grado, $grupo);
+    $indice = count($aviso2);
+    if ($indice>0) {
+        foreach($aviso2 as $contenido) {
+            echo '<div class="col-4"><span class="image fit"><a href="'.$contenido['Url'].'" target="_blank" class="image"><img src="'.$contenido['Imagen'].'" alt="" /></a></span>'."\n";
+            echo '<h4>'.$contenido['Titulo'].'</h4>'."\n";
+            echo '<p>'.$contenido['Contenido'].'</p>'."\n";
+            echo '</div>'."\n";
+        }
+    }
+    echo '</div>'."\n";
+    echo '</div>'."\n";
+    echo '</section>'."\n";        
 }
 
+function showAvisos() {
+    $conn = new aviso();
+    $lista = $conn->lista_avisos();
+    $indice = count($lista);
+    if ($indice>0) {
+        echo '  <table>
+                <tr><th>Sección</th><th>Grado</th><th>Grupo</th><th>Título</th><th>URL</th><th>Activo</th><th>Inicio</th><th>Fin</th><th>Usuario</th></tr>'."\n"; // 10 columnas
+        foreach($lista as $datos) {
+            echo '  <tr><td>'.$datos['Seccion'].'</td><td>'.$datos['Grado'].' </td><td>'.$datos['Grupo'].'</td>
+                    <td>'.$datos['Titulo'].'</td><td>'.$datos['Url'].' </td><td id="lock_'.$datos['Consecutivo'].'" >';
+                    if ($datos['Activo'] == 'Si') {
+                        echo '<a href="#"><i class="fas fa-eye" onclick="unlockaviso('.$datos['Consecutivo'].', 1)"></i></a>'; 
+                    } else { 
+                        echo '<a href="#"><i class="fas fa-eye-slash" onclick="unlockaviso('.$datos['Consecutivo'].', 2)"></i></a>'; 
+                    }
+                    echo '</td><td>'.$datos['Fecha_Inicio'].'</td><td>'.$datos['Fecha_Fin'].' </td><td>'.$datos['Usuario'].'</td></tr>
+                    <tr><td colspan = 9><b>Contenido:</b> '.$datos['Contenido'].'</td></tr>';
+        }
+        echo '</table>'."\n";
+    }
+}
 
 //*************************************************************************************************
 // Funcion:     GrupoActivo
@@ -812,6 +840,7 @@ function listado($grupo) {
 //*************************************************************************************************
 
 function listado_admon($grupo) {
+    $ruta = "boletas/";
     $conn = new alumnos();
     $lista = $conn->lista_alumnos($grupo);
     $indice = count($lista);
@@ -821,7 +850,12 @@ function listado_admon($grupo) {
         foreach($lista as $datos) {
             echo '<tr><td>'.$datos['Id'].'</td><td>'.$datos['Apellidos'].' </td><td>'.$datos['Nombre'].'</td>'."\n";
             echo '<td><center><a href="validpdf.php?context=1&id_alumno='.$datos['Id'].'" target="_blank"> <i class="fas fa-file-pdf"></i></center></td>';
-            echo '<td><center><a href="#"><i class="fas fa-unlock-alt" onclick="unlock('.$datos['Id'].')"></i></a></center></td>';
+            $archivo = $ruta.$datos['Id'].'.pdf';
+            if (file_exists($archivo)) 	{ 
+                echo '<td><center><a href="#"><i class="fas fa-unlock" onclick="unlock('.$datos['Id'].')"></i></a></center></td>';
+            } else {
+                echo '<td><center><a href="#"><i class="fas fa-lock" onclick="unlock('.$datos['Id'].')"></i></a></center></td>';
+            }
             echo '<td><center><a href="validpdf.php?context=2&id_alumno='.$datos['Id'].'" target="_blank"><i class="fas fa-money-check-alt"></i></a></center></td>';
             echo '<td><center><a href="#" class="logo"><i class="fas fa-address-card" onclick="showUser('.$datos['Id'].')"></a></i></center></td></tr>'."\n";
         }
@@ -1069,81 +1103,6 @@ function texto_reinscripcion($seccion) {
 }
 
 
-
-//*************************************************************************************************
-// Funcion:     texto_becas
-// Descripción: Imprime el HTML previo al formulario, uno para preescolar a bachillerato, uno para universidad
-// Parametros:  Seccion del alumno ingresado
-// Regresa:     Nada
-//*************************************************************************************************
-function texto_becas($seccion) {
-    if ($seccion <4) {      // Instituto
-        ?>
-        <h3>Proceso de Solicitud o Renovación de Beca</h3>
-        <ol>
-            <li>Descarga el <strong><a href="media/FormatoBecasInstituto.pdf" target="_blank">Formato de Solicitud</a></strong>. Este es un archivo PDF que deberás llenar digitalmente.</li>
-            <li>Prepara los archivos digitales indicados en el formato. Recomendamos que los escanees en formato PDF (menores a 1 Mb)</li>
-            <li>Realiza el primer pago de reinscripción, para ello <strong>descarga las <a href='recibos.php'>fichas referenciadas.</a></strong>. Es requisito realizarlo antes del 20 de mayo para ser tomado en cuenta en el proceso de asignación/reasignación de becas.</li>
-            <li>Sube los archivos en esta página.
-        </ol> 
-        <p>* En el caso de INE y Comprobantes de pago, en el mismo archivo deberán incluirse los datos de ambos Padres o Tutores.</p>
-        <?php
-    } else {        // Universidad
-        ?>
-        <h3>Proceso de Solicitud o Renovación de Beca</h3>
-        <ol>
-             <li>Descarga el <strong><a href="media/FormatoBecasUniversidad.pdf" target="_blank">Formato de Solicitud</a></strong>. Este es un archivo PDF que deberás llenar digitalmente.</li>
-            <li>Prepara los archivos digitales indicados en el formato. Recomendamos que los escanees en formato PDF (menores a 1 Mb)</li>
-            <li>Realiza el primer pago de reinscripción, para ello <strong>descarga las <a href='recibos.php'>fichas referenciadas.</a></strong>. Es requisito realizarlo antes del 20 de mayo para ser tomado en cuenta en el proceso de asignación/reasignación de becas.</li>
-            <li>Sube los archivos en esta página.
-        </ol> 
-        <p>* En el caso de INE y Comprobantes de pago, en el mismo archivo deberán incluirse los datos de ambos Padres o Tutores.</p>
-        <?php
-    }
-}
-
-//*************************************************************************************************
-// Funcion:     contacto
-// Descripción: Escribe los datos de contacto en funcion a la seccion del alumno
-// Parametros:  Ninguno, los toma de variables de sesion
-//*************************************************************************************************
-function contacto(){
-// verificar si hay login y determinar las cadenas necesarias
-if (isset($_SESSION['login']) && $_SESSION['login'] == 1) {
-  switch($_SESSION['Seccion']) {
-    case '0':
-      $correo="preescolar@valladolid.edu.mx";
-      $telefono="4433 13 2098 / 4433 41 6978";
-      break;
-    case '1':
-      $correo="primaria@valladolid.edu.mx";
-      $telefono="4433 12 3280 / 4433 12 3392";
-      break;
-    case '2':
-      $correo="secundaria@valladolid.edu.mx";
-      $telefono="4433 12 7137 / 4433 13 9886";
-      break;
-    case '3':
-      $correo="preparatoria@valladolid.edu.mx";
-      $telefono="4433 23 5150 / 4433 23 7130";
-      break;
-    case '4':
-      $correo="secretaria@umvalla.edu.mx";
-      $telefono="4433 43 0295 / 4433 23 7161";
-      break;
-  }
-  if ($_SESSION['Seccion']<5) {   //No es Administrativo, es necesario poner los datos de contacto
-    echo '<section id="contactUs">'."\n";
-    echo '<p>La comunicación del Instituto con sus alumnos es importante. Para ello ponemos a tu disposición los siguientes medios:</p>'."\n";
-	  echo '<ul class="contact">'."\n";
-    echo '<li class="icon solid fa-envelope">'.$correo.'</li>'."\n";
-    echo '<li class="icon solid fa-phone">'.$telefono.'</li>'."\n";
-    echo '</ul>'."\n";
-	  echo '</section>'."\n";
-  }
-}
-}
-
 //*************************************************************************************************
 // Funcion:     listado_infoGeneralReinsc
 // Descripción: Obtiene cantidad de alumnos inscritos, por seccion, carrera, grado y la cantidad de los alumnos con proceso de reinscripcion y su estatus 
@@ -1252,3 +1211,79 @@ function observaciones_reinscripcion($matricula,$cicloAct){
 	$estatus=$conn->ObservacionesReinscripcion($matricula,$cicloAct);
 	return $estatus[0]['Observaciones'];
 }
+
+
+//*************************************************************************************************
+// Funcion:     texto_becas
+// Descripción: Imprime el HTML previo al formulario, uno para preescolar a bachillerato, uno para universidad
+// Parametros:  Seccion del alumno ingresado
+// Regresa:     Nada
+//*************************************************************************************************
+function texto_becas($seccion) {
+    if ($seccion <4) {      // Instituto
+        ?>
+        <h3>Proceso de Solicitud o Renovación de Beca</h3>
+        <ol>
+            <li>Descarga el <strong><a href="media/FormatoBecasInstituto.pdf" target="_blank">Formato de Solicitud</a></strong>. Este es un archivo PDF que deberás llenar digitalmente.</li>
+            <li>Prepara los archivos digitales indicados en el formato. Recomendamos que los escanees en formato PDF (menores a 1 Mb)</li>
+            <li>Realiza el primer pago de reinscripción, para ello <strong>descarga las <a href='recibos.php'>fichas referenciadas.</a></strong>. Es requisito realizarlo antes del 20 de mayo para ser tomado en cuenta en el proceso de asignación/reasignación de becas.</li>
+            <li>Sube los archivos en esta página.
+        </ol> 
+        <p>* En el caso de INE y Comprobantes de pago, en el mismo archivo deberán incluirse los datos de ambos Padres o Tutores.</p>
+        <?php
+    } else {        // Universidad
+        ?>
+        <h3>Proceso de Solicitud o Renovación de Beca</h3>
+        <ol>
+             <li>Descarga el <strong><a href="media/FormatoBecasUniversidad.pdf" target="_blank">Formato de Solicitud</a></strong>. Este es un archivo PDF que deberás llenar digitalmente.</li>
+            <li>Prepara los archivos digitales indicados en el formato. Recomendamos que los escanees en formato PDF (menores a 1 Mb)</li>
+            <li>Realiza el primer pago de reinscripción, para ello <strong>descarga las <a href='recibos.php'>fichas referenciadas.</a></strong>. Es requisito realizarlo antes del 20 de mayo para ser tomado en cuenta en el proceso de asignación/reasignación de becas.</li>
+            <li>Sube los archivos en esta página.
+        </ol> 
+        <p>* En el caso de INE y Comprobantes de pago, en el mismo archivo deberán incluirse los datos de ambos Padres o Tutores.</p>
+        <?php
+    }
+}
+
+//*************************************************************************************************
+// Funcion:     contacto
+// Descripción: Escribe los datos de contacto en funcion a la seccion del alumno
+// Parametros:  Ninguno, los toma de variables de sesion
+//*************************************************************************************************
+function contacto(){
+// verificar si hay login y determinar las cadenas necesarias
+	if (isset($_SESSION['login']) && $_SESSION['login'] == 1) {
+		switch($_SESSION['Seccion']) {
+    case '0':
+      $correo="preescolar@valladolid.edu.mx";
+      $telefono="4433 13 2098 / 4433 41 6978";
+      break;
+    case '1':
+      $correo="primaria@valladolid.edu.mx";
+      $telefono="4433 12 3280 / 4433 12 3392";
+      break;
+    case '2':
+      $correo="secundaria@valladolid.edu.mx";
+      $telefono="4433 12 7137 / 4433 13 9886";
+      break;
+    case '3':
+      $correo="preparatoria@valladolid.edu.mx";
+      $telefono="4433 23 5150 / 4433 23 7130";
+      break;
+    case '4':
+      $correo="secretaria@umvalla.edu.mx";
+      $telefono="4433 43 0295 / 4433 23 7161";
+      break;
+  }
+	if ($_SESSION['Seccion']<5) {   //No es Administrativo, es necesario poner los datos de contacto
+    echo '<section id="contactUs">'."\n";
+    echo '<p id="specialMargin">La comunicación del Instituto con sus alumnos es importante. Para ello ponemos a tu disposición los siguientes medios:</p>'."\n";
+	  echo '<ul class="contact">'."\n";
+    echo '<li class="icon solid fa-envelope">'.$correo.'</li>'."\n";
+    echo '<li class="icon solid fa-phone">'.$telefono.'</li>'."\n";
+    echo '</ul>'."\n";
+	  echo '</section>'."\n";
+  }
+	}
+}
+
