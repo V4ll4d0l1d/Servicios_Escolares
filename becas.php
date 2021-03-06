@@ -63,13 +63,13 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             // Existe un registro, ¿Cómo va el proceso?
             switch ($status) {
                 case 0:     // En proceso
-                    echo '<h3>TRÁMITE EN PROCESO DE REVISIÓN</h3>';
+                    echo '<h3 style="color: #0000ad;">Trámite En Proceso De Revisión</h3>';
                     break;
                 case 1:     // Denegado
-                    echo '<h3>TRÁMITE CON RESULTADO NEGATIVO</h3>';
+                    echo '<h3 style="color: #dc0000;">Trámite Con Resultado Negativo</h3>';
                     break;
                 case 2:     // Aceptado
-                    echo '<h3>TRÁMITE CON RESULTADO FAVORABLE</h3>';
+                    echo '<h3 style="color: #008d00;">Trámite Con Resultado Favorable</h3>';
                     break;
             }
             echo '<div class="col-12">'.$observaciones.'<hr/></div>';
@@ -231,6 +231,4 @@ scripts();
 
 /*Footer*/
 footer();
-
-echo "Holi";
 ?>
