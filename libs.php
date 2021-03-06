@@ -451,8 +451,8 @@ function navbar(){
 			<a href="becas.php">Trámite de Beca</a>
 			</div>
 		</div>
+		<a class="active" href="index.php#contactUs" style><i class="fa fa-fw fa-user"></i> CONTACTO</a>
 		<div class="dropdown">
-			<button class="dropbtn"><i class="fa fa-fw fa-user"></i> CONTACTO</button>
 			<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
 			<i class="fa fa-bars"></i></a>
 		</div>';
@@ -497,6 +497,7 @@ function navbar(){
 						}
 				echo	'</div>
 				</div>
+				<a class="active" href="index.php#contactUs" style><i class="fa fa-fw fa-user"></i> CONTACTO</a>
 				<div class="dropdown">
 					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
 				<i class="fa fa-bars"></i></a>
@@ -531,7 +532,9 @@ function navbar(){
 							}
 						}
 				echo	'</div>
-				</div><div class="dropdown">
+				</div>
+				<a class="active" href="index.php#contactUs" style><i class="fa fa-fw fa-user"></i> CONTACTO</a>
+				<div class="dropdown">
 					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
 					<i class="fa fa-bars"></i></a>
 				</div>';
