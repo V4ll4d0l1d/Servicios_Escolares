@@ -14,6 +14,7 @@ $errores = array();     // Acumula en un arreglo los errores para mostrarlos al 
 $Valida_POST = FALSE;   // Bandera que revisa que los datos en el formulario no estén vacios.
 $ValidaF1 = 0;          // Se envío Circular
 $circular='';
+$existe = 0;
 $ruta = 'circulares/';
 
 // VALIDAR SI YA SE INICIO SESION
@@ -89,7 +90,6 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                             $target_file = $ruta."/".$imagen;
                             // Revisar si el archivo existe
                             if (file_exists($target_file)) {
-                                //$errorflag += 1;
                                 $flagOK = 1;
                                 array_push ($errores, "Imagen: El archivo ya existe");
                             } else {
@@ -100,28 +100,8 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                                     array_push ($errores, "Imagen: Solo se aceptan archivos JPEG o PNG: ".$FileType1);
                                     $uploadOk = 0;
                                 }
-                                // Si cumple con todas las condiciones anteriores, es momento de subirlo
                                 if ($uploadOk == 1) {
-                                    if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file)) {
-                                        $flagOK = 1;
-                                        // cambiar tamaño de imagen|
-                                        switch ($FileType1) {
-                                            case 'jpg':
-                                            case 'jpeg':
-                                                $temp_img = resize_imagejpg($target_file, -1, 256);
-                                                imagejpeg($temp_img, $target_file);
-                                                break;
-                                            case 'png':
-                                                $temp_img = resize_imagepng($target_file, -1, 256);
-                                                imagepng($temp_img, $target_file);
-                                                break;
-                                            }
-                                        imagedestroy($temp_img);                                                                                        
-                                    } else {
-                                        $errorflag += 1;
-                                        array_push ($errores, "Imagen: Error al cargar archivo");
-                                    }
-                                }
+                                // Si cumple con todas las condiciones anteriores, es momento de subirlo
                             }
                         }
                         // Validar si los archivos se subieron correctamente y no hay errores, entonces intentar actualizar la BD
