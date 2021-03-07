@@ -101,6 +101,26 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                                     $uploadOk = 0;
                                 }
                                 if ($uploadOk == 1) {
+                                    if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $target_file)) {
+                                        $flagOK = 1;
+                                        // cambiar tamaño de imagen|
+                                        switch ($FileType1) {
+                                            case 'jpg':
+                                            case 'jpeg':
+                                                $temp_img = resize_imagejpg($target_file, -1, 256);
+                                                imagejpeg($temp_img, $target_file);
+                                                break;
+                                            case 'png':
+                                                $temp_img = resize_imagepng($target_file, -1, 256);
+                                                imagepng($temp_img, $target_file);
+                                                break;
+                                            }
+                                        imagedestroy($temp_img);                                        
+                                    } else {
+                                        $errorflag += 1;
+                                        array_push ($errores, "Imagen: Error al cargar archivo");
+                                    }
+                                }
                                 // Si cumple con todas las condiciones anteriores, es momento de subirlo
                             }
                         }
