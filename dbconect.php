@@ -608,11 +608,10 @@ private $Usuario;
 public function leer_avisos_grado($Seccion, $Grado, $Grupo){
     $conn=new Conexion();
     try {
-        //SELECT Seccion, Grado, Grupo, Titulo, Contenido, Url, Imagen FROM Avisos WHERE Seccion = "LFR" and Grado = '0' or grado ='1' and Grupo != "LFR11" and Activo = 'Si'
-        $stmt = $conn->prepare ("SELECT Seccion, Grado, Titulo, Contenido, Url, Imagen FROM Avisos WHERE Seccion = :ss AND (Grado = 0 OR Grado = :pp) AND Grupo != :gg AND curdate() > Fecha_Inicio AND curdate() < Fecha_Fin AND Activo = 'Si'");
-        
-        $stmt->bindParam(':ss', $Seccion);
+        $sql = "SELECT Seccion, Grado, Titulo, Contenido, Url, Imagen FROM (SELECT * FROM Avisos WHERE (Grado = 0 OR Grado = :pp) AND (Seccion = :ss) AND Grupo = '' AND (curdate() > Fecha_Inicio AND curdate() < Fecha_Fin) UNION (select * from Avisos where Grupo = :gg)) LINK ORDER BY Fecha_Fin DESC LIMIT 3";
+        $stmt = $conn->prepare ($sql);
         $stmt->bindParam(':pp', $Grado);
+        $stmt->bindParam(':ss', $Seccion);
         $stmt->bindParam(':gg', $Grupo);
         $stmt->execute();
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -620,13 +619,13 @@ public function leer_avisos_grado($Seccion, $Grado, $Grupo){
     } catch(PDOException $e) {
         echo 'Error: ' . $e->getMessage();
     }
+    close($conn);
 }
 
 public function leer_avisos_grupo($Seccion, $Grupo){
     $conn=new Conexion();
     try {                                                                                                      
-        $stmt = $conn->prepare ("SELECT Seccion, Grado, Grupo, Titulo, Contenido, Url, Imagen FROM Avisos WHERE Seccion = :ss AND Grupo = :gg AND curdate() > Fecha_Inicio AND curdate() < Fecha_Fin AND Activo = 'Si'");
-        $stmt->bindParam(':ss', $Seccion);
+        $stmt = $conn->prepare ("SELECT Seccion, Grado, Grupo, Titulo, Contenido, Url, Imagen FROM Avisos WHERE Grupo = :gg AND (curdate() > Fecha_Inicio AND curdate() < Fecha_Fin) AND Activo = 'Si'");
         $stmt->bindParam(':gg', $Grupo);
         $stmt->execute();
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);

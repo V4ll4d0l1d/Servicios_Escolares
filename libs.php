@@ -699,7 +699,7 @@ function getAvisos($seccion, $grado, $grupo) {
     echo '<div class="box alt">'."\n";
     echo '<div class="row gtr-50 gtr-uniform">'."\n";
     $conn = new aviso();
-    $aviso = $conn->leer_avisos_grupo($seccion, $grupo);
+  /*  $aviso = $conn->leer_avisos_grupo($seccion, $grupo);
     $indice = count($aviso);
     if ($indice>0) {
         foreach($aviso as $contenido) {
@@ -708,7 +708,7 @@ function getAvisos($seccion, $grado, $grupo) {
             echo '<p>'.$contenido['Contenido'].'</p>'."\n";
             echo '</div>'."\n";
         }
-    }
+    } */
     $aviso2 = $conn->leer_avisos_grado($seccion, $grado, $grupo);
     $indice = count($aviso2);
     if ($indice>0) {

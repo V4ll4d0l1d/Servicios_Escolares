@@ -23,8 +23,6 @@ IF (isset($_SESSION['login'])&&($_SESSION['login'] == 1)) {
 }
 if(isset($_GET['id_alumno'])){$matricula=$_GET['id_alumno'];}else{$matricula = "";}
 
-
-
 headerfull_($title);
 
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
@@ -40,40 +38,41 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
         switch ($_SESSION['Privs']) {
                 case 2: // Es titular
                     if (isset($_SESSION['Activo'])) {
-                        echo '<h3>'.secciones(). ' - Grupo: '.$_SESSION['Activo'].'</h3>';
+                        echo '<h3>Grupo Activo: '.secciones(). ' - '.$_SESSION['Activo'].'</h3>';
                          listado($_SESSION['Activo']);
-						 //echo $matricula;
 						 showUser($matricula);
                     } else {
-                        echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
+                        echo '  <h3>Esta página muestra la información académica de los alumnos de un grupo</h3>
+                                <p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>'."\n";
                     }
+                    break;
+                case 3://Control Escolar
+					listado_infoGeneralReinsc($_SESSION['Seccion']);					
                     break;
                 case 4: // Becas hay que validar que es lo que quiere ver OJO, quizá esto sirva para el director - administrador
                     if (isset($_SESSION['Activo']) && $_SESSION['Activo'] != '') {   // Grupo Seleccionado, mostrarlo
-                        echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.secciones().'</h3>';
+                        echo '<h3>Grupo Activo: '.secciones(). ' - '.$_SESSION['Activo'].'</h3>';
                         echo '<p><b>Vista rápida</b>, si requieres detalle haz clic en la matrícula del alumno</p>';
                          listado_becas(1);
                     } else {    // verificar las demás opciones
                         if (isset($_SESSION['Carrera']) && $_SESSION['Carrera'] != '' || $_SESSION['Seccion'] != 'NO') {    // Ojo, ¿qué pasa si es básica
-                            echo '<h3>'.secciones().'</h3>';
+                            echo '<h3>Sección Activa: '.secciones().'</h3>';
                             echo '<p><b>Vista rápida</b>, si requieres detalle haz clic en la matrícula del alumno</p>';
                             listado_becas(2);
                         } else {
-                            echo '<p>No has seleccionado una sección o grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
+                            echo '  <h3>Esta página muestra la información de los trámites de beca por grupo o por sección</h3>
+                                    <p>No has seleccionado un grupo/sección para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>'."\n";
                         }
                     }
-                    break; 
-				case 3://Control Escolares
-					listado_infoGeneralReinsc($_SESSION['Seccion']);					
-                    break;
-					
+                    break; 					
                 case 5: // Es administrador
-                    if (isset($_SESSION['Activo'])) {
+                    if (isset($_SESSION['Activo']) && ($_SESSION['Activo'] != '')) {
                         echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.secciones().'</h3>';
                          listado_admon($_SESSION['Activo']);
+                         echo '<hr>';
                     } else {
-                        echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
-						showUser();
+                        echo '  <h3>Esta página muestra la información académica de los alumnos de un grupo</h3>
+                                <p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>'."\n";
                     }
                     break;
                 }
