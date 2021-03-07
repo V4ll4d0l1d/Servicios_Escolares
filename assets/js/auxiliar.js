@@ -176,11 +176,11 @@ function showGrupos2() {
 // 
 function showGrados() {
     var str = document.getElementById("seccion").value;
-    var g_0=new Array("1","2","3");
-    var g_1=new Array("1","2","3","4","5","6");
-    var g_2=new Array("1","2","3");
-    var g_3=new Array("1","2","3","4","5","6");
-    var g_4=new Array("1","2","3","4","5","6","7","8");
+    var g_0=new Array("Elige el grado","1","2","3");
+    var g_1=new Array("Elige el grado","1","2","3","4","5","6");
+    var g_2=new Array("Elige el grado","1","2","3");
+    var g_3=new Array("Elige el grado","1","2","3","4","5","6");
+    var g_4=new Array("Elige el grado","1","2","3","4","5","6","7","8");
 
     var grados = [ g_0, g_1, g_2, g_3, g_4 ];
     
@@ -193,7 +193,7 @@ function showGrados() {
       	document.Aviso.grado.options[i].text=misgrados[i]; 
     }	
    	// Marco el primer grado seleccionado
-   	//document.Aviso.grado.options[0].selected = true;
+   	document.Aviso.grado.options[0].selected = true;
 }
 
 
