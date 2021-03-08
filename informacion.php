@@ -40,7 +40,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                     if (isset($_SESSION['Activo'])) {
                         echo '<h3>Grupo Activo: '.secciones(). ' - '.$_SESSION['Activo'].'</h3>';
                          listado($_SESSION['Activo']);
-						 showUser($matricula);
+						 //showUser($matricula);
                     } else {
                         echo '  <h3>Esta página muestra la información académica de los alumnos de un grupo</h3>
                                 <p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>'."\n";
@@ -78,6 +78,15 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                 }
             break;
         }
+		echo '<section>
+        <div id="info" class="modal" width="30%";>
+        <form class="modal-content animate">
+        <div class="imgcontainer"><span onclick="document.getElementById(\'info\').style.display=\'none\'" class="close" title="Close Modal">&times;</span></div>
+        <div class="container">
+        </div>
+        </form>
+        </div> <!-- Modal -->
+        </section>'."\n";  
 } else {
     echo '<header class="major"><h2>Bienvenido al Sistema de Servicios <br>Escolares del Instituto Valladolid.</h2></header>';
     echo '<p><b>Ingresa con tus credenciales</b></p>';
