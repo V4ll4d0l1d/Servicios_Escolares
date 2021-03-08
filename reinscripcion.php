@@ -72,7 +72,8 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
 		
         if ($Seccion > 2) { $CicloSig = CICLOSIGS; } else { $CicloSig = CICLOSIGA; }
         if ($Seccion > 2) { $CicloAct = CICLOACTS; } else { $CicloAct = CICLOACTA; }
-        $status=(estatus_reinscripcion($_SESSION['Id'],$CicloAct));
+        if(estatus_reinscripcion($_SESSION['Id'],$CicloAct)){
+		$status=estatus_reinscripcion($_SESSION['Id'],$CicloAct);}
 		   if (isset($status)) {
 			    $flagdata=1;
             // Existe un registro, ¿Cómo va el proceso?
