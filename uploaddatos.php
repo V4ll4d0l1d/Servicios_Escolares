@@ -235,7 +235,7 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
                             $mail=$conexionBD->update_correo($_matricula, $_correo); 
                         } 
                     }
-                    if ($_POST['flagdata'] == 0) {
+					if(!$conexionBD->estatusReinscripcion($_matricula,$_cicloact)){
                             $conexionBD->insert_reinscripcion ($_matricula, $_seccionsig , $_cicloact, $_ciclosig, $_gradosig);
                     }else{
 						    $conexionBD->status_reinscripcion ($_matricula, 0,  $_cicloact,"");

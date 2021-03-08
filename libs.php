@@ -1246,12 +1246,14 @@ function listado_reinscripcion($_seccion,$_grado,$_carrera,$_estatus,$_cicloAct)
 function estatus_reinscripcion($matricula,$cicloAct){
 	$conn = new alumnos();
 	$estatus=$conn->estatusReinscripcion($matricula,$cicloAct);
-	return $estatus[0]['Status'];
+	if(!empty($estatus)){
+	return $estatus[0]['Status'];}
 }
 function observaciones_reinscripcion($matricula,$cicloAct){
 	$conn = new alumnos();
 	$estatus=$conn->ObservacionesReinscripcion($matricula,$cicloAct);
-	return $estatus[0]['Observaciones'];
+	if(!empty($estatus)){
+	return $estatus[0]['Observaciones'];}
 }
 
 

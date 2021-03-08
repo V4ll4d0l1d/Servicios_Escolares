@@ -251,9 +251,9 @@ public function insert_reinscripcion ($Matricula, $Seccion, $CicloAct, $CicloSig
 public function status_reinscripcion ($Matricula, $Status, $CicloAct, $obs) {
     try {
         $conn = new Conexion();
-        $sql = "UPDATE Reinscripciones SET Status=?, Fecha=now() WHERE Id=? and CicloAct=?";
+        $sql = "UPDATE Reinscripciones SET Status=?, Fecha=now(), Observaciones=? WHERE Id=? and CicloAct=?";
         $stmt = $conn->prepare($sql);
-        if ($stmt->execute(array($Status, $Matricula, $CicloAct))) {
+        if ($stmt->execute(array($Status,$obs, $Matricula, $CicloAct))) {
             return true;
         } else {    // error al actualizar el Status
             print_r($stmt->errorInfo());
@@ -302,7 +302,7 @@ public function cantReinscripcion($seccion,$carrera,$grado){
 	$car1=$carrera."%";
 	try{
 		$conn = new Conexion();
-		$stmt = $conn->prepare ("SELECT  count(*) FROM `reinscripciones` inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and datosidalumno.Grado=:grado");
+		$stmt = $conn->prepare ("SELECT  count(*) FROM `reinscripciones` inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and reinscripciones.Grado=:grado");
 		$stmt->execute(array(':sc' => $seccion ,':car'=> $car1,':grado'=>$grado));
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resultado;	
@@ -316,7 +316,7 @@ public function cantReinsStatus($seccion,$carrera,$grado,$estatus){
 	$car1=$carrera."%";
 	try{
 		$conn = new Conexion();
-		$stmt = $conn->prepare ("SELECT  count(*) FROM `reinscripciones` inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and datosidalumno.Grado=:grado and Status=:estatus");
+		$stmt = $conn->prepare ("SELECT  count(*) FROM `reinscripciones` inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and reinscripciones.Grado=:grado and Status=:estatus");
 		$stmt->execute(array(':sc' => $seccion ,':car'=> $car1,':grado'=>$grado,':estatus'=>$estatus));
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
 		//print_r ($resultado);
@@ -357,7 +357,7 @@ public function lista_reinscripcion($_seccion,$_grado,$_carrera,$_estatus,$_cicl
 	$car1=$_carrera."%";
 	try{
 		$conn = new Conexion();
-		$stmt = $conn->prepare ("SELECT  * FROM `reinscripciones` inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and datosidalumno.Grado=:grado and Status=:estatus and CicloAct=:cicloAct");
+		$stmt = $conn->prepare ("SELECT  * FROM `reinscripciones` inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and reinscripciones.Grado=:grado and Status=:estatus and CicloAct=:cicloAct");
 		$stmt->execute(array(':sc' => $_seccion,':car'=>$car1,':grado'=>$_grado,':estatus'=>$_estatus,':cicloAct'=>$_cicloAct));
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resultado;	
