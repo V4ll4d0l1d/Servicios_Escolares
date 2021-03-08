@@ -25,6 +25,7 @@ headerfull_('Reinscripcion');
 
 if ($_SESSION['login'] == 1) { // realizó login exitoso
     // validar el tipo de usuario
+	navbar();
     switch ($_SESSION['Type']) {
     case 0:     // ALUMNO No debería estar aquí
         break;
@@ -77,7 +78,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             }
         
     
-		echo '<h3>Datos del alumno</h3>'."\n";
+		echo '<section><h3>Datos del alumno</h3>'."\n";
         echo '<table>'."\n";
         echo '<tr><td>Matricula</td><td>'.$_matricula.'</td></tr>'."\n";
         echo '<tr><td>Nombre</td><td>'.$nombre." ".$apellidos.'</td></tr>'."\n";
@@ -91,7 +92,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
         echo '<tr><td>Ficha de Control Escolar</td><td><a href="validpdf.php?context=10&id_alumno='.$_matricula.'&seccion='.$_seccion.'" target="_blank"> <i class="fas fa-clipboard-list"></i></a></td></tr>'."\n";
         echo '<tr><td>Contrato de Servicios*</td><td><a href="validpdf.php?context=13&id_alumno='.$_matricula.'&seccion='.$_seccion.'" target="_blank"> <i class="fas fa-file-pdf"></i></a></td></tr>'."\n";
         echo '<tr><td>Identificación Oficial*</td><td><a href="validpdf.php?context=11&id_alumno='.$_matricula.'&seccion='.$_seccion.'" target="_blank"> <i class="fas fa-address-card"></i></a></td></tr>'."\n";
-        echo '<tr><td>Comprobante de Domicilio*</td><td><a href="validpdf.php?context=12&id_alumno='.$_matricula.'&seccion='.$_seccion.'" target="_blank"> <i class="fas fa-home"></i></a></td></tr>'."\n";
+        echo '<tr><td>Comprobante de Domicilio*</td><td><a href="validpdf.php?context=12&id_alumno='.$_matricula.'&seccion='.$_seccion.'" target="_blank"> <i class="fas fa-house-user"></i></a></td></tr>'."\n";
         echo '</table><hr/>'."\n";
 		echo '<form id="detalleReinscripcion" action="uploaddatos.php" method="post" enctype="multipart/form-data" >';
         echo '<div class="col-12">'."\n";
@@ -140,4 +141,5 @@ echo '</section>'."\n";
 /* Scripts */
 scripts();
 
+footer();
 ?>

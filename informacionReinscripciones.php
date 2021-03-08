@@ -57,7 +57,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             break;
         }
 } else {
-    echo '<header class="major"><h2>Bienvenido al Sistema de Servicios <br>Escolares del Instituto Valladolid.</h2></header>';
+    echo '<header class="major"><h2>Bienvenido al Sistema de Servicios Escolares del Instituto Valladolid.</h2></header>';
     echo '<p><b>Ingresa con tus credenciales</b></p>';
     if (isset($error) && strlen($error)>2) { echo '<p>'.$error.'</p>'; }
 }

@@ -78,13 +78,13 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             // Existe un registro, ¿Cómo va el proceso?
             switch ($status) {
                 case 0:    // En proceso
-                    echo '<h3>TRÁMITE EN PROCESO DE REVISIÓN</h3>';				
+                    echo '<h3 style="color: #ffaa00">Trámite en proceso de revisión</h3>';				
                     break;
                 case 1:     // Modificacion de datos
-                    echo '<h3>REVISA LA DOCUMENTACION FALTANTE </h3>';
+                    echo '<h3 style="color: #ca0000">Revisa la documentación faltante</h3>';
                     break;
                 case 2:     // Aceptado
-                    echo '<h3>TRÁMITE FINALIZADO</h3>';
+                    echo '<h3 style="color: #008500">Trámite finalizado</h3>';
                     break;
             }
             echo '<div class="col-12">'.observaciones_reinscripcion($_SESSION['Id'],$CicloAct).'<hr/></div>';
