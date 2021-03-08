@@ -1248,7 +1248,7 @@ function estatus_reinscripcion($matricula,$cicloAct){
 		return $estatus[0]['Status'];
 	}
 	else {
-		return "";
+		return 10;
 	}
 }
 function observaciones_reinscripcion($matricula,$cicloAct){

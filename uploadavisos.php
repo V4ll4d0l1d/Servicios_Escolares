@@ -176,4 +176,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
 /* Scripts */
 scripts();
 
+/*Footer*/
+footer();
+
 ?>
