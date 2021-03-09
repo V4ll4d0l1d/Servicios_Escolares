@@ -1052,7 +1052,7 @@ form {
 label {
   color: #3d4449;
   display: block;
-  font-size: 0.9em;
+  font-size: 1.1em;
   font-weight: 600;
   margin: 0 0 1em 0; }
 
@@ -1569,7 +1569,7 @@ button,
   cursor: pointer;
   display: inline-block;
   font-family: "Verdana", serif;
-  font-size: 0.8em;
+  font-size: 1em;
   /* font-weight: 700; */
   height: 3.5em;
   letter-spacing: 0.075em;
@@ -2295,6 +2295,7 @@ input[type="text"], input[type="password"] {
   /* border: #595959; */
   cursor: pointer;
   width: 100%;
+  font-weight: 700;
 } 
 
 button:hover {
@@ -2353,11 +2354,13 @@ span.psw {
 	.modal {
 		padding-top: 0;
 	}
-}
+
 	.modal-content.animate {
 		width: 85%;
 		font-size: 70%;
 	}
+ }
+
 /*  */
 
 /* The Close Button (x) */
