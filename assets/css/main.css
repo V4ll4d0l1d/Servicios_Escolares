@@ -2349,6 +2349,17 @@ span.psw {
   width: 40%; /* Could be more or less, depending on screen size */
 }
 
+ @media screen and (max-width: 600px) { 
+	.modal {
+		padding-top: 0;
+	}
+}
+	.modal-content.animate {
+		width: 85%;
+		font-size: 70%;
+	}
+/*  */
+
 /* The Close Button (x) */
 .close {
   position: absolute;

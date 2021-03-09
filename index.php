@@ -68,6 +68,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                 }
 				contacto();
                 break;
+			case 3:
             case 4: // BECAS-----------------------------------------
             case 5: // Administrador
                 if (isset($_POST['flag'])) {   // Se activó algo, hay que determinar que cosa, empezamos por grupo y vamos hacia arriba
