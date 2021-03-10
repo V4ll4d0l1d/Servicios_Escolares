@@ -79,7 +79,7 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
                 $_cicloact = htmlentities($_POST['cicloact']);
                 $_gradosig = htmlentities($_POST['gradosig']);
 				$_seccionsig = htmlentities($_POST['seccionsig']);
-				echo $_seccionsig;
+				//echo $_seccionsig;
 				
                 $_flagdata = $_POST['flagdata'];        // hay cambios en los datos registrados
                 if ($_seccionsig  > 2) { $_cicloact = CICLOACTS; } else { $_cicloact = CICLOACTA; }
@@ -314,5 +314,8 @@ echo '</section>'."\n";
 
 /* Scripts */
 scripts();
+
+/*Footer*/
+footer();
 
 ?>

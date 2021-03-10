@@ -318,7 +318,7 @@ if ($_SESSION['login'] == 1) {
 }
 echo '<ul class="icons">'."\n";
 if ($_SESSION['login'] == 1) {
-    echo '<a href="logout.php" class="logo"><li class="icon solid fa-sign-out-alt" style="width:auto;">'.$_SESSION['Id'].'</li></a>'."\n";
+    echo '<a href="logout.php" class="logo"><li class="icon solid fa-sign-out-alt" style="width:auto;">Salir</li></a>'."\n";
 } else {
 ?>
     <a href="#" class="logo"><li class="icon solid fa-key" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Ingresar</li></a>
@@ -471,7 +471,7 @@ function navbar(){
 					</div>
 				</div>
 				<div class="dropdown">
-				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ENLACES</button>
+				<button class="dropbtn"><i class="fa fa-fw fa-link"></i> ENLACES</button>
 					<div class="dropdown-content">
 						<a href="http://aulavirtual.umvalla.edu.mx" target="_blank">Aula Virtual</a>
 						<a href="http://valladolid.edu.mx" target="_blank">Instituto Valladolid</a>
@@ -512,6 +512,33 @@ function navbar(){
 					</div>
 				</div>
 				<div class="dropdown">
+				<button class="dropbtn"><i class="fa fa-fw fa-link"></i> ENLACES</button>
+					<div class="dropdown-content">
+						<a href="http://aulavirtual.umvalla.edu.mx" target="_blank">Aula Virtual</a>
+						<a href="http://valladolid.edu.mx" target="_blank">Instituto Valladolid</a>
+						<a href="http://umvalla.edu.mx" target="_blank">Universidad Marista Valladolid</a>';
+						if (isset($_SESSION['Id'])) {
+							switch ($_SESSION['Seccion']) {
+								case 0:
+									echo '<a href="media/Anuario_Preescolar.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 1:
+									echo '<a href="media/Anuario_Primaria.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 2:
+									echo '<a href="media/Anuario_Secundaria.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 3:
+									echo '<a href="media/Anuario_Bachillerato.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 4:
+									echo '<a href="media/Anuario_Universidad.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+							}
+						}
+				echo	'</div>
+				</div>
+				<div class="dropdown">
 					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
 					<i class="fa fa-bars"></i></a>
 				</div>';
@@ -521,7 +548,7 @@ function navbar(){
 				echo '<a class="active" href="listabecas.php">BECAS</a>
 				<a class="active" href="#">REPORTE ENTREGA</a>
 				<div class="dropdown">
-				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ENLACES</button>
+				<button class="dropbtn"><i class="fa fa-fw fa-link"></i> ENLACES</button>
 					<div class="dropdown-content">
 						<a href="http://aulavirtual.umvalla.edu.mx" target="_blank">Aula Virtual</a>
 						<a href="http://valladolid.edu.mx" target="_blank">Instituto Valladolid</a>
@@ -607,6 +634,7 @@ echo '<script src="assets/js/breakpoints.min.js"></script>'."\n";
 echo '<script src="assets/js/util.js"></script>'."\n";
 echo '<script src="assets/js/main.js"></script>'."\n";
 echo '<script src="assets/js/auxiliar.js"></script>'."\n";
+echo '<script src="https://kit.fontawesome.com/7a8670926a.js" crossorigin="anonymous"></script>'."\n";
 echo '</body>'."\n";
 echo '</html>'."\n";
 }
@@ -899,7 +927,7 @@ function lista_circulares() {
     $Ciclo = ciclo_actual();
     echo '<h4>Seccion: '.$Seccion.' - Grupo: '.$Grupo.' - Ciclo: '.$Ciclo.'</h4>
 		<table>
-		<tr><th>Seccion</th><th>Grupo</th><th>Descripción</th><th>Enlace</th></tr>'."\n";
+		<tr><th>Seccion</th><th>Grupo</th><th>Descripción</th><th><center>Enlace</center></th></tr>'."\n";
     $conn = new Circular();
     if ($Grupo != '') {
         $lista = $conn->lista_circular_grupo($Grupo, $Ciclo);
@@ -907,7 +935,7 @@ function lista_circulares() {
         if ($indice>0) {
             foreach($lista as $datos) {
                 echo '<tr><td>'.$datos['Seccion'].'</td><td>'.$datos['IdGrupo'].' </td><td>'.$datos['Descripcion'].'</td>'."\n";
-                echo '<td><center><a href="'.$datos['Archivo'].'" target="_blank"><i class="fas fa-book-open"></i></a></center></td>'."\n";
+                echo '<td><center><a href="'.$datos['Archivo'].'" target="_blank"><i class="fas fa-file-alt"></i></a></center></td>'."\n";
             }
         }
     }
@@ -920,7 +948,7 @@ function lista_circulares() {
     if ($indice>0) {
         foreach($lista as $datos) {
             echo '<tr><td>'.$datos['Seccion'].'</td><td>'.$datos['IdGrupo'].' </td><td>'.$datos['Descripcion'].'</td>'."\n";
-            echo '<td><center><a href="'.$datos['Archivo'].'" target="_blank"><i class="fas fa-book-open"></i></a></center></td>'."\n";
+            echo '<td><center><a href="'.$datos['Archivo'].'" target="_blank"><i class="fas fa-file-alt"></i></a></center></td>'."\n";
         }
     }
     echo '</table>'."\n";
@@ -954,8 +982,8 @@ function listado_becas($tipo) { // El tipo determina qué es lo que buscará (1:
         echo '<table>'."\n";
         echo '<tr><th>Matrícula</th><th>Apellidos</th><th>Nombres</th>';
         if ($tipo == 2) { echo '<th>Grupo</th>'; }
-        echo '<th>Status</th><th><center>Solicitud</center></th><th><center>Boleta</center></th>';
-        echo '<th><center>Ingresos</center></th><th><center>Identificación</center></th><th><center>Socioeconómico</center></th></tr>'."\n";
+        echo '<th><center>Estatus</center></th><th><center>Solicitud</center></th><th><center>Boleta</center></th>';
+        echo '<th><center>Ingresos</center></th><th><center>INE/IFE</center></th><th><center>Socioeconómico</center></th></tr>'."\n";
         foreach($lista as $datos) {
             echo '<tr><td><a href="detallebecas.php?id_alumno='.$datos['Id'].'&seccion='.$_SESSION['Seccion'].'">'.$datos['Id'].'</td><td>'.$datos['Apellidos'].' </td><td>'.$datos['Nombre'].'</td>'."\n";
             if ($tipo == 2) { echo '<td>'.$datos['IdGrupo'].'</td>'; }
@@ -1133,9 +1161,9 @@ function listado_infoGeneralReinsc($seccion) {
 		echo '<tr><th  colspan= "3"><center>CICLO ACTUAL '.CICLOACTS.'</center></th><th  colspan= "4"><center>CICLO SIGUIENTE '.CICLOSIGS.'</center></th></tr>';
 		
 		echo '<tr><th>Carrera</th>';
-	 echo '<th>Grado</th><th># alumnos<th>Proceso de reinscripcion</th><th>Pendiente</th><th>Modificar datos</th><th>Inscritos</th></tr>';
+	 echo '<th><center>Grado</center></th><th><center>Total de alumnos</center></th><th><center>Proceso de reinscripcion</center></th><th><center>Pendiente</center></th><th><center>Modificar datos</center></th><th><center>Inscritos</th></tr>';
 		foreach(CARRERAS as list ($claveCarrera,$nombreCarrera)){
-			echo $claveCarrera;
+
 			$lista = $conn->infoInscritos($seccion,$claveCarrera);
 		
 			$indice = count($lista);
@@ -1144,16 +1172,14 @@ function listado_infoGeneralReinsc($seccion) {
 					$cantReinscripcion=$conn2->cantReinscripcion($seccion,$claveCarrera,$datos['Grado']);
 					echo '<tr>';
 					echo '<td>'.$claveCarrera.'</td>';
-					echo '<td>'.$datos['Grado'].'</td><td>'.$datos['count(*)'].' </td>';
-					echo '<td>'.$cantReinscripcion[0]['count(*)'].'</td>';
+					echo '<td><center>'.$datos['Grado'].'</center></td><td><center>'.$datos['count(*)'].'</center></td>';
+					echo '<td><center>'.$cantReinscripcion[0]['count(*)'].'</td>';
 					for($i=0;$i<3;$i++){
 					$cantidadStatus=$conn2->cantReinsStatus($seccion,$claveCarrera,$datos['Grado'],$i);
-					echo '<td><a href="informacionReinscripciones.php?claveCarrera="'.$claveCarrera.'"grado="'.$datos['Grado'].'"&estatus="'.$i.'&cicloAct="'.CICLOACTS.'&seccion="'.$seccion.'"">'.$cantidadStatus[0]['count(*)'].'</td>';
+					echo '<td><center><a href="informacionReinscripciones.php?claveCarrera='.$claveCarrera.'&grado='.$datos['Grado'].'&estatus='.$i.'&cicloAct='.CICLOACTS.'&seccion='.$seccion.'">'.$cantidadStatus[0]['count(*)'].'</center></td>';
 					}
 					echo '</tr>';
 				}
-			} else  {
-				echo '<p>Grupo sin alumnos</p>';
 			}
 		 }
 		 echo '</table>'."\n";  
@@ -1161,7 +1187,7 @@ function listado_infoGeneralReinsc($seccion) {
 	 else{
 		 echo '<table>'."\n";
 		echo '<tr><th  colspan= "2"><center>CICLO ACTUAL '.CICLOACTUAL.'</center></th><th  colspan= "4"><center>CICLO SIGUIENTE '.CICLONEXT.'</center></th></tr><tr>';
-		echo '<th>Grado</th><th># alumnos<th>Proceso de reinscripcion</th><th>Pendiente</th></th><th>Modificar datos</th><th>Inscritos</th></tr>';
+		echo '<th><center>Grado</center></th><th><center>Total de alumnos</center><th><center>Proceso de reinscripcion</center></th><th><center>Pendiente</center></th></th><th><center>Modificar datos</center></th><th><center>Inscritos</center></th></tr>';
 		$lista = $conn->infoInscritos($seccion,"");
 		//lista2=$conn2->infoReinscripcionGeneral($seccion);
 			$indice = count($lista);
@@ -1169,7 +1195,7 @@ function listado_infoGeneralReinsc($seccion) {
 			   foreach($lista as $datos) {
 					$cantReinscripcion=$conn2->cantReinscripcion($seccion,"",$datos['Grado']);
 					echo '<tr>';
-					echo '<td>'.$datos['Grado'].'</td><td>'.$datos['count(*)'].' </td>';
+					echo '<td>'.$datos['grado'].'</td><td>'.$datos['count(*)'].' </td>';
 					echo '<td>'.$cantReinscripcion[0]['count(*)'].'</td>';
 					for($i=0;$i<3;$i++){
 						$cantidadStatus=$conn2->cantReinsStatus($seccion,"",$datos['Grado'],$i);
@@ -1197,14 +1223,14 @@ function listado_reinscripcion($_seccion,$_grado,$_carrera,$_estatus,$_cicloAct)
     if ($indice>0) {
         echo '<table>'."\n";
         echo '<tr><th>Matrícula</th><th>Apellidos</th><th>Nombres</th>';
-        echo '<th>Status</th><th><center>Ficha</center></th><th><center>Contrato</center></th>';
-        echo '<th><center>Domicilio</center></th><th><center>Identificación</center></th></tr>'."\n";
+        echo '<th><center>Estatus Beca</center></th><th><center>Ficha</center></th><th><center>Contrato</center></th>';
+        echo '<th><center>Domicilio</center></th><th><center>INE/IFE</center></th></tr>'."\n";
         foreach($lista as $datos) {
             echo '<tr><td><a href="detalleReinscripcion.php?matricula='.$datos['Id'].'&seccion='.$_seccion.'&cicloAct='.$_cicloAct.'">'.$datos['Id'].'</td><td>'.$datos['Apellidos'].' </td><td>'.$datos['Nombre'].'</td>'."\n";
             echo '<td><center>'.estatus($datos['Status']).'</i></center></td>';
             echo '<td><center><a href="validpdf.php?context=10&id_alumno='.$datos['Id'].'&seccion='.$_seccion.'" target="_blank"> <i class="fas fa-clipboard-list"></i></a></center></td>';
             echo '<td><center><a href="validpdf.php?context=13&id_alumno='.$datos['Id'].'&seccion='.$_seccion.'" target="_blank"> <i class="fas fa-file-pdf"></i></a></center></td>';
-            echo '<td><center><a href="validpdf.php?context=12&id_alumno='.$datos['Id'].'&seccion='.$_seccion.'" target="_blank"> <i class="fas fa-home"></i></a></center></td>';
+            echo '<td><center><a href="validpdf.php?context=12&id_alumno='.$datos['Id'].'&seccion='.$_seccion.'" target="_blank"> <i class="fas fa-house-user"></i></a></center></td>';
             echo '<td><center><a href="validpdf.php?context=11&id_alumno='.$datos['Id'].'&seccion='.$_seccion.'" target="_blank"> <i class="fas fa-address-card"></i></a></center></td>';
      
         }
@@ -1218,14 +1244,23 @@ function listado_reinscripcion($_seccion,$_grado,$_carrera,$_estatus,$_cicloAct)
 function estatus_reinscripcion($matricula,$cicloAct){
 	$conn = new alumnos();
 	$estatus=$conn->estatusReinscripcion($matricula,$cicloAct);
-	if(!empty($estatus)){
-	return $estatus[0]['Status'];}
+	if($estatus != Null){
+		return $estatus[0]['Status'];
+	}
+	else {
+		return 10;
+	}
 }
 function observaciones_reinscripcion($matricula,$cicloAct){
 	$conn = new alumnos();
 	$estatus=$conn->ObservacionesReinscripcion($matricula,$cicloAct);
-	if(!empty($estatus)){
-	return $estatus[0]['Observaciones'];}
+	if($estatus != Null){
+		return $estatus[0]['Observaciones'];
+	}
+	else {
+		return "";
+	}
+	
 }
 
 
