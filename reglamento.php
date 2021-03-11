@@ -28,6 +28,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
 	echo '<section>';
     if ($_SESSION['Type'] == 0) { // Es alumno
         $dir = 'reglamento/'.$_SESSION['Seccion'].'/';
+		$contador = 0;
         $directorio=opendir($dir); 
         if ($gestor = opendir($dir)) {      // SE PUEDE ABRIR EL DIRECTORIO
             echo '<table id="circular">'."\n";
@@ -36,13 +37,14 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                     echo ''; 
                 } else { 
                     echo '<tr><td><a href="'.$dir.$archivo.'" target="_blank">'.$archivo.'</a></td></tr>'."\n";
+					$contador += 1;
                 }
             }
             echo '</table>'."\n";
-        } else {
-            echo '<center><h3>AÚN NO EXISTEN CIRCULARES EN ESTE CICLO ESCOLAR</h3></center>'."\n";
         }
-
+		if ($contador == 0) {
+			echo '<center><h3>No se encontraron archivos</h3></center>'."\n";
+		}
     closedir($directorio); 
 }
 } else {
