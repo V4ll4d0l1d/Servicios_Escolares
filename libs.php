@@ -1171,12 +1171,12 @@ function listado_infoGeneralReinsc($seccion) {
 			   	foreach($lista as $datos) {
 					$cantReinscripcion=$conn2->cantReinscripcion($seccion,$claveCarrera,$datos['Grado']);
 					echo '<tr>';
-					echo '<td>'.$claveCarrera.'</td>';
+					//echo '<td>'.$claveCarrera.'</td>';
 					echo '<td><center>'.$datos['Grado'].'</center></td><td><center>'.$datos['count(*)'].'</center></td>';
 					echo '<td><center>'.$cantReinscripcion[0]['count(*)'].'</td>';
 					for($i=0;$i<3;$i++){
 					$cantidadStatus=$conn2->cantReinsStatus($seccion,$claveCarrera,$datos['Grado'],$i);
-					echo '<td><center><a href="informacionReinscripciones.php?claveCarrera='.$claveCarrera.'&grado='.$datos['Grado'].'&estatus='.$i.'&cicloAct='.CICLOACTS.'&seccion='.$seccion.'">'.$cantidadStatus[0]['count(*)'].'</center></td>';
+					echo '<td><center><a href="informacionReinscripciones.php?claveCarrera=.$claveCarrera.&grado=.$datos["Grado"].&estatus=.$i.&cicloAct=.CICLOACTS.&seccion=.$seccion.">.$cantidadStatus[0][count(*)]</center></td>';
 					}
 					echo '</tr>';
 				}
@@ -1203,9 +1203,7 @@ function listado_infoGeneralReinsc($seccion) {
 						}
 					echo '</tr>';
 				}
-			} else  {
-				echo '<p>Grupo sin alumnos</p>';
-			}
+			} 
 		 echo '</table>'."\n";  
 	 }
 }
