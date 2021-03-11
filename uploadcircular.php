@@ -39,7 +39,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                 case 4:     // Becas
                 case 5:     // Administrador
                     $circular = basename($_FILES['circular']['name']);
-                    $Valida_POST = (isset($_POST['seccion']) && !empty($_POST['seccion']));
+                    $Valida_POST = (isset($_POST['seccion']) && $_POST['seccion']!='');
                     if (is_uploaded_file($_FILES['circular']['tmp_name'])) { $ValidaF1 = 1; }
                     if ($Valida_POST == FALSE || $ValidaF1 == 0) {
                         echo '<script type="text/javascript">'."\n";
