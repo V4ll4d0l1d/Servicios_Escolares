@@ -1176,7 +1176,7 @@ function listado_infoGeneralReinsc($seccion) {
 					echo '<td><center>'.$cantReinscripcion[0]['count(*)'].'</td>';
 					for($i=0;$i<3;$i++){
 					$cantidadStatus=$conn2->cantReinsStatus($seccion,$claveCarrera,$datos['Grado'],$i);
-					echo '<td><center><a href="informacionReinscripciones.php?claveCarrera=.$claveCarrera.&grado=.$datos["Grado"].&estatus=.$i.&cicloAct=.CICLOACTS.&seccion=.$seccion.">.$cantidadStatus[0][count(*)]</center></td>';
+						echo '<td><center><a href="informacionReinscripciones.php?claveCarrera='.$claveCarrera.'&grado='.$datos['Grado'].'&estatus='.$i.'&cicloAct='.CICLOACTS.'&seccion='.$seccion.'">'.$cantidadStatus[0]['count(*)'].'</center></td>';
 					}
 					echo '</tr>';
 				}
