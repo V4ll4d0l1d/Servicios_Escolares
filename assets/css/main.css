@@ -164,6 +164,7 @@ h3 {
   letter-spacing: 1px;}
 
 h4 {
+	color: #003764;
   font-size: 1.1em; }
 
 h5 {
@@ -1016,7 +1017,7 @@ header p {
 
 header.major > :last-child {
   /* border-bottom: solid 3px; */
-  color: #d4dbe2;/* color: #003764; */
+  /* color: #003764; */
   display: inline-block; 
   /* margin: 0 0 2em 0; */
   /* padding: 0 1.75em 0.5em 0; */
