@@ -152,7 +152,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             <?php
             if ($flagfile == 1) {
                 echo '<div class="col-12">'."\n";
-                echo '<h4>Documentos Entregados anteriormente:</h4>'."\n";
+                echo '<h4><b>Documentos Entregados anteriormente:</b></h4>'."\n";
                 echo '</div>'."\n";
                 echo '<div class="col-6 col-12-small">'."\n";
                 if ($ficheros[0] == '1') { 

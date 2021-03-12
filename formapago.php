@@ -35,7 +35,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
         <!--<header class="major"><h2>Formas de Pago</h2></header>-->
         <div class="features">
 		<article>
-			<span class="icon solid fa-comments-dollar"></span>
+			<span class="icon solid fa-mobile-alt"></span>
 			<div class="content">
 			<h3>Transferencia electrónica</h3>
 			<?php 
@@ -55,7 +55,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
 			Correo para notificaciones:
 			<a href="mailto:pieacpadres@gmail.com"> pieacpadres@gmail.com</a><br>
 			<?php } ?>
-			Especificar el Nombre Completo del Alumno</p>
+			Especificar el Nombre Completo del Alumno y si es inscripción o colegiatura.</p>
             </div>
         </article>
         <?php
@@ -72,14 +72,14 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
 		</article>
 		<?php } // ¿Se realiza deposito bancario a cuenta de cheques? ?>                            
         <article>
-            <span class="icon solid fa-school"></span>
+            <span class="icon solid fa-money-bill-wave"></span>
             <div class="content">
             <h3>Pago en la Institución</h3>
-            <p>En horario de 8:00hrs a 13:00hrs de Lunes a Viernes.<br>Los pagos que se realizan aqui puede ser en efectivo, cheque o tarjeta de crédito.</p>
+            <p>En horario de 8:00hrs a 13:00hrs de Lunes a Viernes.<br>Los pagos que se realizan aquí puede ser en efectivo, cheque o tarjeta de crédito y débito.</p>
             </div>
         </article>
 		<article>
-			<span class="icon solid fa-money-bill-wave"></span>
+			<span class="icon solid fa-university"></span>
 			<div class="content">
 			<h3>Depósito en BANORTE con ficha referenciada</h3>
 			<p>Puede realizar su pago en ventanilla en Banorte con los <a href='recibos.php'>Recibos de pago</a>.</p>

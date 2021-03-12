@@ -106,37 +106,37 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             echo '</div>'."\n";
             echo '<div class="col-6 col-12-small">'."\n";
             if ($ficheros[0] == '1') { 
-                echo '<input type="checkbox" id="formato_" name="formato_" checked  disabled>'."\n".'<label><a href="'.$directorio.'/formato/'.$_SESSION['Id'].'.pdf" target = "_blank">Formato de Solicitud</a></label>'."\n";
+                echo '<input type="checkbox" id="formato_" name="formato_" checked  disabled>'."\n".'<h4><a href="'.$directorio.'/formato/'.$_SESSION['Id'].'.pdf" target = "_blank">Formato de Solicitud</a></h4>'."\n";
             } else { 
-                echo '<input type="checkbox" id="formato_" name="formato_" disabled>'."\n".'<label>Formato de Solicitud</label>'."\n"; 
+                echo '<input type="checkbox" id="formato_" name="formato_" disabled>'."\n".'<h4>Formato de Solicitud</h4>'."\n"; 
             }
             echo '</div>'."\n";
             echo '<div class="col-6 col-12-small">'."\n";
             if ($ficheros[1] == '1') { 
-                echo '<input type="checkbox" id="boleta_" name="boleta_" checked disabled>'."\n".'<label><a href="'.$directorio.'/boleta/'.$_SESSION['Id'].'.pdf" target = "_blank">Boleta</a></label>'."\n";
+                echo '<input type="checkbox" id="boleta_" name="boleta_" checked disabled>'."\n".'<h4><b><a href="'.$directorio.'/boleta/'.$_SESSION['Id'].'.pdf" target = "_blank">Boleta</a></h4>'."\n";
             } else {
-                echo '<input type="checkbox" id="boleta_" name="boleta_" disabled>'."\n".'<label>Boleta</label>'."\n";
+                echo '<input type="checkbox" id="boleta_" name="boleta_" disabled>'."\n".'<h4>Boleta</h4>'."\n";
             }
             echo '</div>'."\n";
             echo '<div class="col-6 col-12-small">'."\n";
             if ($ficheros[2] == '1') { 
-                echo '<input type="checkbox" id="ingresos_" name="ingresos_" checked disabled>'."\n".'<label><a href="'.$directorio.'/ingresos/'.$_SESSION['Id'].'.pdf" target = "_blank">Comprobante de Ingresos</a></label>'."\n";
+                echo '<input type="checkbox" id="ingresos_" name="ingresos_" checked disabled>'."\n".'<h4><a href="'.$directorio.'/ingresos/'.$_SESSION['Id'].'.pdf" target = "_blank">Comprobante de Ingresos</a></h4>'."\n";
             } else {
-                echo '<input type="checkbox" id="ingresos_" name="ingresos_" disabled>'."\n".'<label>Comprobante de Ingresos</label>'."\n";
+                echo '<input type="checkbox" id="ingresos_" name="ingresos_" disabled>'."\n".'<h4>Comprobante de Ingresos</h4>'."\n";
             }
             echo '</div>'."\n";
             echo '<div class="col-6 col-12-small">'."\n";
             if ($ficheros[3] == '1') { 
-                echo '<input type="checkbox" id="idoficial_" name="idoficial_" checked disabled>'."\n".'<label><a href="'.$directorio.'/idoficial/'.$_SESSION['Id'].'.pdf" target = "_blank">Identificación Oficial</a></label>'."\n";
+                echo '<input type="checkbox" id="idoficial_" name="idoficial_" checked disabled>'."\n".'<h4><a href="'.$directorio.'/idoficial/'.$_SESSION['Id'].'.pdf" target = "_blank">Identificación Oficial</a></h4>'."\n";
             } else {
-                echo '<input type="checkbox" id="idoficial_" name="idoficial_" disabled>'."\n".'<label>Identificación Oficial</label>'."\n";
+                echo '<input type="checkbox" id="idoficial_" name="idoficial_" disabled>'."\n".'<h4>Identificación Oficial</h4>'."\n";
             }
             echo '</div>'."\n";
             echo '<div class="col-6 col-12-small">'."\n";
             if ($ficheros[4] == '1') { 
-                echo '<input type="checkbox" id="estudio_" name="estudio_" checked disabled>'."\n".'<label><a href="'.$directorio.'/estudio/'.$_SESSION['Id'].'.pdf" target = "_blank">Estudio Socioeconómico</a></label>'."\n";
+                echo '<input type="checkbox" id="estudio_" name="estudio_" checked disabled>'."\n".'<h4><a href="'.$directorio.'/estudio/'.$_SESSION['Id'].'.pdf" target = "_blank">Estudio Socioeconómico</a></h4>'."\n";
             } else {
-                echo '<input type="checkbox" id="estudio_" name="estudio_" disabled>'."\n".'<label>Estudio Socioeconómico</label>'."\n";
+                echo '<input type="checkbox" id="estudio_" name="estudio_" disabled>'."\n".'<h4>Estudio Socioeconómico</h4>'."\n";
             }
             echo '</div>'."\n";
             if (isset($status) && $status == 0) {
@@ -170,23 +170,23 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             if (!isset($status) || $status == 0) {
             ?>
             <div class="col-6 col-12-small">
-            <label>Formato de Solicitud</label>
+            <h4>Formato de Solicitud</h4>
             <input placeholder="Formato de Solicitud" id="formato" name="formato" accept=".pdf" tabindex="2" type="file" <?php if ($flagfile == 0) {echo 'required';} ?>/> 
             <hr/></div>
             <div class="col-6 col-12-small">
-            <label>Boleta de Calificaciones</label>
+            <h4>Boleta de Calificaciones</h4>
             <input placeholder="Boleta de Calificaciones" id="boleta" name="boleta" accept=".pdf" tabindex="3" type="file" <?php if ($flagfile == 0) {echo 'required';} ?>/>  
             <hr/></div>
             <div class="col-6 col-12-small">
-            <label>Comprobantes de Ingresos</label>
+            <h4>Comprobantes de Ingresos</h4>
             <input placeholder="Comprobantes de Ingresos" id="ingresos" name="ingresos" accept=".pdf" tabindex="4" type="file" <?php if ($flagfile == 0) {echo 'required';} ?>/>  
             <hr/></div>
             <div class="col-6 col-12-small">
-            <label>Identificación Oficial</label>
+            <h4>Identificación Oficial</h4>
             <input placeholder="Identificación" id="idoficial" name="idoficial" accept=".pdf" tabindex="5" type="file" <?php if ($flagfile == 0) {echo 'required';} ?>/> 
             </div>
             <div class="col-6 col-12-small">
-            <label>Pago Estudio Socioeconómico</label>
+            <h4>Pago Estudio Socioeconómico</h4>
             <input placeholder="Pago Estudio Socioeconómico" id="estudio" name="estudio" accept=".pdf" tabindex="6" type="file" class="primary"/> 
             </div>
             <input id="Flag" name="Flag" type="hidden" value="<?php echo $flagfile; ?>">
