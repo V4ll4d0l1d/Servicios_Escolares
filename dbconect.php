@@ -25,7 +25,7 @@ public function login($id,$pass){
   $conn = new Conexion();
   //Preparamos la consulta
   $pass = md5($pass);//Se cifra la contraseña ingresada por el usuario para comparar con la contraseña cifrada en la BD
-  $stmt = $conn->prepare ("SELECT * FROM Usuarios WHERE Id = :ss AND Pass = :pp");
+  $stmt = $conn->prepare ("SELECT * FROM usuarios WHERE Id = :ss AND Pass = :pp");
  $stmt->execute(array(':ss' => $id ,':pp'=> $pass));
  $stmt->setFetchMode(PDO::FETCH_ASSOC);
  if ($registro = $stmt->fetch()) {
@@ -52,7 +52,7 @@ public function datosAlumno($Id){
  $alumno=null;
  $conn=new Conexion();
  try {
-  $comando = $conn->prepare ("SELECT Nombre, Apellidos, Grado, Grupo, Seccion, IdGrupo, Correo FROM DatosIDAlumno WHERE Id = :ss");
+  $comando = $conn->prepare ("SELECT Nombre, Apellidos, Grado, Grupo, Seccion, IdGrupo, Correo FROM datosidalumno WHERE Id = :ss");
   $comando->execute(array(':ss' => $Id));
   if($row = $comando->fetch(PDO::FETCH_ASSOC)) {
     $alumno=array(
@@ -85,7 +85,7 @@ public function datosUsuario($Id){
  $usuario=null;
  $conn=new Conexion();
  try {
-  $comando = $conn->prepare ("SELECT Nombres, Seccion, Grado, Carrera FROM DatosIDUsuario WHERE Id = :ss");
+  $comando = $conn->prepare ("SELECT Nombres, Seccion, Grado, Carrera FROM datosidusuario WHERE Id = :ss");
   $comando->execute(array(':ss' => $Id));
   if($row = $comando->fetch(PDO::FETCH_ASSOC)) {
     $usuario=array(
@@ -134,7 +134,7 @@ public function lista_alumnos($Grupo){
     $listado=null;
     $conn=new Conexion();
     try {
-        $stmt = $conn->prepare ("SELECT Id, Nombre, Apellidos, Grado, Grupo, Seccion, IdGrupo, Correo FROM DatosIDAlumno WHERE IdGrupo = :gg order by Apellidos");
+        $stmt = $conn->prepare ("SELECT Id, Nombre, Apellidos, Grado, Grupo, Seccion, IdGrupo, Correo FROM datosidalumno WHERE IdGrupo = :gg order by Apellidos");
         $stmt->bindParam(':gg', $Grupo);
         $stmt->execute();
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -152,7 +152,7 @@ public function lista_alumnos_contacto($Matricula) {
     $listado=null;
     $conn=new Conexion();
     try {
-        $stmt = $conn->prepare ("SELECT Calle, Colonia, Ciudad, Estado, Postal, TelFijo, Celular, Correo FROM ContactoAlumno WHERE Id = :gg");
+        $stmt = $conn->prepare ("SELECT Calle, Colonia, Ciudad, Estado, Postal, TelFijo, Celular, Correo FROM contactoalumno WHERE Id = :gg");
         $stmt->bindParam(':gg', $Matricula);
         $stmt->execute();
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -166,7 +166,7 @@ public function lista_alumnos_contacto($Matricula) {
 public function update_alumnos_contacto ($Matricula, $Calle, $Colonia, $Ciudad, $Estado, $Postal, $TelFijo, $Celular, $Correo) {
     try {
         $conn = new Conexion();
-        $sql = "UPDATE ContactoAlumno SET Calle= :a, Colonia= :b, Ciudad=:c, Estado=:d, Postal=:e, TelFijo=:f, Celular=:g, Correo=:h WHERE Id=:i";
+        $sql = "UPDATE contactoalumno SET Calle= :a, Colonia= :b, Ciudad=:c, Estado=:d, Postal=:e, TelFijo=:f, Celular=:g, Correo=:h WHERE Id=:i";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':a', $Calle);
         $stmt->bindParam(':b', $Colonia);
@@ -193,7 +193,7 @@ public function update_alumnos_contacto ($Matricula, $Calle, $Colonia, $Ciudad, 
 public function update_correo ($Matricula, $Correo) {
     try {
         $conn = new Conexion();
-        $sql = "UPDATE DatosIDAlumno SET Correo=? WHERE Id=?";
+        $sql = "UPDATE datosidalumno SET Correo=? WHERE Id=?";
         $stmt = $conn->prepare($sql);
         if ($stmt->execute(array($Correo, $Matricula))) {
             $_SESSION['Correo'] = $Correo;
@@ -215,7 +215,7 @@ return true;
 public function insert_alumnos_contacto ($Matricula, $Calle, $Colonia, $Ciudad, $Estado, $Postal, $TelFijo, $Celular, $Correo) {
     try {
         $conn = new Conexion();
-        $sql = "INSERT INTO ContactoAlumno (Id, Calle, Colonia, Ciudad, Estado, Postal, TelFijo, Celular, Correo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO contactoalumno (Id, Calle, Colonia, Ciudad, Estado, Postal, TelFijo, Celular, Correo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         if ($stmt->execute(array($Matricula, $Calle, $Colonia, $Ciudad, $Estado, $Postal, $TelFijo, $Celular, $Correo))) {
             return true;
@@ -233,7 +233,7 @@ public function insert_alumnos_contacto ($Matricula, $Calle, $Colonia, $Ciudad, 
 public function insert_reinscripcion ($Matricula, $Seccion, $CicloAct, $CicloSig, $Grado) {
     try {
         $conn = new Conexion();
-        $sql = "INSERT INTO Reinscripciones (Id, Seccion, CicloAct, CicloSig, Grado, Fecha) VALUES (?, ?, ?, ?, ?, now())";
+        $sql = "INSERT INTO reinscripciones (Id, Seccion, CicloAct, CicloSig, Grado, Fecha) VALUES (?, ?, ?, ?, ?, now())";
         $stmt = $conn->prepare($sql);
         if ($stmt->execute(array($Matricula, $Seccion, $CicloAct, $CicloSig, $Grado))) {
             return true;
@@ -251,7 +251,7 @@ public function insert_reinscripcion ($Matricula, $Seccion, $CicloAct, $CicloSig
 public function status_reinscripcion ($Matricula, $Status, $CicloAct, $obs) {
     try {
         $conn = new Conexion();
-        $sql = "UPDATE Reinscripciones SET Status=?, Fecha=now(), Observaciones=? WHERE Id=? and CicloAct=?";
+        $sql = "UPDATE reinscripciones SET Status=?, Fecha=now(), Observaciones=? WHERE Id=? and CicloAct=?";
         $stmt = $conn->prepare($sql);
         if ($stmt->execute(array($Status,$obs, $Matricula, $CicloAct))) {
             return true;
@@ -288,7 +288,7 @@ public function infoInscritos($seccion,$car){
 	$car1=$car."%";
 	try{
 		$conn = new Conexion();
-		$stmt = $conn->prepare ("SELECT Grado, count(*) FROM `datosidalumno` where Seccion=:sc and IdGrupo like :car group by Grado order by Grado");
+		$stmt = $conn->prepare ("SELECT Grado, count(*) FROM datosidalumno where Seccion=:sc and IdGrupo like :car group by Grado order by Grado");
 		$stmt->execute(array(':sc' => $seccion ,':car'=> $car1));
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resultado;	
@@ -302,7 +302,7 @@ public function cantReinscripcion($seccion,$carrera,$grado){
 	$car1=$carrera."%";
 	try{
 		$conn = new Conexion();
-		$stmt = $conn->prepare ("SELECT  count(*) FROM `reinscripciones` inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and reinscripciones.Grado=:grado");
+		$stmt = $conn->prepare ("SELECT  count(*) FROM reinscripciones inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and reinscripciones.Grado=:grado");
 		$stmt->execute(array(':sc' => $seccion ,':car'=> $car1,':grado'=>$grado));
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resultado;	
@@ -316,7 +316,7 @@ public function cantReinsStatus($seccion,$carrera,$grado,$estatus){
 	$car1=$carrera."%";
 	try{
 		$conn = new Conexion();
-		$stmt = $conn->prepare ("SELECT  count(*) FROM `reinscripciones` inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and reinscripciones.Grado=:grado and Status=:estatus");
+		$stmt = $conn->prepare ("SELECT  count(*) FROM reinscripciones inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and reinscripciones.Grado=:grado and Status=:estatus");
 		$stmt->execute(array(':sc' => $seccion ,':car'=> $car1,':grado'=>$grado,':estatus'=>$estatus));
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
 		//print_r ($resultado);
@@ -330,7 +330,7 @@ public function cantReinsStatus($seccion,$carrera,$grado,$estatus){
 public function estatusReinscripcion($matricula,$cicloAct){
 	try{
 		$conn = new Conexion();
-		$stmt = $conn->prepare ("SELECT  Status FROM `reinscripciones` where Id=:matricula and CicloAct=:cicloAct");
+		$stmt = $conn->prepare ("SELECT  Status FROM reinscripciones where Id=:matricula and CicloAct=:cicloAct");
 		$stmt->execute(array(':matricula' => $matricula ,':cicloAct'=> $cicloAct));
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resultado;	
@@ -343,7 +343,7 @@ public function estatusReinscripcion($matricula,$cicloAct){
 public function ObservacionesReinscripcion($matricula,$cicloAct){
 	try{
 		$conn = new Conexion();
-		$stmt = $conn->prepare ("SELECT  Observaciones FROM `reinscripciones` where Id=:matricula and CicloAct=:cicloAct");
+		$stmt = $conn->prepare ("SELECT  Observaciones FROM reinscripciones where Id=:matricula and CicloAct=:cicloAct");
 		$stmt->execute(array(':matricula' => $matricula ,':cicloAct'=> $cicloAct));
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resultado;	
@@ -357,7 +357,7 @@ public function lista_reinscripcion($_seccion,$_grado,$_carrera,$_estatus,$_cicl
 	$car1=$_carrera."%";
 	try{
 		$conn = new Conexion();
-		$stmt = $conn->prepare ("SELECT  * FROM `reinscripciones` inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and reinscripciones.Grado=:grado and Status=:estatus and CicloAct=:cicloAct");
+		$stmt = $conn->prepare ("SELECT  * FROM reinscripciones inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and reinscripciones.Grado=:grado and Status=:estatus and CicloAct=:cicloAct");
 		$stmt->execute(array(':sc' => $_seccion,':car'=>$car1,':grado'=>$_grado,':estatus'=>$_estatus,':cicloAct'=>$_cicloAct));
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resultado;	
@@ -376,7 +376,7 @@ public function lista_becas($Matricula, $Ciclo) {
     $listado=null;
     $conn=new Conexion();
     try {
-        $stmt = $conn->prepare ("SELECT Id, Seccion, CicloAct, CicloSig, Grado, Tipo, Status, Fecha, Observaciones FROM Becas WHERE Id = :gg and CicloAct = :cc");
+        $stmt = $conn->prepare ("SELECT Id, Seccion, CicloAct, CicloSig, Grado, Tipo, Status, Fecha, Observaciones FROM becas WHERE Id = :gg and CicloAct = :cc");
         $stmt->bindParam(':gg', $Matricula);
         $stmt->bindParam(':cc', $Ciclo);
         $stmt->execute();
@@ -391,8 +391,8 @@ public function lista_becas_alumno($Matricula, $Ciclo) {
     $listado=null;
     $conn=new Conexion();
     try {
-    //SELECT Becas.Id, Becas.Seccion, Becas.CicloAct, Becas.CicloSig, Becas.Grado, Becas.Tipo, Becas.Status, Becas.Fecha, Becas.Observaciones, DatosIDAlumno.Apellidos, DatosIDAlumno.Nombre FROM Becas INNER JOIN DatosIDAlumno ON Becas.Id = DatosIDAlumno.Id WHERE Becas.Id ='160023'
-        $stmt = $conn->prepare ("SELECT Becas.Id, Becas.Seccion, Becas.CicloAct, Becas.CicloSig, Becas.Grado, Becas.Tipo, Becas.Status, Becas.Fecha, Becas.Observaciones, Becas.Review, DatosIDAlumno.Apellidos, DatosIDAlumno.Nombre FROM Becas INNER JOIN DatosIDAlumno ON Becas.Id = DatosIDAlumno.Id WHERE Becas.Id = :gg and Becas.CicloAct = :cc");
+    //SELECT becas.Id, becas.Seccion, becas.CicloAct, becas.CicloSig, becas.Grado, becas.Tipo, becas.Status, becas.Fecha, becas.Observaciones, datosidalumno.Apellidos, datosidalumno.Nombre FROM becas INNER JOIN datosidalumno ON becas.Id = datosidalumno.Id WHERE becas.Id ='160023'
+        $stmt = $conn->prepare ("SELECT becas.Id, becas.Seccion, becas.CicloAct, becas.CicloSig, becas.Grado, becas.Tipo, becas.Status, becas.Fecha, becas.Observaciones, becas.Review, datosidalumno.Apellidos, datosidalumno.Nombre FROM becas INNER JOIN datosidalumno ON becas.Id = datosidalumno.Id WHERE becas.Id = :gg and becas.CicloAct = :cc");
         $stmt->bindParam(':gg', $Matricula);
         $stmt->bindParam(':cc', $Ciclo);
         $stmt->execute();
@@ -408,7 +408,7 @@ public function lista_becas_grupos($Seccion, $Grupo) {
     $conn=new Conexion();
     //echo '<p>'.$Seccion.'-'.$Grupo.'</p>';
     try {
-        $stmt = $conn->prepare ("SELECT Becas.Id, DatosIDAlumno.Nombre, DatosIDAlumno.Apellidos, DatosIDAlumno.Seccion, DatosIDAlumno.IdGrupo, Becas.Tipo, Becas.Status, Becas.Fecha FROM Becas INNER JOIN DatosIDAlumno ON Becas.Id = DatosIDAlumno.Id where Becas.Seccion = :ss and DatosIDAlumno.IdGrupo = :gg ORDER BY DatosIDAlumno.Apellidos");
+        $stmt = $conn->prepare ("SELECT becas.Id, datosidalumno.Nombre, datosidalumno.Apellidos, datosidalumno.Seccion, datosidalumno.IdGrupo, becas.Tipo, becas.Status, becas.Fecha FROM becas INNER JOIN datosidalumno ON becas.Id = datosidalumno.Id where becas.Seccion = :ss and datosidalumno.IdGrupo = :gg ORDER BY datosidalumno.Apellidos");
         $stmt->bindParam(':ss', $Seccion);
         $stmt->bindParam(':gg', $Grupo);
         $stmt->execute();
@@ -425,7 +425,7 @@ public function lista_becas_carrera($carrera) {
     $conn=new Conexion();
     //echo '<p>'.$Seccion.'-'.$Grupo.'</p>';
     try {            
-        $stmt = $conn->prepare ("SELECT Becas.Id, DatosIDAlumno.Nombre, DatosIDAlumno.Apellidos, DatosIDAlumno.Seccion, DatosIDAlumno.IdGrupo, Becas.Tipo, Becas.Status, Becas.Fecha FROM Becas INNER JOIN DatosIDAlumno ON Becas.Id = DatosIDAlumno.Id where Becas.Seccion = :ss ORDER BY DatosIDAlumno.IdGrupo" );
+        $stmt = $conn->prepare ("SELECT becas.Id, datosidalumno.Nombre, datosidalumno.Apellidos, datosidalumno.Seccion, datosidalumno.IdGrupo, becas.Tipo, becas.Status, becas.Fecha FROM becas INNER JOIN datosidalumno ON becas.Id = datosidalumno.Id where becas.Seccion = :ss ORDER BY datosidalumno.IdGrupo" );
         $stmt->bindParam(':ss', $carrera);
         $stmt->execute();
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -439,7 +439,7 @@ public function lista_becas_carrera($carrera) {
 public function insert_beca ($Matricula, $Seccion, $CicloAct, $CicloSig, $Grado, $Tipo) {
     try {
         $conn = new Conexion();
-        $sql = "INSERT INTO Becas (Id, Seccion, CicloAct, CicloSig, Grado, Tipo, Fecha) VALUES (?, ?, ?, ?, ?, ?, now())";
+        $sql = "INSERT INTO becas (Id, Seccion, CicloAct, CicloSig, Grado, Tipo, Fecha) VALUES (?, ?, ?, ?, ?, ?, now())";
         $stmt = $conn->prepare($sql);
         if ($stmt->execute(array($Matricula, $Seccion, $CicloAct, $CicloSig, $Grado, $Tipo))) {
             return true;
@@ -457,7 +457,7 @@ public function insert_beca ($Matricula, $Seccion, $CicloAct, $CicloSig, $Grado,
 public function update_beca ($Matricula, $Tipo, $Cicloact) {
     try {
         $conn = new Conexion();
-        $sql = "UPDATE Becas SET Tipo=?, Fecha=now() WHERE Id=? and Cicloact=?";
+        $sql = "UPDATE becas SET Tipo=?, Fecha=now() WHERE Id=? and Cicloact=?";
         $stmt = $conn->prepare($sql);
         if ($stmt->execute(array($Tipo, $Matricula, $Cicloact))) {
             return true;
@@ -476,7 +476,7 @@ public function update_beca ($Matricula, $Tipo, $Cicloact) {
 public function update_status_beca ($Matricula, $Status, $Tipo, $Cicloact, $Observaciones, $Review) {
     try {
         $conn = new Conexion();
-        $sql = "UPDATE Becas SET Tipo=?, Status=?, Observaciones=?, Review=? WHERE Id=? and Cicloact=?";
+        $sql = "UPDATE becas SET Tipo=?, Status=?, Observaciones=?, Review=? WHERE Id=? and Cicloact=?";
         $stmt = $conn->prepare($sql);
         if ($stmt->execute(array($Tipo, $Status, $Observaciones, $Review, $Matricula, $Cicloact))) {
             return true;
@@ -484,7 +484,7 @@ public function update_status_beca ($Matricula, $Status, $Tipo, $Cicloact, $Obse
             print_r($stmt->errorInfo());
             return false;
         }
-        
+            
     } catch(PDOException $e) {
         echo 'Error: '. $e->getMessage();
         return false;
@@ -496,7 +496,7 @@ public function update_status_beca ($Matricula, $Status, $Tipo, $Cicloact, $Obse
 public function status_beca ($Matricula, $Status, $Fecha) {
     try {
         $conn = new Conexion();
-        $sql = "UPDATE Becas SET Status=? WHERE Id=? and Fecha=?";
+        $sql = "UPDATE becas SET Status=? WHERE Id=? and Fecha=?";
         $stmt = $conn->prepare($sql);
         if ($stmt->execute(array($Status, $Matricula, $Fecha))) {
             return true;
@@ -534,7 +534,7 @@ public function lista_grupos($Usuario){
     $listado=null;
     $conn=new Conexion();
     try {
-        $stmt = $conn->prepare ("SELECT IdUsuario, Ciclo, IdGrupo, Consecutivo FROM Titulares WHERE IdUsuario = :gg");
+        $stmt = $conn->prepare ("SELECT IdUsuario, Ciclo, IdGrupo, Consecutivo FROM titulares WHERE IdUsuario = :gg");
         $stmt->bindParam(':gg', $Usuario);
         $stmt->execute();
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -549,7 +549,7 @@ public function lista_seccion($Seccion){
     $listado=null;
     $conn=new Conexion();
     try {
-        $stmt = $conn->prepare ("SELECT IdGrupo, Grado, Ciclo FROM Grupos WHERE Seccion = :gg order By IdGrupo");
+        $stmt = $conn->prepare ("SELECT IdGrupo, Grado, Ciclo FROM grupos WHERE Seccion = :gg order By IdGrupo");
         $stmt->bindParam(':gg', $Seccion);
         $stmt->execute();
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -563,7 +563,7 @@ public function lista_carrera($carrera) {
     $listado=null;
     $conn=new Conexion();
     try {
-        $stmt = $conn->prepare ("SELECT IdGrupo, Grado, Ciclo FROM Grupos WHERE IdGrupo LIKE :term ORDER BY IdGrupo");
+        $stmt = $conn->prepare ("SELECT IdGrupo, Grado, Ciclo FROM grupos WHERE IdGrupo LIKE :term ORDER BY IdGrupo");
         $stmt->bindValue(':term', $carrera.'%');
         //$stmt->bindParam('s', $search);
         $stmt->execute();
@@ -608,7 +608,7 @@ private $Usuario;
 public function leer_avisos_grado($Seccion, $Grado, $Grupo){
     $conn=new Conexion();
     try {
-        $sql = "SELECT Seccion, Grado, Titulo, Contenido, Url, Imagen FROM (SELECT * FROM Avisos WHERE (Grado = 0 OR Grado = :pp) AND (Seccion = :ss) AND Grupo = '' AND (curdate() > Fecha_Inicio AND curdate() < Fecha_Fin) UNION (select * from Avisos where Grupo = :gg)) LINK ORDER BY Fecha_Fin DESC LIMIT 3";
+        $sql = "SELECT Seccion, Grado, Titulo, Contenido, Url, Imagen FROM (SELECT * FROM avisos WHERE (Grado = 0 OR Grado = :pp) AND (Seccion = :ss) AND Grupo = '' AND (curdate() > Fecha_Inicio AND curdate() < Fecha_Fin) UNION (select * from avisos where Grupo = :gg)) LINK ORDER BY Fecha_Fin DESC LIMIT 3";
         $stmt = $conn->prepare ($sql);
         $stmt->bindParam(':pp', $Grado);
         $stmt->bindParam(':ss', $Seccion);
@@ -625,7 +625,7 @@ public function leer_avisos_grado($Seccion, $Grado, $Grupo){
 public function leer_avisos_grupo($Seccion, $Grupo){
     $conn=new Conexion();
     try {                                                                                                      
-        $stmt = $conn->prepare ("SELECT Seccion, Grado, Grupo, Titulo, Contenido, Url, Imagen FROM Avisos WHERE Grupo = :gg AND (curdate() > Fecha_Inicio AND curdate() < Fecha_Fin) AND Activo = 'Si'");
+        $stmt = $conn->prepare ("SELECT Seccion, Grado, Grupo, Titulo, Contenido, Url, Imagen FROM avisos WHERE Grupo = :gg AND (curdate() > Fecha_Inicio AND curdate() < Fecha_Fin) AND Activo = 'Si'");
         $stmt->bindParam(':gg', $Grupo);
         $stmt->execute();
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -638,7 +638,7 @@ public function leer_avisos_grupo($Seccion, $Grupo){
 public function lista_avisos(){
     $conn=new Conexion();
     try {
-        $stmt = $conn->prepare ("SELECT Consecutivo, Seccion, Grado, Grupo, Titulo, Contenido, Url, Activo, Imagen, Fecha_Inicio, Fecha_Fin, Usuario FROM Avisos ORDER BY Seccion");
+        $stmt = $conn->prepare ("SELECT Consecutivo, Seccion, Grado, Grupo, Titulo, Contenido, Url, Activo, Imagen, Fecha_Inicio, Fecha_Fin, Usuario FROM avisos ORDER BY Seccion");
         $stmt->execute();
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resultado;
@@ -650,7 +650,7 @@ public function lista_avisos(){
 public function insert_aviso ($Seccion, $Grado, $Grupo, $Titulo, $Contenido, $Url, $Imagen, $Finicio, $Ffin, $Activo, $Usuario) {
     try {
         $conn = new Conexion();
-        $sql = "INSERT INTO Avisos (Seccion, Grado, Grupo, Titulo, Contenido, Url, Imagen, Fecha_Inicio, Fecha_Fin, Activo, Usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO avisos (Seccion, Grado, Grupo, Titulo, Contenido, Url, Imagen, Fecha_Inicio, Fecha_Fin, Activo, Usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         if ($stmt->execute(array($Seccion, $Grado, $Grupo, $Titulo, $Contenido, $Url, $Imagen, $Finicio, $Ffin, $Activo, $Usuario))) {
             return true;
@@ -667,10 +667,10 @@ public function insert_aviso ($Seccion, $Grado, $Grupo, $Titulo, $Contenido, $Ur
  public function lockavisos($id, $tipo) {
     switch($tipo) {
         case '1':
-            $sql = "UPDATE Avisos SET Activo='No' WHERE Consecutivo = :cc";
+            $sql = "UPDATE avisos SET Activo='No' WHERE Consecutivo = :cc";
             break;
         case 2:
-            $sql = "UPDATE Avisos SET Activo='Si' WHERE Consecutivo = :cc";
+            $sql = "UPDATE avisos SET Activo='Si' WHERE Consecutivo = :cc";
             break;
     }
     try {
@@ -704,7 +704,7 @@ class Circular {
   public function insert_circular ($Seccion, $Grupo, $Descripcion, $Archivo, $Ciclo) {
     try {
         $conn = new Conexion();
-        $sql = "INSERT INTO Circulares (Seccion, IdGrupo, Descripcion, Archivo, Ciclo) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO circulares (Seccion, IdGrupo, Descripcion, Archivo, Ciclo) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         if ($stmt->execute(array($Seccion, $Grupo, $Descripcion, $Archivo, $Ciclo))) {
             return true;
@@ -721,7 +721,7 @@ class Circular {
   public function lista_circular_seccion1 ($Seccion, $Ciclo) {
     try {
         $conn = new Conexion();
-        $sql = "SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM Circulares WHERE Seccion = :ss AND IdGrupo = '' AND Ciclo = :cc";
+        $sql = "SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM circulares WHERE Seccion = :ss AND IdGrupo = '' AND Ciclo = :cc";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':ss', $Seccion);
         $stmt->bindParam(':cc', $Ciclo);
@@ -737,7 +737,7 @@ class Circular {
    public function lista_circular_seccion2 ($Seccion, $Ciclo) {
     try {
         $conn = new Conexion();
-        $sql = "SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM Circulares WHERE Seccion = :ss AND Ciclo = :cc ORDER BY IdGrupo";
+        $sql = "SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM circulares WHERE Seccion = :ss AND Ciclo = :cc ORDER BY IdGrupo";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':ss', $Seccion);
         $stmt->bindParam(':cc', $Ciclo);
@@ -753,7 +753,7 @@ class Circular {
    public function lista_circular_grupo ($Grupo, $Ciclo) {
     try {
         $conn = new Conexion();
-        $sql = "SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM Circulares WHERE IdGrupo = :gg AND Ciclo = :cc";
+        $sql = "SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM circulares WHERE IdGrupo = :gg AND Ciclo = :cc";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':gg', $Grupo);
         $stmt->bindParam(':cc', $Ciclo);
