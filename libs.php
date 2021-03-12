@@ -727,21 +727,16 @@ function getAvisos($seccion, $grado, $grupo) {
     echo '<div class="box alt">'."\n";
     echo '<div class="row gtr-50 gtr-uniform">'."\n";
     $conn = new aviso();
-  /*  $aviso = $conn->leer_avisos_grupo($seccion, $grupo);
-    $indice = count($aviso);
-    if ($indice>0) {
-        foreach($aviso as $contenido) {
-            echo '<div class="col-4"><span class="image fit"><a href="'.$contenido['Url'].'" target="_blank" class="image"><img src="'.$contenido['Imagen'].'" alt="" /></a></span>'."\n";
-            echo '<h4>'.$contenido['Titulo'].'</h4>'."\n";
-            echo '<p>'.$contenido['Contenido'].'</p>'."\n";
-            echo '</div>'."\n";
-        }
-    } */
+
     $aviso2 = $conn->leer_avisos_grado($seccion, $grado, $grupo);
     $indice = count($aviso2);
     if ($indice>0) {
         foreach($aviso2 as $contenido) {
-            echo '<div class="col-4"><span class="image fit"><a href="'.$contenido['Url'].'" target="_blank" class="image"><img src="'.$contenido['Imagen'].'" alt="" /></a></span>'."\n";
+            if (empty($contenido['Url'])) { 
+                echo '<div class="col-4"><span class="image fit"><a href="#"  class="image"><img src="'.$contenido['Imagen'].'" alt="" /></a></span>'."\n";
+            } else {
+                echo '<div class="col-4"><span class="image fit"><a href="'.$contenido['Url'].'" target="_blank" class="image"><img src="'.$contenido['Imagen'].'" alt="" /></a></span>'."\n";
+            }
             echo '<h4>'.$contenido['Titulo'].'</h4>'."\n";
             echo '<p>'.$contenido['Contenido'].'</p>'."\n";
             echo '</div>'."\n";
