@@ -47,9 +47,12 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                         echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
                     }
                     break;
-                case 3: // Es administrador
+                case 3: // becas
                         listado_reinscripcion($_session,$_grado,$_carrera,$_estatus,$_cicloAct);
-                    break;
+			    break;
+			    case 5: // Es administrador
+                        listado_reinscripcion($_session,$_grado,$_carrera,$_estatus,$_cicloAct);
+				break;
                 }
             break;
         default:

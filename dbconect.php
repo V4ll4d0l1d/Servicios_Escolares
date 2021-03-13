@@ -271,7 +271,7 @@ public function infoReinscripcionGeneral($seccion){
 	try{
 		$conn = new Conexion();
 		/*"SELECT idgrupo,datosidalumno.grado, count(datosidalumno.Id), count(reinscripciones.Id), cicloAct, cicloSig, reinscripciones.grado, status FROM `datosidalumno` left join reinscripciones on reinscripciones.Id=datosidalumno.Id WHERE datosidalumno.seccion=4 group by datosidalumno.IdGrupo, datosidalumno.Grado, status"*/
-        $stmt = $conn->prepare ("SELECT idgrupo,datosidalumno.grado, count(datosidalumno.Id), count(reinscripciones.Id), cicloAct, cicloSig, reinscripciones.grado, status FROM `datosidalumno` left join reinscripciones on reinscripciones.Id=datosidalumno.Id WHERE datosidalumno.seccion=:sc group by datosidalumno.IdGrupo, datosidalumno.Grado, status");
+        $stmt = $conn->prepare ("SELECT idgrupo,reinscripciones.grado, count(datosidalumno.Id), count(reinscripciones.Id), cicloAct, cicloSig, reinscripciones.grado, status FROM `datosidalumno` left join reinscripciones on reinscripciones.Id=datosidalumno.Id WHERE datosidalumno.seccion=:sc group by datosidalumno.IdGrupo, reinscripciones.Grado, status");
 		$stmt->bindParam(':sc', $seccion);
         $stmt->execute();
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -302,7 +302,7 @@ public function cantReinscripcion($seccion,$carrera,$grado){
 	$car1=$carrera."%";
 	try{
 		$conn = new Conexion();
-		$stmt = $conn->prepare ("SELECT  count(*) FROM reinscripciones inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and reinscripciones.Grado=:grado");
+		$stmt = $conn->prepare ("SELECT  reinscripciones.Grado, count(*) FROM reinscripciones inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and reinscripciones.Grado=:grado");
 		$stmt->execute(array(':sc' => $seccion ,':car'=> $car1,':grado'=>$grado));
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resultado;	
@@ -316,7 +316,7 @@ public function cantReinsStatus($seccion,$carrera,$grado,$estatus){
 	$car1=$carrera."%";
 	try{
 		$conn = new Conexion();
-		$stmt = $conn->prepare ("SELECT  count(*) FROM reinscripciones inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and reinscripciones.Grado=:grado and Status=:estatus");
+		$stmt = $conn->prepare ("SELECT  reinscripciones.Grado,count(*) FROM reinscripciones inner join datosidalumno on reinscripciones.Id=datosidalumno.Id where reinscripciones.Seccion=:sc and IdGrupo like :car and reinscripciones.Grado=:grado and Status=:estatus");
 		$stmt->execute(array(':sc' => $seccion ,':car'=> $car1,':grado'=>$grado,':estatus'=>$estatus));
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
 		//print_r ($resultado);
@@ -608,7 +608,7 @@ private $Usuario;
 public function leer_avisos_grado($Seccion, $Grado, $Grupo){
     $conn=new Conexion();
     try {
-        $sql = "SELECT Seccion, Grado, Titulo, Contenido, Url, Imagen FROM (SELECT * FROM avisos WHERE (Grado = 0 OR Grado = :pp) AND (Seccion = :ss) AND Grupo = '' AND (curdate() > Fecha_Inicio AND curdate() < Fecha_Fin) UNION (select * from avisos where Grupo = :gg)) LINK ORDER BY Fecha_Fin DESC LIMIT 3";
+        $sql = "SELECT Seccion, Grado, Titulo, Contenido, Url, Imagen FROM (SELECT * FROM avisos WHERE (Grado = 0 OR Grado = :pp) AND (Seccion = :ss) AND Grupo = '' AND (curdate() > Fecha_Inicio AND curdate() < Fecha_Fin) and Activo='Si' UNION (select * from avisos where Grupo = :gg)) LINK ORDER BY Fecha_Fin DESC LIMIT 3";
         $stmt = $conn->prepare ($sql);
         $stmt->bindParam(':pp', $Grado);
         $stmt->bindParam(':ss', $Seccion);

@@ -93,7 +93,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                         <div class="col-12">
                         </div>
                         <div class="col-4 col-12-xsmall">
-                            <input id="titulo" name="titulo" type="text" tabindex="5" placeholder="Título del aviso" required>
+                            <input id="titulo" name="titulo" type="text" tabindex="5" placeholder="Título del aviso" maxlength=30 required>
                         </div>
                         <div class="col-4 col-12-xsmall">
                             <input id="contenido" name="contenido" type="text" tabindex="6" placeholder="Texto del Contenido" required>

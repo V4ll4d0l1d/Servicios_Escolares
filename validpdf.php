@@ -25,7 +25,7 @@ if ($_SESSION['Id'] == $matricula or $_SESSION['Privs'] > 1) {
                 readfile($archivo); 
             } else 	{   // Revisar si la boleta está bloqueada
                 //$archivo2 = "boletas/".$_SESSION['Seccion']."/_".$matricula.".pdf";
-                $archivo2 = "boletas/".$matricula.".pdf"; 
+                $archivo2 = "boletas/_".$matricula.".pdf"; 
                 if (file_exists($archivo2)) { // Se encontro el archivo bloqueado, mostrar aviso de pago
                     $archivo = "boletas/Aviso_".$_SESSION['Seccion'].".pdf"; // Muestra el aviso correspondiente a la sección
                     header ("Cache-Control: no-cache, must-revalidate"); //no guardar en CACHE 
@@ -180,7 +180,7 @@ if ($_SESSION['Id'] == $matricula or $_SESSION['Privs'] > 1) {
             break;
 		case 13:     // Contrato
 			if(isset($_GET['seccion'])){$seccion=$_GET['seccion'];}else{$seccion=0;} 
-            $archivo = 'becas/'.$seccion.'/contrato/'.$matricula.'.pdf';
+            $archivo = 'reinscripcion/'.$seccion.'/contrato/'.$matricula.'.pdf';
             if (file_exists($archivo)) 	{   //La boleta no está bloqueada
                 header ("Cache-Control: no-cache, must-revalidate"); //no guardar en CACHE 
                 header ("Pragma: no-cache");  

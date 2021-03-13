@@ -10,6 +10,7 @@ include ("dbconect.php");
 // VALIDAR SI YA SE INICIO SESION
 IF (isset($_SESSION['login'])&&($_SESSION['login'] == 1)) {
     // sesion iniciada
+	$title ="Reinscripción";
     if (isset($_SESSION['Activo'])) { $title = $title . ' - ' .$_SESSION['Activo']; }
 } else {
     // Verificar si es la primera vez que envían el login
@@ -40,12 +41,13 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                     }
                     break;
                 case 3: // Es controlEscolar
+				case 5:
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
    $_matricula = $_GET['matricula'];
    $_seccion=$_GET['seccion'];
    $_cicloAct=$_GET['cicloAct'];
    $fecha=date("Y-m-d H:i:s"); 
-    $status=(estatus_reinscripcion($_matricula,$_cicloAct));
+   $status=(estatus_reinscripcion($_matricula,$_cicloAct));
    
    $conexionBD1=new Usuario();
    $resultado=$conexionBD1->datosAlumno($_matricula);

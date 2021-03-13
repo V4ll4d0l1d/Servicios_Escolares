@@ -287,6 +287,7 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
            case 1:     // USUARIO
         switch ($_SESSION['Privs']) {
 			case 3: //CONTROL ESCOLAR
+			case 5: 
 				$status_=$_POST['status'];
 				$obs_=$_POST['obs'];
 				$cicloAct_=$_POST['cicloact'];
@@ -296,9 +297,9 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
 				$conexionBD->status_reinscripcion ($matricula_, $status_,  $cicloAct_,$obs_);
 			    echo '<script type="text/javascript">'."\n";
 				echo 'alert("Se actualizado el registro...");'."\n"; 
-				echo 'window.location = "informacion.php"'."\n"; 
+				echo 'window.location = "reinscripciones.php"'."\n"; 
 				echo '</script>'."\n";
-				header("Location: informacion.php");
+				header("Location: reinscripciones.php");
 			break;
         }   
 		break;

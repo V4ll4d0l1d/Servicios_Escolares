@@ -40,7 +40,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                 case 4:     // Becas
                 case 5:     // Administrador
                     $imagen = basename($_FILES['imagen']['name'])   ;
-                    $Valida_POST = (isset($_POST['seccion']) && !empty($_POST['seccion']) &&
+                    $Valida_POST = (isset($_POST['seccion']) && 
                                     isset($_POST['titulo']) && !empty($_POST['titulo']) &&
                                     isset($_POST['contenido']) && !empty($_POST['contenido']) &&
                                     isset($_POST['estatus']) && !empty($_POST['estatus']) &&
@@ -80,7 +80,8 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                         $ruta = 'images';
                         
                         $seccion = seccion_nombre($_POST['seccion'], $ctx);     // Convierte la sección en las iniciales
-                        $titulo = htmlentities($_POST['titulo'], ENT_QUOTES, "UTF-8");
+                        //$titulo = htmlentities($_POST['titulo'], ENT_QUOTES , "UTF-8");
+						$titulo = htmlentities($_POST['titulo']);
                         $contenido = htmlentities($_POST['contenido'], ENT_QUOTES, "UTF-8");
                         $estatus = $_POST['estatus'];
                         $finicio = $_POST['finicio'];
@@ -128,7 +129,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                         if ($flagOK == 1 && $errorflag == 0) {
                             //Subir los datos del formulario
                             $conexionBD=new Aviso();
-                            $result=$conexionBD->insert_aviso ($seccion, $grado, $grupo, $titulo, $contenido, $url, $target_file, $finicio, $ffin, $estatus, $_SESSION['Id']);
+                            $result=$conexionBD->insert_aviso($seccion, $grado, $grupo, $titulo, $contenido, $url, $target_file, $finicio, $ffin, $estatus, $_SESSION['Id']);
                             if (!$result) {
                                 $errorflag += 1;
                                 array_push ($errores, "Base de Datos: Error al actualizar los datos");
@@ -140,7 +141,8 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                         echo '<tr><td>Grado</td><td>'.$grado.'</td></tr>';
                         echo '<tr><td>Grupo</td><td>'.$grupo.'</td></tr>';
                         echo '<tr><td>Título</td><td>'.$titulo.'</td></tr>';
-                        echo '<tr><td>Contenido</td><td>'.$titulo.'</td></tr>';
+						echo '<tr><td>Título</td><td>'.html_entity_decode($titulo).'</td></tr>';
+                        echo '<tr><td>Contenido</td><td>'.$contenido.'</td></tr>';
                         echo '<tr><td>Imagen</td><td><a href="'.$target_file.'" target="_blank">'.$target_file.'</a></td></tr>';
                         echo '<tr><td>Url</td><td><a href="'.$url.'" target="_blank">'.$url.'</a></td></tr>';
                         echo '<tr><td>Fecha de inicio</td><td>'.$finicio.'</td></tr>';

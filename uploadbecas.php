@@ -194,7 +194,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                         $errorflag += 1;
                             array_push ($errores, "Id Oficial: Solo se aceptan archivos pdf");
                             $uploadOk = 0;
-                        }                        echo '<p>Vamos a insertar</p>';
+                        }                       // echo '<p>Vamos a insertar</p>';
                         if ($uploadOk == 1) {       // El archivo se puede cargar
                             if (move_uploaded_file($_FILES["idoficial"]["tmp_name"], $target_file)) {
                                 $flagOK += 1;

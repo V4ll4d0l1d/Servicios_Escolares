@@ -507,8 +507,7 @@ function navbar(){
 				echo '<div class="dropdown">
 				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
 					<div class="dropdown-content">
-						<a href="informacion.php">Reporte preinscripcion</a>
-						<!--a href="comunicacion.php">Concentrados</a-->
+						<a href="reinscripciones.php">Reporte preinscripcion</a>
 					</div>
 				</div>
 				<div class="dropdown">
@@ -585,6 +584,7 @@ function navbar(){
 				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
 					<div class="dropdown-content">
 						<a href="informacion.php">Información</a>
+						<a href="reinscripciones.php">Reinscripciones</a>
 						<a href="comunicacion.php">Circulares</a>
 						<a href="avisos.php">Avisos</a>
 						<a href="bloqueo.php">Bloqueo/Desbloqueo</a>
@@ -737,7 +737,7 @@ function getAvisos($seccion, $grado, $grupo) {
             } else {
                 echo '<div class="col-4"><span class="image fit"><a href="'.$contenido['Url'].'" target="_blank" class="image"><img src="'.$contenido['Imagen'].'" alt="" /></a></span>'."\n";
             }
-            echo '<h4>'.$contenido['Titulo'].'</h4>'."\n";
+            echo '<h4>'.html_entity_decode($contenido['Titulo']).'</h4>'."\n";
             echo '<p>'.$contenido['Contenido'].'</p>'."\n";
             echo '</div>'."\n";
         }
@@ -882,7 +882,7 @@ function listado_admon($grupo) {
     $lista = $conn->lista_alumnos($grupo);
     $indice = count($lista);
     if ($indice>0) {
-        echo '<table>'."\n";
+        echo '<section><table>'."\n";
         echo '<tr><th>Matrícula</th><th>Apellidos</th><th>Nombres</th><th colspan=2><center>Boleta</center></th><th><center>Recibo de Pago</center></th><th><center>Información</center></th></tr>'."\n";
         foreach($lista as $datos) {
             echo '<tr><td>'.$datos['Id'].'</td><td>'.$datos['Apellidos'].' </td><td>'.$datos['Nombre'].'</td>'."\n";
@@ -896,7 +896,7 @@ function listado_admon($grupo) {
             echo '<td><center><a href="validpdf.php?context=2&id_alumno='.$datos['Id'].'" target="_blank"><i class="fas fa-money-check-alt"></i></a></center></td>';
             echo '<td><center><a href="#" class="logo"><i class="fas fa-address-card" onclick="showUser('.$datos['Id'].')"></a></i></center></td></tr>'."\n";
         }
-        echo '</table>'."\n";
+        echo '</table></section>'."\n";
         
     }
 }
@@ -920,7 +920,7 @@ function lista_circulares() {
     }
     $Seccion = corto_seccion();
     $Ciclo = ciclo_actual();
-    echo '<h4>Seccion: '.$Seccion.' - Grupo: '.$Grupo.' - Ciclo: '.$Ciclo.'</h4>
+    echo '<section> <h4>Seccion: '.$Seccion.' - Grupo: '.$Grupo.' - Ciclo: '.$Ciclo.'</h4>
 		<table>
 		<tr><th>Seccion</th><th>Grupo</th><th>Descripción</th><th><center>Enlace</center></th></tr>'."\n";
     $conn = new Circular();
@@ -946,7 +946,7 @@ function lista_circulares() {
             echo '<td><center><a href="'.$datos['Archivo'].'" target="_blank"><i class="fas fa-file-alt"></i></a></center></td>'."\n";
         }
     }
-    echo '</table>'."\n";
+    echo '</table></section>'."\n";
         
 }
 
@@ -1190,7 +1190,7 @@ function listado_infoGeneralReinsc($seccion) {
 			   foreach($lista as $datos) {
 					$cantReinscripcion=$conn2->cantReinscripcion($seccion,"",$datos['Grado']);
 					echo '<tr>';
-					echo '<td>'.$datos['grado'].'</td><td>'.$datos['count(*)'].' </td>';
+					echo '<td>'.$datos['Grado'].'</td><td>'.$datos['count(*)'].' </td>';
 					echo '<td>'.$cantReinscripcion[0]['count(*)'].'</td>';
 					for($i=0;$i<3;$i++){
 						$cantidadStatus=$conn2->cantReinsStatus($seccion,"",$datos['Grado'],$i);

@@ -1,0 +1,15 @@
+Id,Nombres,Seccion,Grado,Carrera
+bachillerato1,Titular Bach 1ro,3,1,NO
+bachillerato3,Titular Bach 3ro,3,3,NO
+fisioterapia1,Titular LFR 1ro,4,1,LFR
+fisioterapia3,Titular LFR 3ro,4,3,LFR
+preescolar1A,Titular PRE11,0,1,NO
+preescolar2A,Titular PRE21,0,2,NO
+primaria1A,Titular PRI11,1,2,NO
+primaria2A,Titular PRI21,1,2,NO
+secundaria1A,Titular SEC11,2,2,NO
+secundaria2A,Titular SEC21,2,2,NO
+controlprimaria, Control Escolar Primaria, 1, , NO
+controlsecundaria, Control Escolar Secundaria, 2, , NO
+controlpreescolar, Control Escolar Preescolar, 0, , NO
+controlbachillerato, Control Escolar bachillerato, 3, , NO
