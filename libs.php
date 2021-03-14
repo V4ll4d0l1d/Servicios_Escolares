@@ -1146,27 +1146,43 @@ function texto_reinscripcion($seccion) {
 // Parametros:  seccion y carreras
 //*************************************************************************************************
 
-function listado_infoGeneralReinsc($seccion) {
-    $conn = new alumnos();
+function listado_infoGeneralReinsc($seccion, $carrera) {
+	$conn = new alumnos();
 	$conn2 = new alumnos();
-	$conn3 = new alumnos();
-	$conn4 = new alumnos();
-	 if($seccion==4){
+	if (isset($carrera) && $carrera != '') {  
+	echo '<table>'."\n";
+		echo '<tr><th  colspan= "3"><center>CICLO ACTUAL '.CICLOACTS.'</center></th><th  colspan= "4"><center>CICLO SIGUIENTE '.CICLOSIGS.'</center></th></tr>';		
+		echo '<th><center>Grado</center></th><th><center>Total de alumnos</center></th><th><center>Proceso de reinscripcion</center></th><th><center>Pendiente</center></th><th><center>Modificar datos</center></th><th><center>Inscritos</th></tr>';
+	    $lista = $conn->infoInscritos($seccion,$carrera);		
+		$indice = count($lista);
+			if ($indice>0) {
+			   	foreach($lista as $datos) {
+					$cantReinscripcion=$conn2->cantReinscripcion($seccion,$carrera,$datos['Grado']);
+					echo '<tr>';
+					echo '<td><center>'.$datos['Grado'].'</center></td><td><center>'.$datos['count(*)'].'</center></td>';
+					echo '<td><center>'.$cantReinscripcion[0]['count(*)'].'</td>';
+					for($i=0;$i<3;$i++){
+					$cantidadStatus=$conn2->cantReinsStatus($seccion,$carrera,$datos['Grado'],$i);
+						echo '<td><center><a href="informacionReinscripciones.php?claveCarrera='.$carrera.'&grado='.$datos['Grado'].'&estatus='.$i.'&cicloAct='.CICLOACTS.'&seccion='.$seccion.'">'.$cantidadStatus[0]['count(*)'].'</center></td>';
+					}
+					echo '</tr>';
+				}
+			}
+		 echo '</table>'."\n";  
+	}else{
+	 if($seccion==4 ){
 		echo '<table>'."\n";
-		echo '<tr><th  colspan= "3"><center>CICLO ACTUAL '.CICLOACTS.'</center></th><th  colspan= "4"><center>CICLO SIGUIENTE '.CICLOSIGS.'</center></th></tr>';
-		
+		echo '<tr><th  colspan= "3"><center>CICLO ACTUAL '.CICLOACTS.'</center></th><th  colspan= "4"><center>CICLO SIGUIENTE '.CICLOSIGS.'</center></th></tr>';		
 		echo '<tr><th>Carrera</th>';
 	 echo '<th><center>Grado</center></th><th><center>Total de alumnos</center></th><th><center>Proceso de reinscripcion</center></th><th><center>Pendiente</center></th><th><center>Modificar datos</center></th><th><center>Inscritos</th></tr>';
 		foreach(CARRERAS as list ($claveCarrera,$nombreCarrera)){
-
-			$lista = $conn->infoInscritos($seccion,$claveCarrera);
-		
+			$lista = $conn->infoInscritos($seccion,$claveCarrera);		
 			$indice = count($lista);
 			if ($indice>0) {
 			   	foreach($lista as $datos) {
 					$cantReinscripcion=$conn2->cantReinscripcion($seccion,$claveCarrera,$datos['Grado']);
 					echo '<tr>';
-					//echo '<td>'.$claveCarrera.'</td>';
+					echo '<td>'.$claveCarrera.'</td>';
 					echo '<td><center>'.$datos['Grado'].'</center></td><td><center>'.$datos['count(*)'].'</center></td>';
 					echo '<td><center>'.$cantReinscripcion[0]['count(*)'].'</td>';
 					for($i=0;$i<3;$i++){
@@ -1200,7 +1216,7 @@ function listado_infoGeneralReinsc($seccion) {
 				}
 			} 
 		 echo '</table>'."\n";  
-	 }
+	}}
 }
 
 //*************************************************************************************************
@@ -1244,6 +1260,7 @@ function estatus_reinscripcion($matricula,$cicloAct){
 		return 10;
 	}
 }
+
 function observaciones_reinscripcion($matricula,$cicloAct){
 	$conn = new alumnos();
 	$estatus=$conn->ObservacionesReinscripcion($matricula,$cicloAct);
