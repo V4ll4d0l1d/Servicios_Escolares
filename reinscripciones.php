@@ -40,7 +40,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
 					echo '<h3>No cuentas con privilegios suficientes, por favor comunicate con Sistemas</p>';
                     break;
                 case 3://Control Escolar
-					listado_infoGeneralReinsc($_SESSION['Seccion']);					
+					listado_infoGeneralReinsc($_SESSION['Seccion'],$_SESSION['Carrera']);					
                     break;
                 case 4: // Becas hay que validar que es lo que quiere ver OJO, quizá esto sirva para el director - administrador
                    /* if (isset($_SESSION['Activo']) && $_SESSION['Activo'] != '') {   // Grupo Seleccionado, mostrarlo
@@ -61,7 +61,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                 case 5: // Es administrador
                    // if (isset($_SESSION['Activo']) && ($_SESSION['Activo'] != '')) {
                         echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.secciones().'</h3>';
-                        listado_infoGeneralReinsc($_SESSION['Seccion']);
+                       listado_infoGeneralReinsc($_SESSION['Seccion'],$_SESSION['Carrera']);	
                     /*    echo '<hr>';
                     } else {
                         echo '  <h3>Esta página muestra la información académica de los alumnos de un grupo</h3>
