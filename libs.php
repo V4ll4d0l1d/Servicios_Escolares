@@ -908,45 +908,57 @@ function listado_admon($grupo) {
 // Parametros:  Los consulta de las variables de sesión
 //*************************************************************************************************
 function lista_circulares() {
-    // Toma los datos activos
-    if (isset($_SESSION['IdGrupo']) && $_SESSION['IdGrupo'] != '') {    // Es alumno!!
-        $Grupo = $_SESSION['IdGrupo'];
-    } else {    
-        if (isset($_SESSION['Activo']) && $_SESSION['Activo'] != '') {  // Es usuario
-            $Grupo = $_SESSION['Activo'];
-        } else {
-            $Grupo = '';
-        }
-    }
-    $Seccion = corto_seccion();
+	$Seccion = corto_seccion();
     $Ciclo = ciclo_actual();
-    echo '<section> <h4>Seccion: '.$Seccion.' - Grupo: '.$Grupo.' - Ciclo: '.$Ciclo.'</h4>
-		<table>
-		<tr><th>Seccion</th><th>Grupo</th><th>Descripción</th><th><center>Enlace</center></th></tr>'."\n";
-    $conn = new Circular();
-    if ($Grupo != '') {
-        $lista = $conn->lista_circular_grupo($Grupo, $Ciclo);
-        $indice = count($lista);
-        if ($indice>0) {
-            foreach($lista as $datos) {
-                echo '<tr><td>'.$datos['Seccion'].'</td><td>'.$datos['IdGrupo'].' </td><td>'.$datos['Descripcion'].'</td>'."\n";
-                echo '<td><center><a href="'.$datos['Archivo'].'" target="_blank"><i class="fas fa-file-alt"></i></a></center></td>'."\n";
-            }
-        }
-    }
-    if ($Grupo == '' && $_SESSION['Privs'] > 3) {    // Es usuario y solo seleccionó carrera
-        $lista = $conn->lista_circular_seccion2 ($Seccion, $Ciclo);
-    } else {
-        $lista = $conn->lista_circular_seccion1 ($Seccion, $Ciclo);
-    }
-    $indice = count($lista);
-    if ($indice>0) {
-        foreach($lista as $datos) {
-            echo '<tr><td>'.$datos['Seccion'].'</td><td>'.$datos['IdGrupo'].' </td><td>'.$datos['Descripcion'].'</td>'."\n";
-            echo '<td><center><a href="'.$datos['Archivo'].'" target="_blank"><i class="fas fa-file-alt"></i></a></center></td>'."\n";
-        }
-    }
-    echo '</table></section>'."\n";
+	// Valida tipo de usuario
+	switch ($_SESSION['Type']) {
+		case '0':		// Alumno
+			echo '<section>
+					<h4>Seccion: '.$Seccion.' - Grupo: '.$_SESSION['Grupo'].' - Ciclo: '.$Ciclo.'</h4>';
+					
+			$conn = new Circular();
+			$lista = $conn->lista_circular_alumno($_SESSION['Grupo'], $Seccion, $Ciclo);
+			$indice = count($lista);
+			if ($indice>0) {
+				echo '<table><tr><th>Seccion</th><th>Grupo</th><th>Descripción</th><th><center>Enlace</center></th></tr>'."\n";
+				foreach($lista as $datos) {
+					echo '	<tr><td>'.$datos['Seccion'].'</td><td>'.$datos['IdGrupo'].' </td><td>'.$datos['Descripcion'].'</td>
+							<td><center><a href="'.$datos['Archivo'].'" target="_blank"><i class="fas fa-file-alt"></i></a></center></td></tr>'."\n";
+				}
+				echo '</table></section>'."\n";
+			} else {
+				echo '<br><h4>No existen circulares en el ciclo actual</h4>'."\n";
+			}
+			break;
+		case '1':		// Usuario
+			// ¿Seleccionaste una sección? ¿Tienes privilegios para ocultar la circular?
+			$conn = new Circular();
+			$lista = $conn->lista_circular_seccion($Seccion, $Ciclo);
+			$indice = count($lista);
+			if ($indice>0) {
+				echo '<table><tr><th>Seccion</th><th>Grupo</th><th>Descripción</th><th><center>Enlace</center></th>';
+				if ($_SESSION['Privs'] > 2) {	// puede ocultar las circulares
+					echo '<th><center>Visible</center></th>';
+				}
+				echo '</tr>'."\n";
+				foreach($lista as $datos) {
+					echo '	<tr><td>'.$datos['Seccion'].'</td><td>'.$datos['IdGrupo'].' </td><td>'.$datos['Descripcion'].'</td>
+							<td><center><a href="'.$datos['Archivo'].'" target="_blank"><i class="fas fa-file-alt"></i></a></center></td>';
+					if ($_SESSION['Privs'] > 2) {	// puede ocultar las circulares
+						if ($datos['Visible'] == 'Si') {
+							echo '<td><center><a href="#"><i class="fas fa-eye" onclick="unlockcircular('.$datos['IdCircular'].', 1)"></i></a></center></td>'; 
+						} else { 
+							echo '<td><center><a href="#"><i class="fas fa-eye-slash" onclick="unlockcircular('.$datos['IdCircular'].', 2)"></i></a></center></td>'; 
+						}
+					}
+					echo '</tr>';
+				}
+				echo '</table></section>'."\n";
+			} else {
+				echo '<br><h4>No existen circulares en el ciclo actual</h4>'."\n";
+			}
+			break;
+	}
         
 }
 

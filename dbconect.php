@@ -718,44 +718,14 @@ class Circular {
     }
  }
  
-  public function lista_circular_seccion1 ($Seccion, $Ciclo) {
+  public function lista_circular_alumno($Grupo, $Seccion, $Ciclo) {
     try {
         $conn = new Conexion();
-        $sql = "SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM circulares WHERE Seccion = :ss AND IdGrupo = '' AND Ciclo = :cc";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':ss', $Seccion);
-        $stmt->bindParam(':cc', $Ciclo);
-        $stmt->execute();
-        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $resultado;
-    } catch(PDOException $e) {
-        echo "Error en conexion: ".$e->getMessage();
-        return false;
-    }
- }
-
-   public function lista_circular_seccion2 ($Seccion, $Ciclo) {
-    try {
-        $conn = new Conexion();
-        $sql = "SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM circulares WHERE Seccion = :ss AND Ciclo = :cc ORDER BY IdGrupo";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':ss', $Seccion);
-        $stmt->bindParam(':cc', $Ciclo);
-        $stmt->execute();
-        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $resultado;
-    } catch(PDOException $e) {
-        echo "Error en conexion: ".$e->getMessage();
-        return false;
-    }
- }
-
-   public function lista_circular_grupo ($Grupo, $Ciclo) {
-    try {
-        $conn = new Conexion();
-        $sql = "SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM circulares WHERE IdGrupo = :gg AND Ciclo = :cc";
+        $sql = "SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM circulares WHERE IdGrupo = :gg AND Ciclo = :cc UNION (SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM
+		circulares WHERE Seccion = :ss AND IdGrupo='' AND Ciclo = :cc)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':gg', $Grupo);
+		$stmt->bindParam(':ss', $Seccion);
         $stmt->bindParam(':cc', $Ciclo);
         $stmt->execute();
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -764,7 +734,25 @@ class Circular {
         echo "Error en conexion: ".$e->getMessage();
         return false;
     }
- }
+  }
+ 
+  public function lista_circular_seccion($Seccion, $Ciclo) {
+    try {
+        $conn = new Conexion();
+		$sql = "SELECT IdCircular, Seccion, IdGrupo, Descripcion, Archivo, Ciclo, Visible FROM circulares WHERE Seccion = :ss AND Ciclo = :cc";
+        $stmt = $conn->prepare($sql);
+		$stmt->bindParam(':ss', $Seccion);
+        $stmt->bindParam(':cc', $Ciclo);
+        $stmt->execute();
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;
+    } catch(PDOException $e) {
+        echo "Error en conexion: ".$e->getMessage();
+        return false;
+    }
+  }
+ 
+
 
   
 }

@@ -30,7 +30,6 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
     switch ($_SESSION['Type']) {
     case 0:     // ALUMNO
         // ¿Existen avisos?
- 
         break;
     case 1:     // USUARIO - Validar el tipo de usuario----------------------------------
         switch ($_SESSION['Privs']) {
@@ -50,47 +49,51 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                     echo '</h4>';   
                 }
                 // PRIMER FORMULARIO-------------------------
-                echo '<h4>Subir Circulares</h4>'."\n";
-                echo '<form method="post" action="uploadcircular.php" enctype="multipart/form-data">'."\n";
-                echo '<div class="row gtr-uniform">'."\n";
+                echo '
+					<h4>Subir Circulares</h4>
+					<form method="post" action="uploadcircular.php" enctype="multipart/form-data">
+					<div class="row gtr-uniform">'."\n";
                 if (!$ValidaSeleccion) {
-                    echo '<div id="ListaSeccion" name="ListaSeccion" class="col-4 col-12-xsmall">'."\n";
-                    echo '<select id="seccion" name="seccion" onchange="showGrupos()" tabindex="1" required>'."\n";
-                    echo '<option value="" disabled selected>Elige la sección</option>'."\n";
-                    echo '<option value="0">Preescolar</option>'."\n";
-                    echo '<option value="1">Primaria</option>'."\n";
-                    echo '<option value="2">Secundaria</option>'."\n";
-                    echo '<option value="3">Bachillerato</option>'."\n";
-                    echo '<option value="4">Universidad</option>'."\n";
-                    echo '</select>'."\n";
-                    echo '</div>'."\n";
-                    echo '<div id="select1" name="select1" class="col-4 col-12-xsmall">'."\n";
-                    echo '<select id="Active" name="Active" tabindex="2">'."\n";
-                    echo '<option value="" disabled selected>Elige el Grupo</option>'."\n";
-                    echo '</select>'."\n";
-                    echo '</div>'."\n";
-                    echo '<div id="select2" name="select2" class="col-4 col-12-xsmall">'."\n";
-                    echo '</div>'."\n";
+                echo '	
+					<div id="ListaSeccion" name="ListaSeccion" class="col-4 col-12-xsmall">
+						<select id="seccion" name="seccion" onchange="showGrupos()" tabindex="1" required>
+							<option value="" disabled selected>Elige la sección</option>
+							<option value="0">Preescolar</option>
+							<option value="1">Primaria</option>
+							<option value="2">Secundaria</option>
+							<option value="3">Bachillerato</option>
+							<option value="4">Universidad</option>
+						</select>
+					</div>
+					<div id="select1" name="select1" class="col-4 col-12-xsmall">
+						<select id="Active" name="Active" tabindex="2">
+							<option value="" disabled selected>Elige el Grupo</option>
+						</select>
+					</div>
+					<div id="select2" name="select2" class="col-4 col-12-xsmall">
+					</div>'."\n";
                 } else {
-                    echo '<input id="seccion" name="seccion" type="hidden" value="'.$_SESSION['Seccion'].'">';
-                    echo '<input id="ctx" name="ctx" type="hidden" value="'.$_SESSION['Carrera'].'">';
-                    echo '<input id="Active" name="Active" type="hidden" value="'.$_SESSION['Activo'].'">';
+                    echo '
+						<input id="seccion" name="seccion" type="hidden" value="'.$_SESSION['Seccion'].'">
+						<input id="ctx" name="ctx" type="hidden" value="'.$_SESSION['Carrera'].'">
+						<input id="Active" name="Active" type="hidden" value="'.$_SESSION['Activo'].'">';
                 }
-                echo '<div id="inputDescripcion" name="inputDescripcion" class="col-12">'."\n";
-                echo '<label>Descripción de la circular</label>'."\n";
-                echo '<input id="descripcion" name="descripcion" type="text" tabindex="4" placeholder="Descripción" required>'."\n";
-                echo '</div>'."\n";
-                echo '<div id="inputArchivo" name="inputArchivo" class="col-6 col-12-xsmall">'."\n";
-                echo '<label>Archivo</label>'."\n";
-                echo '<input id="circular" name="circular"  accept=".pdf" tabindex="5" type="file" required>'."\n";
-                echo '</div>'."\n";
-                echo '<div class="col-6 col-12-xsmall"><br>'."\n";
-                echo '<ul class="actions">'."\n";
-                echo '<li><input type="submit" value="Subir Circular" class="primary" tabindex="6"></li>'."\n";
-                echo '</ul>'."\n";
-                echo '</div>'."\n";
-                echo '</div>'."\n";
-                echo '</form>'."\n";
+                echo '
+					<div id="inputDescripcion" name="inputDescripcion" class="col-12">
+						<label>Descripción de la circular</label>
+						<input id="descripcion" name="descripcion" type="text" tabindex="4" placeholder="Descripción" required>
+					</div>
+					<div id="inputArchivo" name="inputArchivo" class="col-6 col-12-xsmall">
+						<label>Archivo</label>
+						<input id="circular" name="circular"  accept=".pdf" tabindex="5" type="file" required>
+					</div>
+					<div class="col-6 col-12-xsmall"><br>
+						<ul class="actions">
+						<li><input type="submit" value="Subir Circular" class="primary" tabindex="6"></li>
+						</ul>
+					</div>
+					</div>
+					</form>'."\n";
             
                 // MOSTRAR CIRCULARES ACTUALES-------------------------------------------------------
                 if ($ValidaSeleccion) {
