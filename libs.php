@@ -1260,6 +1260,7 @@ function estatus_reinscripcion($matricula,$cicloAct){
 		return 10;
 	}
 }
+
 function observaciones_reinscripcion($matricula,$cicloAct){
 	$conn = new alumnos();
 	$estatus=$conn->ObservacionesReinscripcion($matricula,$cicloAct);
