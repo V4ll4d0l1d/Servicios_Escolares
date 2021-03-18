@@ -721,8 +721,8 @@ class Circular {
   public function lista_circular_alumno($Grupo, $Seccion, $Ciclo) {
     try {
         $conn = new Conexion();
-        $sql = "SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM circulares WHERE IdGrupo = :gg AND Ciclo = :cc UNION (SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM
-		circulares WHERE Seccion = :ss AND IdGrupo='' AND Ciclo = :cc)";
+        $sql = "SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM circulares WHERE IdGrupo = :gg AND Ciclo = :cc AND Visible='Si' UNION (SELECT Seccion, IdGrupo, Descripcion, Archivo, Ciclo FROM
+		circulares WHERE Seccion = :ss AND IdGrupo='' AND Ciclo = :cc AND Visible='Si')";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':gg', $Grupo);
 		$stmt->bindParam(':ss', $Seccion);
@@ -752,6 +752,33 @@ class Circular {
     }
   }
  
+ public function lockcircular($id, $tipo) {
+    switch($tipo) {
+        case '1':
+            $sql = "UPDATE circulares SET Visible='No' WHERE IdCircular = :cc";
+			echo 'alert("Ocultar")';
+            break;
+        case 2:
+            $sql = "UPDATE circulares SET Visible='Si' WHERE IdCircular = :cc";
+			echo 'alert("Mostrar")';
+            break;
+    }
+    try {
+        $conn = new Conexion();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':cc', $id);
+        if ($stmt->execute()) {
+            return true;
+        } else {    // error al actualizar el Status
+            print_r($stmt->errorInfo());
+            return false;
+        }
+    } catch(PDOException $e) {
+        echo 'Error: '. $e->getMessage();
+        return false;
+    }
+    
+ }
 
 
   

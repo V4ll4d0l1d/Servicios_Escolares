@@ -112,6 +112,7 @@ function responsiveMenu() {
 
 
 
+
 function responsiveMenu() {
   var x = document.getElementById("myTopnav");
   if (x.className === "topnav") {
@@ -201,3 +202,25 @@ function hideGrados() {
     var vacio = '<div id="grados" name="grados" class="col-4 col-12-xsmall"></select></div>';
     document.getElementById("grados").innerHTML = vacio;
 }
+
+// Desbloquear Circular -> cambia el estatus en la BD
+ function unlockcircular(id, tipo) {
+    var idr = 'lock_'+id;
+    //alert ("Cadena: "+idr);
+    var ant = document.getElementById(idr).innerHTML;
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        document.getElementById(idr).innerHTML = this.responseText;
+      } else {
+        document.getElementById(idr).innerHTML = ant;
+      }
+      location.reload();
+    };
+    var str1 = "unlockcirculares.php?id=";
+    var str2 = "&type=";
+    var url = str1.concat(id, str2, tipo);
+    //alert (url);
+    xmlhttp.open("GET",url, true);
+    xmlhttp.send();
+  }

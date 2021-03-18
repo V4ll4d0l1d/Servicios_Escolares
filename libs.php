@@ -600,8 +600,8 @@ function navbar(){
 				<div class="dropdown">
 				<button class="dropbtn"><i class="fa fa-fw fa-user-shield"></i>ADMINISTRATIVO</button>
 					<div class="dropdown-content">
-						<a href="#">Usuarios</a>
-						<a href="#">Perfiles</a>
+						<a href="usuarios.php">Usuarios</a>
+						<a href="perfiles.php">Perfiles</a>
 					</div>
 				</div>
 				<a class="active" href="index.php#contactUs" style><i class="fa fa-fw fa-user"></i> CONTACTO</a>
@@ -945,13 +945,15 @@ function lista_circulares() {
 					echo '	<tr><td>'.$datos['Seccion'].'</td><td>'.$datos['IdGrupo'].' </td><td>'.$datos['Descripcion'].'</td>
 							<td><center><a href="'.$datos['Archivo'].'" target="_blank"><i class="fas fa-file-alt"></i></a></center></td>';
 					if ($_SESSION['Privs'] > 2) {	// puede ocultar las circulares
+						echo '<td id="lock_'.$datos['IdCircular'].'">';
 						if ($datos['Visible'] == 'Si') {
-							echo '<td><center><a href="#"><i class="fas fa-eye" onclick="unlockcircular('.$datos['IdCircular'].', 1)"></i></a></center></td>'; 
+							echo '<center><a href="#"><i class="fas fa-eye" onclick="unlockcircular('.$datos['IdCircular'].', 1)"></i></a></center>'; 
 						} else { 
-							echo '<td><center><a href="#"><i class="fas fa-eye-slash" onclick="unlockcircular('.$datos['IdCircular'].', 2)"></i></a></center></td>'; 
+							echo '<center><a href="#"><i class="fas fa-eye-slash" onclick="unlockcircular('.$datos['IdCircular'].', 2)"></i></a></center>'; 
 						}
+						echo '</td>';
 					}
-					echo '</tr>';
+					echo '</tr>'."\n";
 				}
 				echo '</table></section>'."\n";
 			} else {
