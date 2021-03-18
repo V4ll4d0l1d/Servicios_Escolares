@@ -6,7 +6,7 @@ session_start();
 
 include ("libs.php");           /* Librerias */
 include ("dbconect.php");
-$title = 'Información';
+$title = 'Bloqueo/Desbloqueo';
 // VALIDAR SI YA SE INICIO SESION
 IF (isset($_SESSION['login'])&&($_SESSION['login'] == 1)) {
     // sesion iniciada

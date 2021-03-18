@@ -26,7 +26,7 @@ headerfull_('Recibos de pago');
 if ($_SESSION['login'] == 1) { // realizó login exitoso
 	navbar();
 	echo '<section>';
-    echo '<header class="major"><h2>Recibos de Pago</h2></header>'."\n";
+    echo '<header><h2>Recibos de Pago</h2></header>'."\n";
     // validar si es alumno
     if ($_SESSION['Type'] == 0) { // Es alumno
         echo '<table id="circular">'."\n";

@@ -428,7 +428,7 @@ function navbar(){
 	echo '<div class="topnav" id="myTopnav">
 		<a class="active" href="index.php"><i class="fa fa-fw fa-home"></i> INICIO</a>';
 	switch ($type) {
-    case '0':   // Es ALUMNO
+    case '0':   //ALUMNO
 		echo '<div class="dropdown">
 			<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
 			<div class="dropdown-content">
@@ -485,7 +485,7 @@ function navbar(){
 			<i class="fa fa-bars"></i></a>
 		</div>';
 	break;
-	case '1': // Es USUARIO
+	case '1': //USUARIO
     // Validar el tipo de usuario y los privilegios
 		switch ($_SESSION['Privs']) {
 			case '2':     // Titulares
@@ -564,13 +564,14 @@ function navbar(){
 						}
 				echo	'</div>
 				</div>
+				<a class="active" href="index.php#contactUs" style><i class="fa fa-fw fa-user"></i> CONTACTO</a>
 				<div class="dropdown">
 					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
 					<i class="fa fa-bars"></i></a>
 				</div>';
             break;
 			
-			case '4':
+			case '4':  //Becas
 				echo '<a class="active" href="listabecas.php">BECAS</a>
 				<a class="active" href="#">REPORTE ENTREGA</a>
 				<div class="dropdown">
@@ -625,6 +626,33 @@ function navbar(){
 						<a href="usuarios.php">Usuarios</a>
 						<a href="perfiles.php">Perfiles</a>
 					</div>
+				</div>
+				<div class="dropdown">
+				<button class="dropbtn"><i class="fa fa-fw fa-link"></i> ENLACES</button>
+					<div class="dropdown-content">
+						<a href="http://aulavirtual.umvalla.edu.mx" target="_blank">Aula Virtual</a>
+						<a href="http://valladolid.edu.mx" target="_blank">Instituto Valladolid</a>
+						<a href="http://umvalla.edu.mx" target="_blank">Universidad Marista Valladolid</a>';
+						if (isset($_SESSION['Id'])) {
+							switch ($_SESSION['Seccion']) {
+								case 0:
+									echo '<a href="media/Anuario_Preescolar.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 1:
+									echo '<a href="media/Anuario_Primaria.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 2:
+									echo '<a href="media/Anuario_Secundaria.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 3:
+									echo '<a href="media/Anuario_Bachillerato.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 4:
+									echo '<a href="media/Anuario_Universidad.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+							}
+						}
+				echo	'</div>
 				</div>';
             break;
 		}
@@ -1238,11 +1266,11 @@ function listado_infoGeneralReinsc($seccion, $carrera) {
 			   foreach($lista as $datos) {
 					$cantReinscripcion=$conn2->cantReinscripcion($seccion,"",$datos['Grado']);
 					echo '<tr>';
-					echo '<td>'.$datos['Grado'].'</td><td>'.$datos['count(*)'].' </td>';
-					echo '<td>'.$cantReinscripcion[0]['count(*)'].'</td>';
+					echo '<td><center>'.$datos['Grado'].'</center></td><td><center>'.$datos['count(*)'].'</center></td>';
+					echo '<td><center>'.$cantReinscripcion[0]['count(*)'].'</center></td>';
 					for($i=0;$i<3;$i++){
 						$cantidadStatus=$conn2->cantReinsStatus($seccion,"",$datos['Grado'],$i);
-						echo '<td><a href="informacionReinscripciones.php?grado='.$datos['Grado'].'&estatus='.$i.'&cicloAct='.CICLOACTA.'&seccion='.$seccion.'">'.$cantidadStatus[0]['count(*)'].'</a></td>';
+						echo '<td><center><a href="informacionReinscripciones.php?grado='.$datos['Grado'].'&estatus='.$i.'&cicloAct='.CICLOACTA.'&seccion='.$seccion.'">'.$cantidadStatus[0]['count(*)'].'</a></center></td>';
 						}
 					echo '</tr>';
 				}

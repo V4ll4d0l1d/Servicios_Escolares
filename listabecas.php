@@ -22,7 +22,7 @@ IF (isset($_SESSION['login'])&&($_SESSION['login'] == 1)) {
 }
 
 
-headerfull_($title);
+headerfull_('Información');
 
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
 if ($_SESSION['login'] == 1) { // realizó login exitoso

@@ -17,7 +17,7 @@ IF (isset($_SESSION['login'])&&($_SESSION['login'] == 1)) {
     }
 }
 
-headerfull_('Reinscripcion');
+headerfull_('Reinscripción');
 
 
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/

@@ -20,7 +20,7 @@ IF (isset($_SESSION['login'])&&($_SESSION['login'] == 1)) {
     }
 }
 
-headerfull_('Comunicación');
+headerfull_('Circulares');
 
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
 if ($_SESSION['login'] == 1) { // realizó login exitoso
