@@ -443,6 +443,7 @@ function navbar(){
 					}
 				}
 		echo '</div></div>
+		
 		<div class="dropdown">
 		<button class="dropbtn"><i class="fa fa-fw fa-money-check-alt"></i> FINANCIERO</button>
 			<div class="dropdown-content">
@@ -451,12 +452,38 @@ function navbar(){
 			<a href="becas.php">Trámite de Beca</a>
 			</div>
 		</div>
+		<div class="dropdown">
+				<button class="dropbtn"><i class="fa fa-fw fa-link"></i> ENLACES</button>
+					<div class="dropdown-content">
+						<a href="http://aulavirtual.umvalla.edu.mx" target="_blank">Aula Virtual</a>
+						<a href="http://valladolid.edu.mx" target="_blank">Instituto Valladolid</a>
+						<a href="http://umvalla.edu.mx" target="_blank">Universidad Marista Valladolid</a>';
+						if (isset($_SESSION['Id'])) {
+							switch ($_SESSION['Seccion']) {
+								case 0:
+									echo '<a href="media/Anuario_Preescolar.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 1:
+									echo '<a href="media/Anuario_Primaria.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 2:
+									echo '<a href="media/Anuario_Secundaria.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 3:
+									echo '<a href="media/Anuario_Bachillerato.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 4:
+									echo '<a href="media/Anuario_Universidad.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+							}
+						}
+				echo	'</div>
+				</div>
 		<a class="active" href="index.php#contactUs" style><i class="fa fa-fw fa-user"></i> CONTACTO</a>
 		<div class="dropdown">
 			<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
 			<i class="fa fa-bars"></i></a>
 		</div>';
-		//</div>';
 	break;
 	case '1': // Es USUARIO
     // Validar el tipo de usuario y los privilegios
