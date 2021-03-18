@@ -599,11 +599,6 @@ function navbar(){
 							}
 						}
 				echo	'</div>
-				</div>
-				<a class="active" href="index.php#contactUs" style><i class="fa fa-fw fa-user"></i> CONTACTO</a>
-				<div class="dropdown">
-					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
-					<i class="fa fa-bars"></i></a>
 				</div>';
             break;
 			case '5':     // Admin
@@ -630,11 +625,6 @@ function navbar(){
 						<a href="usuarios.php">Usuarios</a>
 						<a href="perfiles.php">Perfiles</a>
 					</div>
-				</div>
-				<a class="active" href="index.php#contactUs" style><i class="fa fa-fw fa-user"></i> CONTACTO</a>
-				<div class="dropdown">
-					<a href="javascript:void(0);" class="icon" onclick="responsiveMenu()">
-					<i class="fa fa-bars"></i></a>
 				</div>';
             break;
 		}
