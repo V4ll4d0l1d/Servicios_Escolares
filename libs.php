@@ -1210,7 +1210,8 @@ function listado_infoGeneralReinsc($seccion, $carrera) {
 	$conn = new alumnos();
 	$conn2 = new alumnos();
 	if (isset($carrera) && $carrera != '') {  
-	echo '<table>'."\n";
+	echo '<h3>Reinscripciones en curso</h3>
+		<table>'."\n";
 		echo '<tr><th  colspan= "3"><center>CICLO ACTUAL '.CICLOACTS.'</center></th><th  colspan= "4"><center>CICLO SIGUIENTE '.CICLOSIGS.'</center></th></tr>';		
 		echo '<th><center>Grado</center></th><th><center>Total de alumnos</center></th><th><center>Proceso de reinscripcion</center></th><th><center>Pendiente</center></th><th><center>Modificar datos</center></th><th><center>Inscritos</th></tr>';
 	    $lista = $conn->infoInscritos($seccion,$carrera);		
@@ -1231,7 +1232,7 @@ function listado_infoGeneralReinsc($seccion, $carrera) {
 		 echo '</table>'."\n";  
 	}else{
 	 if($seccion==4 ){
-		echo '<table>'."\n";
+		echo '<h3>Reinscripciones en curso</h3><table>'."\n";
 		echo '<tr><th  colspan= "3"><center>CICLO ACTUAL '.CICLOACTS.'</center></th><th  colspan= "4"><center>CICLO SIGUIENTE '.CICLOSIGS.'</center></th></tr>';		
 		echo '<tr><th>Carrera</th>';
 	 echo '<th><center>Grado</center></th><th><center>Total de alumnos</center></th><th><center>Proceso de reinscripcion</center></th><th><center>Pendiente</center></th><th><center>Modificar datos</center></th><th><center>Inscritos</th></tr>';
@@ -1256,7 +1257,8 @@ function listado_infoGeneralReinsc($seccion, $carrera) {
 		 echo '</table>'."\n";  
 	 }//UNIVERSIDAD
 	 else{
-		 echo '<table>'."\n";
+		 echo '<h3>Reinscripciones en curso</h3>
+		 <table>'."\n";
 		echo '<tr><th  colspan= "2"><center>CICLO ACTUAL '.CICLOACTUAL.'</center></th><th  colspan= "4"><center>CICLO SIGUIENTE '.CICLONEXT.'</center></th></tr><tr>';
 		echo '<th><center>Grado</center></th><th><center>Total de alumnos</center><th><center>Proceso de reinscripcion</center></th><th><center>Pendiente</center></th></th><th><center>Modificar datos</center></th><th><center>Inscritos</center></th></tr>';
 		$lista = $conn->infoInscritos($seccion,"");

@@ -23,7 +23,7 @@ IF (isset($_SESSION['login'])&&($_SESSION['login'] == 1)) {
 }
 if(isset($_GET['id_alumno'])){$matricula=$_GET['id_alumno'];}else{$matricula = "";}
 
-headerfull_($title);
+headerfull_('Reinscripciones');
 
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
 if ($_SESSION['login'] == 1) { // realizó login exitoso
