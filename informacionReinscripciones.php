@@ -39,7 +39,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
         break;
     case 1:     // USUARIO
         switch ($_SESSION['Privs']) {
-                case 2: // Es titular
+                case 2: // Titular
                     if (isset($_SESSION['Activo'])) {
                         echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.secciones().'</h3>';
                          listado($_SESSION['Activo']);
@@ -47,10 +47,9 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                         echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
                     }
                     break;
-                case 3: // becas
-                        listado_reinscripcion($_session,$_grado,$_carrera,$_estatus,$_cicloAct);
-			    break;
-			    case 5: // Es administrador
+                case 3: // Becas
+			    case 5: // Coordinador
+				case 6: // Administrador
                         listado_reinscripcion($_session,$_grado,$_carrera,$_estatus,$_cicloAct);
 				break;
                 }

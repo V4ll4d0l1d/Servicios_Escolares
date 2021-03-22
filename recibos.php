@@ -47,7 +47,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
         if (file_exists($recibo3)) 	{ echo '<tr><td><a href="validpdf.php?context=5&id_alumno='.$_SESSION['Id'].'" target="_blank">Recibo Inscripción Pago 3</a></td></tr>'."\n"; }
         // Cerramos la tabla
         echo '</table>'."\n";
-}
+	}
 } else {
     echo '<header class="major"><h2>Bienvenido al Sistema de Servicios <br>Escolares del Instituto Valladolid.</h2></header>'."\n";
     echo '<p><b>Ingresa con tus credenciales</b></p>'."\n";

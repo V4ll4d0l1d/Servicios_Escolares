@@ -41,7 +41,8 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                         echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
                     }
                     break;
-                case 4: // Es administrador
+                case 4: // Becas
+				case 6: // Administrador
                     if (isset($_SESSION['Activo'])) {
                         echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.secciones().'</h3>';
                          listado_becas($_SESSION['Activo']);

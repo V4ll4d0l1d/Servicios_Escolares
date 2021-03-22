@@ -36,8 +36,9 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             case 2:     // Titular
            
                 break;
-            case 4: // BECAS-----------------------------------------
-            case 5: // Administrador---------------------------------
+            case 4: // Becas
+            case 5: // Coordinador
+			case 6: // Administrador
                 // Validar si hay una selección de Grupo o de carrera o de sección
                 $ValidaSeleccion = isset($_SESSION['Activo']) || isset($_SESSION['Carrera']) && $_SESSION['Carrera'] != 'NO' || isset($_SESSION['Seccion']) && $_SESSION['Seccion'] != '10';
                 if ($ValidaSeleccion) {

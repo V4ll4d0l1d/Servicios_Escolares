@@ -40,8 +40,9 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                         echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
                     }
                     break;
-                case 3: // Es controlEscolar
-				case 5:
+                case 3: // Control Escolar
+				case 5:	// Coordinador
+				case 6: // Administrador
 /* ---------------- AQUI COMIENZA LA SECCION CENTRAL DE INFORMACION -----------------------*/
    $_matricula = $_GET['matricula'];
    $_seccion=$_GET['seccion'];

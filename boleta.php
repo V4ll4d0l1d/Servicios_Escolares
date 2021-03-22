@@ -38,9 +38,9 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                         echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
                     }
                     break;
-                case 5: // Es administrador
-                    echo '<p>Administrador</p>';
-                    break;
+                default:
+					echo '<p>Regresar al <a href="index.php">inicio</a></p>';
+					break;
                 }
             break;
         }

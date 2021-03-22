@@ -224,7 +224,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
         break;
     case 1:     // USUARIO - Validar el tipo de usuario
         echo '<h3>Bienvenido</h3>'."\n";
-        echo '<p>No deberías estar aquí</p>'."\n";
+        echo '<p>Regresar al <a href="index.php">inicio</a></p>'."\n";
         break;
     }
 } else {

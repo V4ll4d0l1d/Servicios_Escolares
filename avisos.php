@@ -36,24 +36,13 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             case 2:     // Titular
 				echo '<h3>No cuentas con privilegios suficientes, por favor comunicate con Sistemas</p>';
                 break;
-            case 4: // BECAS-----------------------------------------
-            case 5: // Administrador---------------------------------
-                // Validar si hay una selección de Grupo o de carrera o de sección
-                /*$ValidaSeleccion = isset($_SESSION['Activo']) || isset($_SESSION['Carrera']) && $_SESSION['Carrera'] != 'NO' || isset($_SESSION['Seccion']) && $_SESSION['Seccion'] != '10';
-                if ($ValidaSeleccion) {
-                    // Mostrar seccion o grupo activo
-                    echo '<h4>Selección: '.secciones();
-                    if (isset($_SESSION['Activo']) && $_SESSION['Activo'] != '') {
-                        echo ' - Grupo: '.$_SESSION['Activo'];
-                    }
-                    echo '</h4>';   
-                }*/
+            case 4: // Becas
+			case 5: // Coordinador
+            case 6: // Administrador
                 // PRIMER FORMULARIO-------------------------
                 echo '<h3>Subir Avisos</h3>'."\n";
                 echo '<form name="Aviso" method="post" action="uploadavisos.php" enctype="multipart/form-data">'."\n";
-                echo '<div class="row gtr-uniform">'."\n";
-               // if (!$ValidaSeleccion) {
-                    echo '
+                echo '<div class="row gtr-uniform">
 					<div id="ListaSeccion" name="ListaSeccion" class="col-4 col-12-xsmall">
                     <select id="seccion" name="seccion" onchange="showGrupos2()" tabindex="1" required>
 						<option value="" disabled selected>Elige la sección</option>
@@ -70,15 +59,8 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                     </select>
                     </div>
                     <div id="select2" name="select2" class="col-4 col-12-xsmall">
-                    </div>';
-                /*} else {
-                    echo '
-                        <input id="seccion" name="seccion" type="hidden" value="'.$_SESSION['Seccion'].'">
-                        <input id="ctx" name="ctx" type="hidden" value="'.$_SESSION['Carrera'].'">
-                        <input id="Active" name="Active" type="hidden" value="'.$_SESSION['Activo'].'">';
-                } */
-                echo '  
-                        <div id="grados" name="grados" class="col-4 col-12-xsmall">
+                    </div>
+					<div id="grados" name="grados" class="col-4 col-12-xsmall">
                         <select id="grado" name="grado" tabindex="4">
                             <option value="" disabled selected>Elige el grado</option>
                         </select>

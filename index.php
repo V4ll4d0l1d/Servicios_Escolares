@@ -69,8 +69,39 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
 				contacto();
                 break;
 			case 3:
-            case 4: // BECAS-----------------------------------------
-            case 5: // Administrador
+				if (isset($_POST['Active'])){   // Viene del formulario
+					$_SESSION['Activo'] = $_POST['Active'];
+                }
+                if (isset($_SESSION['Activo'])) {        // ¿Que quieres hacer? ¿Seleccionar otro grupo o tomar alguna acción en el menú lateral
+                    echo '<h4>Selección: '.secciones();
+                    if($_SESSION['Activo'] != '') { echo '-'.$_SESSION['Activo']; }
+                    echo '</h4>';
+                    echo '<p>Ahora puedes elegir una opción del menú.</p>';
+                    echo '<p>O cambiar tu grupo activo:</p>'."\n";
+					muestrasologrupos();
+				} else {
+					echo '<h4>Elige un grupo para comenzar a trabajar</h4>'."\n";
+					muestrasologrupos();
+				}
+				break;
+            case 4: // Becas
+            case 5: // Coordinacion
+				if (isset($_POST['Active'])){   // Viene del formulario
+					$_SESSION['Activo'] = $_POST['Active'];
+                }
+                if (isset($_SESSION['Activo'])) {        // ¿Que quieres hacer? ¿Seleccionar otro grupo o tomar alguna acción en el menú lateral
+                    echo '<h4>Selección: '.secciones();
+                    if($_SESSION['Activo'] != '') { echo '-'.$_SESSION['Activo']; }
+                    echo '</h4>';
+                    echo '<p>Ahora puedes elegir una opción del menú.</p>';
+                    echo '<p>O cambiar tu grupo activo:</p>'."\n";
+					muestrasologrupos();
+				} else {
+					echo '<h4>Elige un grupo para comenzar a trabajar</h4>'."\n";
+					muestrasologrupos();
+				}
+				break;
+			case 6: // Administrador
                 if (isset($_POST['flag'])) {   // Se activó algo, hay que determinar que cosa, empezamos por grupo y vamos hacia arriba
                     // Grupo
                     if (isset($_POST['Active'])) { $_SESSION['Activo'] = $_POST['Active']; } else { $_SESSION['Activo'] = ''; }
@@ -87,10 +118,10 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                     echo '</h4>';
                     echo '<p>Ahora puedes elegir una opción del menú.</p><hr/>';
                     echo '<p>O cambiar tu grupo activo:</p>'."\n";
-                    grupos($_SESSION['Id']);
+                    grupos();
                 } else {       // No viene de formulario, ni ha seleccionado, mostrar el formulario limpio
                     echo '<h4>Elige un grupo para comenzar a trabajar</h4>'."\n";
-                    grupos($_SESSION['Id']);
+                    grupos();
                 }
                 break;
             }

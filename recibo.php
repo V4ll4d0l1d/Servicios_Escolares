@@ -40,8 +40,8 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                         echo '<p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>'."\n";
                     }
                     break;
-                case 5: // Es administrador
-                    echo '<p>Administrador</p>'."\n";
+                Default: // Todos los demas OJO, hay que eliminar esta página y reemplazarla por cambios en informacion.php
+                    echo '<h3>No tienes privilegios suficientes, por favor comunicate con Sistemas </h3>';
                     break;
                 }
             break;

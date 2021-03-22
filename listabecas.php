@@ -35,11 +35,10 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
         break;
     case 1:     // USUARIO
         switch ($_SESSION['Privs']) {
-                case 2: // Es titular
-                    echo '<h3>No tienes privilegios suficientes, por favor comunicate con Sistemas </h3>';
-                    break;
-                case 4: // Becas hay que validar que es lo que quiere ver OJO, quizá esto sirva para el director - administrador
-                case 5: //Administrador
+                
+                case 4: // Becas
+                case 5: // Coordinador
+				case 6: // Administrador
                     if (isset($_SESSION['Activo']) && $_SESSION['Activo'] != '') {   // Grupo Seleccionado, mostrarlo
                         echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.secciones().'</h3>';
                         echo '<p><b>Vista rápida</b>, si requieres detalle haz clic en la matrícula del alumno</p>';
@@ -53,7 +52,10 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                             echo '<p>No has seleccionado una sección o grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>';
                         }
                     }
-                    break;                
+                    break;
+				Default: // Es titular o algún otro
+                    echo '<h3>No tienes privilegios suficientes, por favor comunicate con Sistemas </h3>';
+                    break;
                 }
             break;
         }

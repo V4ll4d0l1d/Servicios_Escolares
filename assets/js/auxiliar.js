@@ -58,6 +58,40 @@ function showGrupos() {
     xmlhttp.send(); 
 }
 
+// para control escolar y coordinacion que solo deben ver grupos de su seccion
+function muestraGrupos(sxn) {
+    var divcrr = document.getElementById("ctx");
+    var vacio = '<div id="select2" name="select2" class="col6 col-12-xsmall"></div>';
+    var crr = "";
+    if (divcrr) {
+        crr = divcrr.value;
+        if (crr == undefined) {
+            crr = "";
+        }
+    }
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        if (sxn < '4') {
+            document.getElementById("select1").innerHTML = this.responseText;
+            document.getElementById("select2").innerHTML = vacio;
+        } else {
+            if (sxn == '4' && crr == "") {
+                document.getElementById("select1").innerHTML = this.responseText;
+            } else {
+                document.getElementById("select2").innerHTML = this.responseText;
+            }
+        }
+      }
+    };
+    
+    var str1 = "datos.php?seccion=";
+    var str2 = "&ctx=";
+    var url = str1.concat(sxn, str2, crr);
+    xmlhttp.open("GET",url,true);
+    xmlhttp.send(); 
+}
+
 
 // para el aviso de bloqueo/desbloqueo de boleta (informacion.php)
  function unlock(str) {

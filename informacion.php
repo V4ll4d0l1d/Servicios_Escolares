@@ -36,7 +36,8 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
         break;
     case 1:     // USUARIO
         switch ($_SESSION['Privs']) {
-                case 2: // Es titular
+                case 2: // Titular
+				case 3: // Control Escolar
                     if (isset($_SESSION['Activo'])) {
                         echo '<h3>Grupo Activo: '.secciones(). ' - '.$_SESSION['Activo'].'</h3>';
                          listado($_SESSION['Activo']);
@@ -45,9 +46,6 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                         echo '  <h3>Esta página muestra la información académica de los alumnos de un grupo</h3>
                                 <p>No has seleccionado un grupo para mostrar, hazlo desde el <a href="index.php">Inicio</a></p>'."\n";
                     }
-                    break;
-                case 3://Control Escolar
-					listado_infoGeneralReinsc($_SESSION['Seccion'],$_SESSION['Carrera']);						
                     break;
                 case 4: // Becas hay que validar que es lo que quiere ver OJO, quizá esto sirva para el director - administrador
                     if (isset($_SESSION['Activo']) && $_SESSION['Activo'] != '') {   // Grupo Seleccionado, mostrarlo
@@ -65,7 +63,8 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                         }
                     }
                     break; 					
-                case 5: // Es administrador
+                case 5: // Coordinador
+				case 6: // Administrador
                     if (isset($_SESSION['Activo']) && ($_SESSION['Activo'] != '')) {
                         echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.secciones().'</h3>';
                          listado_admon($_SESSION['Activo']);

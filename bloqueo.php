@@ -39,7 +39,8 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
                 case 4: // Becas
                     echo '<h3>No tienes privilegios suficientes, por favor comunicate con Sistemas </h3>';
                     break;
-                case 5: //Administrador
+				case 5:	// Coordinador
+                case 6: //Administrador
                     echo '
                     <h4>Bloquear Boletas</h4>
                     <form method="post" action="uploadlock.php" enctype="multipart/form-data">
