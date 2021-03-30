@@ -236,9 +236,9 @@ $Valida_POST = (isset($_POST['calle']) && !empty($_POST['calle'])) &&
                         } 
                     }
 					if(!$conexionBD->estatusReinscripcion($_matricula,$_cicloact)){
-                            $conexionBD->insert_reinscripcion ($_matricula, $_seccionsig , $_cicloact, $_ciclosig, $_gradosig);
+                            $conexionBD->insert_reinscripcion ($_matricula, $_seccionsig , $_cicloact, $_ciclosig, $_gradosig,$_flagdata);
                     }else{
-						    $conexionBD->status_reinscripcion ($_matricula, 0,  $_cicloact,"");
+						    $conexionBD->status_reinscripcion ($_matricula, 0,  $_cicloact,"",$_flagdata);
 					}
                     if (!$result) {
                         $errorflag += 1;
