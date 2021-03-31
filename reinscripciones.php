@@ -53,7 +53,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
 				case 6: // Es administrador
                     if (isset($_SESSION['Seccion']) && ($_SESSION['Seccion'] != '')) {
 					    echo '<h3>REPORTE DE REINSCRIPCIÓN</h3>';
-                        echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.secciones().'</h3>';
+                      //  echo '<h3>Grupo: '.$_SESSION['Activo'].' - '.secciones().'</h3>';
                        listado_infoGeneralReinsc($_SESSION['Seccion'],$_SESSION['Carrera']);	
                         echo '<hr>';
                     } else {

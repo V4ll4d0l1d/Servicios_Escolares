@@ -1332,7 +1332,8 @@ function listado_infoGeneralReinsc($seccion, $carrera) {
 		echo '</table>'."\n";  
 		/**/
 	}else{
-	if (isset($carrera) && $carrera != '') {  //Muestra a los alumnos de la carrera activa
+	if ((isset($carrera) || $carrera != '') && strcmp($carrera, "NO") !== 0) {  //Muestra a los alumnos de la carrera activa
+	echo '<h3>'.$carrera.'</h3>';
 	echo '<table style="text-align:center;">'."\n";
 		echo '<tr><th  colspan= "3"><center>CICLO ACTUAL '.CICLOACTS.'</center></th><th  colspan= "5"><center>CICLO SIGUIENTE '.CICLOSIGS.'</center></th></tr>';		
 		echo '<th><center>Grado</center></th><th><center>Total de alumnos</center><th><center>Proceso de reinscripcion</center></th><th><center>Pendiente</center></th></th><th><center>Inscritos</center></th><th><center>Modifico Datos</center></th><th>Faltantes</th></tr>';
