@@ -640,19 +640,27 @@ private $Usuario;
 // Parametros:  Seccion
 //*************************************************************************************************
 
-public function leer_avisos_grado($Seccion, $Grado, $Grupo){
+public function leer_avisos_grado($Seccion, $CortoSeccion, $Grado, $Grupo){
     $conn=new Conexion();
     try {
-        $sql = "SELECT Seccion, Grado, Titulo, Contenido, Url, Imagen FROM (SELECT * FROM avisos WHERE (Grado = 0 OR Grado = :pp) AND (Seccion = :ss) AND Grupo = '' AND (curdate() > Fecha_Inicio AND curdate() < Fecha_Fin) and Activo='Si' UNION (select * from avisos where Grupo = :gg)) LINK ORDER BY Fecha_Fin DESC LIMIT 3";
+        //$sql1 = "SELECT Seccion, Grado, Titulo, Contenido, Url, Imagen FROM avisos WHERE (Grado = 0 OR Grado = :pp) AND (Seccion = :ss";
+		$sql1 = "SELECT * FROM avisos WHERE (Grado = 0 OR Grado = :pp) AND (Seccion = :ss";
+		if ($Seccion == '4') {
+			$sqlint = " OR Seccion = 'UNI'";
+		} else {
+			$sqlint = "";
+		}
+		$sql2 = ") AND Grupo = '' AND (curdate() > Fecha_Inicio AND curdate() < Fecha_Fin) and Activo='Si' UNION SELECT * FROM avisos WHERE Grupo = :gg ORDER BY Fecha_Fin DESC LIMIT 3";
+		$sql = $sql1.$sqlint.$sql2;
         $stmt = $conn->prepare ($sql);
         $stmt->bindParam(':pp', $Grado);
-        $stmt->bindParam(':ss', $Seccion);
+        $stmt->bindParam(':ss', $CortoSeccion);
         $stmt->bindParam(':gg', $Grupo);
         $stmt->execute();
         $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $resultado;
     } catch(PDOException $e) {
-        echo 'Error: ' . $e->getMessage();
+        echo 'Error: '.$sql .' '. $e->getMessage();
     }
     close($conn);
 }

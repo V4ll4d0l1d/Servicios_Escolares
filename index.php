@@ -28,7 +28,7 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
 	navbar();
     switch ($_SESSION['Type']) {
     case 0:     // ALUMNO
-        getAvisos(corto_seccion(), $_SESSION['Grado'], $_SESSION['IdGrupo']);
+        getAvisos($_SESSION['Seccion'], corto_seccion(), $_SESSION['Grado'], $_SESSION['IdGrupo']);
 		// Imprime los datos del alumno
         echo '<table>
 				<tr><th width=20%>Matricula</th><td>'.$_SESSION['Id'].'</td></tr>
@@ -41,9 +41,6 @@ if ($_SESSION['login'] == 1) { // realizó login exitoso
             echo '<tr><th width=20%>Sección</th>'."\n";
         }
         echo '<td>'.secciones($_SESSION['Seccion']).'</td></tr>'."\n";
-        if ($_SESSION['Seccion'] == 4) {
-            echo '<tr><th width=20%>Carrera</th><td>'. $_SESSION['Carrera'].'</td></tr>'."\n";
-        }
         echo '</table>'."\n";
 		contacto();
         break;

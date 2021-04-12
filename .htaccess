@@ -1,1 +1,7 @@
 php_flag output_buffering on
+Options -Indexes
+Redirect 301 /boletas http://servicios.valladolid.edu.mx
+Redirect 301 /circulares http://servicios.valladolid.edu.mx
+Redirect 301 /recibos http://servicios.valladolid.edu.mx
+Redirect 301 /reinscripcion http://servicios.valladolid.edu.mx
+Redirect 301 /upload http://servicios.valladolid.edu.mx

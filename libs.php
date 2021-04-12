@@ -815,7 +815,7 @@ return $errortext;
 // Parametros:  Seccion, grado
 //*************************************************************************************************
 
-function getAvisos($seccion, $grado, $grupo) {
+function getAvisos($seccion, $cortoseccion, $grado, $grupo) {
     
     echo '<section>'."\n";
     echo '<header class=""><h2>Avisos</h2></header>'."\n";
@@ -823,7 +823,7 @@ function getAvisos($seccion, $grado, $grupo) {
     echo '<div class="row gtr-50 gtr-uniform">'."\n";
     $conn = new aviso();
 
-    $aviso2 = $conn->leer_avisos_grado($seccion, $grado, $grupo);
+    $aviso2 = $conn->leer_avisos_grado($seccion, $cortoseccion, $grado, $grupo);
     $indice = count($aviso2);
     if ($indice>0) {
         foreach($aviso2 as $contenido) {
