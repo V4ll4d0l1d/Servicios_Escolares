@@ -5,7 +5,7 @@ class Conexion extends PDO {
     /*DATOS SERVIDOR LOCAL*/
   private $usuario = 'servicios';
   private $password = 'servicios';
-  private $nombre_de_base = 'Servicios';
+  private $nombre_de_base = 'servicios';
   //private $usuario = 'id15894937_servicios_user';
   //private $password = '@T(/GQ*~eSf[7IvN';
   //private $nombre_de_base = 'id15894937_servicios';

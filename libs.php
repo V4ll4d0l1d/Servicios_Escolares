@@ -430,7 +430,8 @@ function navbar(){
 		<a class="active" href="index.php"><i class="fa fa-fw fa-home"></i> INICIO</a>';
 	switch ($type) {
     case '0':   //ALUMNO
-		echo '<div class="dropdown">
+		echo '
+			<div class="dropdown">
 			<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
 			<div class="dropdown-content">
 				<a href="validpdf.php?context=1&id_alumno='.$_SESSION['Id'].'" target="_blank">Boleta</a>
@@ -443,7 +444,10 @@ function navbar(){
 						echo '<a href="reinscripcion.php">Reinscripción</a>';
 					}
 				}
-		echo '</div></div>
+			echo '
+				<a href="certificado.php">Certificado diario</a>
+				<a href="certificado2.php">QR identificación</a>
+			</div></div>
 		
 		<div class="dropdown">
 		<button class="dropbtn"><i class="fa fa-fw fa-money-check-alt"></i> FINANCIERO</button>
@@ -493,6 +497,7 @@ function navbar(){
 				echo '<div class="dropdown">
 				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
 					<div class="dropdown-content">
+						<a href="leercertificado.php">Filtro sanitario</a>
 						<a href="informacion.php">Información</a>
 						<a href="concentrados.php">Concentrado</a>
 						<a href="circulares.php">Circulares</a>
@@ -536,6 +541,7 @@ function navbar(){
 				echo '<div class="dropdown">
 				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
 					<div class="dropdown-content">
+						<a href="leercertificado.php">Filtro sanitario</a>
 						<a href="informacion.php">Información</a>
 						<a href="reinscripciones.php">Reporte preinscripcion</a>
 						<a href="concentrados.php">Subir concentrados</a>
@@ -610,6 +616,7 @@ function navbar(){
 			echo '<div class="dropdown">
 				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
 					<div class="dropdown-content">
+						<a href="leercertificado.php">Filtro sanitario</a>
 						<a href="informacion.php">Información</a>
 						<a href="concentrados.php">Subir concentrados</a>
 						<a href="reinscripciones.php">Reinscripciones</a>
@@ -655,6 +662,7 @@ function navbar(){
 				echo '<div class="dropdown">
 				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
 					<div class="dropdown-content">
+						<a href="leercertificado.php">Filtro sanitario</a>
 						<a href="informacion.php">Información</a>
 						<a href="concentrados.php">Subir concentrados</a>
 						<a href="reinscripciones.php">Reinscripciones</a>
@@ -675,6 +683,42 @@ function navbar(){
 					<div class="dropdown-content">
 						<a href="usuarios.php">Usuarios</a>
 						<a href="perfiles.php">Perfiles</a>
+					</div>
+				</div>
+				<div class="dropdown">
+				<button class="dropbtn"><i class="fa fa-fw fa-link"></i> ENLACES</button>
+					<div class="dropdown-content">
+						<a href="http://aulavirtual.umvalla.edu.mx" target="_blank">Aula Virtual</a>
+						<a href="http://valladolid.edu.mx" target="_blank">Instituto Valladolid</a>
+						<a href="http://umvalla.edu.mx" target="_blank">Universidad Marista Valladolid</a>';
+						if (isset($_SESSION['Id'])) {
+							switch ($_SESSION['Seccion']) {
+								case 0:
+									echo '<a href="media/Anuario_Preescolar.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 1:
+									echo '<a href="media/Anuario_Primaria.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 2:
+									echo '<a href="media/Anuario_Secundaria.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 3:
+									echo '<a href="media/Anuario_Bachillerato.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+								case 4:
+									echo '<a href="media/Anuario_Universidad.pdf" target="_blank">Anuario Escolar</a>';
+								break;
+							}
+						}
+				echo	'</div>
+				</div>';
+            break;
+			case '7':		// Filtro de entrada
+				echo '
+				<div class="dropdown">
+				<button class="dropbtn"><i class="fa fa-fw fa-graduation-cap"></i> ACADÉMICO</button>
+					<div class="dropdown-content">
+						<a href="leercertificado.php">Filtro sanitario</a>
 					</div>
 				</div>
 				<div class="dropdown">

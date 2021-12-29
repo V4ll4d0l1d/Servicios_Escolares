@@ -822,9 +822,92 @@ class Circular {
     }
     
  }
-
-
   
 }
+
+//*************************************************************************************************************************
+//*************************************************************************************************************************
+//*************************************************************************************************************************
+//*************************************************************************************************************************
+//*************************************************************************************************************************
+// Se utiliza para la validación y lectura de codigos QR de los certificados
+class certificado {
+
+private $Consecutivo;
+private $Id;
+private $Seccion;
+private $Grupo;
+private $Fecha;
+private $Timestamp;
+
+
+//*************************************************************************************************
+// Funcion:     leer_Matricula
+// Descripción: Buscar los ingresos por matrícula
+// Parametros:  Seccion
+//*************************************************************************************************
+
+public function leer_Matricula($Seccion, $Grado){
+    $conn=new Conexion();
+    try {
+        $stmt = $conn->prepare ("SELECT Consecutivo, Id, Seccion, Grupo, Fecha, Timestamp FROM certificado WHERE Id = :ss");
+        $stmt->bindParam(':ss', $Id);
+        $stmt->execute();
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;
+    } catch(PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
+}
+
+public function insert_certificado ($Id, $Seccion, $Grupo, $Fecha) {
+    try {
+        $conn = new Conexion();
+        $sql = "INSERT INTO certificado (Id, Seccion, Grupo, Fecha) VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute(array($Id, $Seccion, $Grupo, $Fecha))) {
+            return true;
+        } else {        //Problema en inserción
+            print_r($stmt->errorInfo());
+            return false;
+        }
+    } catch(PDOException $e) {
+        echo "Error en conexion: ".$e->getMessage();
+        return false;
+    }
+ }
+
+public function select_autorizacion($Id) {
+	$conn=new Conexion();
+    try {
+        $stmt = $conn->prepare ("SELECT Consecutivo, Id, Seccion, Grupo, Fecha, Autoriza, Timestamp FROM autorizacion WHERE Id = :ss");
+        $stmt->bindParam(':ss', $Id);
+        $stmt->execute();
+        $resultado= $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $resultado;
+    } catch(PDOException $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
+}
+ 
+public function insert_autorizacion ($Id, $Seccion, $Grupo, $Fecha, $Autoriza) {
+    try {
+        $conn = new Conexion();
+        $sql = "INSERT INTO autorizacion (Id, Seccion, Grupo, Fecha, Autoriza) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        if ($stmt->execute(array($Id, $Seccion, $Grupo, $Fecha, $Autoriza))) {
+            return true;
+        } else {        //Problema en inserción
+            print_r($stmt->errorInfo());
+            return false;
+        }
+    } catch(PDOException $e) {
+        echo "Error en conexion: ".$e->getMessage();
+        return false;
+    }
+ }
+ 
+}
+
 
 ?>
